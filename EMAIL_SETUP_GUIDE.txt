@@ -1,0 +1,126 @@
+============================================
+  EmailJS 설정 가이드 (네이버 메일)
+============================================
+
+이 포트폴리오의 Contact 폼은 EmailJS를 사용합니다.
+방문자가 메시지를 보내면 네이버 메일로 수신됩니다.
+서버 없이 클라이언트(브라우저)에서 바로 발송됩니다.
+
+무료 플랜: 월 200건 발송 가능
+
+
+--------------------------------------------
+1. EmailJS 회원가입
+--------------------------------------------
+- https://www.emailjs.com 접속
+- 구글/깃허브 계정으로 가입 가능
+
+
+--------------------------------------------
+2. Email Service 등록 (네이버 SMTP)
+--------------------------------------------
+- Email Services > Add New Service > SMTP 선택
+
+  Name         : 아무거나 (예: 포트폴리오 메일)
+  Service ID   : 자동 생성됨 (예: service_qam7ucv)
+  Host         : smtp.naver.com
+  Port         : 465
+  Use SSL      : 체크 ON
+  User         : 본인네이버아이디@naver.com
+  App Password : 네이버 앱 비밀번호 (아래 참고)
+
+[네이버 앱 비밀번호 발급 방법]
+  1) 네이버 > 내정보 > 보안설정
+  2) 2단계 인증 켜기
+  3) 애플리케이션 비밀번호 관리 클릭
+  4) 직접 입력 > "EmailJS" 입력 > 생성하기
+  5) 생성된 12자리 비밀번호를 App Password에 입력
+
+[네이버 SMTP 사용 설정]
+  1) 네이버 메일 접속 (mail.naver.com)
+  2) 환경설정 > POP3/IMAP 설정
+  3) IMAP/SMTP 사용 > "사용함" 선택 > 확인
+
+
+--------------------------------------------
+3. Email Template 생성
+--------------------------------------------
+- Email Templates > Create New Template > Contact Us 선택
+
+[Subject]
+  [포트폴리오] {{subject}}
+
+[Content] (Edit Content 클릭 후 아래 HTML로 교체)
+
+  <div style="font-family: system-ui, sans-serif; font-size: 14px; color: #333;">
+    <h2 style="margin-bottom: 20px;">[포트폴리오] 새 메시지가 도착했습니다</h2>
+    <table style="width: 100%; border-collapse: collapse;">
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; width: 100px;">이름</td>
+        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{from_name}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">이메일</td>
+        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{from_email}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">제목</td>
+        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{subject}}</td>
+      </tr>
+      <tr>
+        <td style="padding: 10px; font-weight: bold; vertical-align: top;">메시지</td>
+        <td style="padding: 10px;">{{message}}</td>
+      </tr>
+    </table>
+  </div>
+
+[오른쪽 설정]
+  To Email   : 본인 네이버 메일 주소
+  From Name  : {{from_name}}
+  From Email : Use Default Email Address 체크
+  Reply To   : {{from_email}}
+  Bcc / Cc   : 비워두기
+
+
+--------------------------------------------
+4. 코드에 키 값 입력
+--------------------------------------------
+index.html 파일에서 아래 3개 값을 본인 것으로 교체:
+
+  data-emailjs-public-key="여기에_Public_Key"
+  data-emailjs-service-id="여기에_Service_ID"
+  data-emailjs-template-id="여기에_Template_ID"
+
+[각 값 확인 위치]
+  Public Key   : Account > API Keys
+  Service ID   : Email Services 목록
+  Template ID  : Email Templates > Settings 탭
+
+
+--------------------------------------------
+5. 현재 설정된 값 (참고용)
+--------------------------------------------
+  Public Key   : 1VLcMmtVYo_vztKwc
+  Service ID   : service_qam7ucv
+  Template ID  : template_0lz2nhz
+  수신 메일    : yoo128@naver.com
+
+
+============================================
+  문제 해결
+============================================
+
+Q. "Invalid login" 에러가 나요
+A. 네이버 앱 비밀번호를 사용했는지 확인하세요.
+   일반 로그인 비밀번호는 안 됩니다.
+
+Q. 메일이 안 와요
+A. 네이버 메일 > 환경설정 > POP3/IMAP 설정에서
+   IMAP/SMTP 사용이 "사용함"인지 확인하세요.
+
+Q. "키를 먼저 설정해주세요" 라고 나와요
+A. index.html에서 3개 키 값이 제대로 입력되었는지 확인하세요.
+
+Q. 무료 한도를 초과했어요
+A. EmailJS 무료 플랜은 월 200건입니다.
+   포트폴리오용이면 충분하지만, 초과 시 유료 플랜 업그레이드가 필요합니다.

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KEJ Portfolio | Front-end Publisher</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+  <!-- Skip Navigation -->
+  <a href="#hero" class="skip-nav">본문 바로가기</a>
+
+  <!-- Navigation -->
+  <nav class="nav" id="nav" aria-label="메인 내비게이션">
+    <div class="nav-progress" id="navProgress" role="progressbar" aria-hidden="true"></div>
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo" aria-label="KEJ 포트폴리오 홈">KEJ.</a>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navMenu">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </button>
+      <ul class="nav-menu" id="navMenu" role="menubar">
+        <li role="none"><a href="#projects" class="nav-link" role="menuitem">Projects</a></li>
+        <li role="none"><a href="#about" class="nav-link" role="menuitem">About</a></li>
+        <li role="none"><a href="#experience" class="nav-link" role="menuitem">Experience</a></li>
+        <li role="none"><a href="#contact" class="nav-link" role="menuitem">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="main">
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero" aria-label="소개">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-marquee">
+        <span>PUBLISHER &mdash; FRONT-END &mdash; SEMANTIC &mdash; RESPONSIVE &mdash; ACCESSIBLE &mdash;&nbsp;</span>
+        <span>PUBLISHER &mdash; FRONT-END &mdash; SEMANTIC &mdash; RESPONSIVE &mdash; ACCESSIBLE &mdash;&nbsp;</span>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-top">
+        <!-- Left: Text -->
+        <div class="hero-text">
+          <p class="hero-sub fade-in">프론트엔드 퍼블리셔 포트폴리오</p>
+          <h1 class="hero-title fade-in">
+            좋아하니까,<br>
+            <em>코드</em>로 말하는 퍼블리셔
+          </h1>
+          <p class="hero-desc fade-in">
+            시맨틱한 마크업과 섬세한 인터랙션을 추구하며,<br>
+            디자인의 의도를 정확하게 구현합니다.
+          </p>
+          <div class="hero-name-tag fade-in">
+            <strong>김은지</strong>
+            <span>1997.02.28 &middot; 한국대학교 컴퓨터공학과 &middot; 4년차 퍼블리셔 &middot; 서울</span>
+          </div>
+        </div>
+        <!-- Right: Photo -->
+        <div class="hero-photo fade-in">
+          <img src="assets/profile.jpg" alt="김은지 프로필 사진" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="hero-photo-fallback" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="56" height="56">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>사진을 넣어주세요</span>
+          </div>
+        </div>
+      </div>
+      <!-- Stats -->
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <em data-count="4">0</em>
+          <div class="hero-stat-label">
+            <strong>Years</strong>
+            <span>경력</span>
+          </div>
+        </div>
+        <div class="hero-stat">
+          <em data-count="30">0</em>
+          <div class="hero-stat-label">
+            <strong>Projects</strong>
+            <span>수행</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll fade-in">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+      <span>스크롤 해주세요</span>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section class="section projects" id="projects" aria-label="프로젝트">
+    <div class="container">
+      <h2 class="section-label fade-in">Projects</h2>
+      <h3 class="section-title fade-in">작업한 프로젝트</h3>
+      <!-- 실무 / 개인 탭 -->
+      <div class="projects-tabs fade-in" role="tablist" aria-label="프로젝트 유형">
+        <button class="tab-btn active" data-tab="work" role="tab" aria-selected="true" aria-controls="workGrid" id="tabWork">실무 프로젝트</button>
+        <button class="tab-btn" data-tab="personal" role="tab" aria-selected="false" aria-controls="personalGrid" id="tabPersonal">개인 프로젝트</button>
+        <div class="tab-indicator" aria-hidden="true"></div>
+      </div>
+      <!-- 실무 필터 -->
+      <div class="projects-filter fade-in" id="workFilter">
+        <button class="filter-btn active" data-filter="all">전체</button>
+        <button class="filter-btn" data-filter="corporate">기업 사이트</button>
+        <button class="filter-btn" data-filter="landing">랜딩 페이지</button>
+        <button class="filter-btn" data-filter="admin">관리자 페이지</button>
+      </div>
+      <div class="projects-grid" id="workGrid" role="tabpanel" aria-labelledby="tabWork">
+        <!-- Project 1 -->
+        <article class="project-card fade-in" data-category="corporate"
+          data-title="글로벌 테크 기업 사이트"
+          data-period="2023.09 - 2023.12"
+          data-role="메인 퍼블리셔"
+          data-client="(주) 글로벌테크"
+          data-detail="글로벌 IT 기업의 공식 웹사이트를 전면 리뉴얼한 프로젝트입니다. 영문/국문/일문 3개 국어를 지원하며, WCAG 2.1 AA 기준의 접근성을 충족하도록 시맨틱 마크업을 설계했습니다."
+          data-video="assets/videos/project1.mp4"
+          data-pages="메인 페이지|회사소개|채용 페이지|뉴스룸|글로벌 언어 전환 시스템"
+          data-contrib="CSS Grid 기반 레이아웃 시스템 설계|다국어(3개국어) 전환 UI 구현|WCAG 2.1 AA 접근성 마크업|LCP 2.1초 → 0.8초 성능 개선"
+          data-tags="HTML5,SCSS,JavaScript,반응형"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #7d93c4, #a25873);">
+              <span>Corporate Website</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">글로벌 테크 기업 사이트</h4>
+            <p class="project-card-desc">반응형 기업 웹사이트 퍼블리싱. 다국어 지원 및 접근성 준수.</p>
+            <div class="project-card-tags">
+              <span>HTML5</span>
+              <span>SCSS</span>
+              <span>JavaScript</span>
+              <span>반응형</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+        <!-- Project 2 -->
+        <article class="project-card fade-in" data-category="landing"
+          data-title="SaaS 제품 랜딩 페이지"
+          data-period="2023.05 - 2023.07"
+          data-role="퍼블리셔"
+          data-client="(주) 클라우드솔루션"
+          data-detail="B2B SaaS 제품의 신규 런칭을 위한 프로모션 랜딩 페이지입니다. GSAP를 활용한 스크롤 트리거 애니메이션으로 제품의 핵심 기능을 시각적으로 전달했습니다."
+          data-video="assets/videos/project2.mp4"
+          data-pages="히어로 섹션|기능 소개 (스크롤 애니메이션)|요금제 비교 테이블|CTA 및 문의 폼"
+          data-contrib="GSAP ScrollTrigger 기반 섹션별 애니메이션 구현|A/B 테스트 가능한 모듈형 CTA 컴포넌트|요금제 비교 테이블 반응형 처리"
+          data-tags="HTML5,CSS3,GSAP,jQuery"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #c093a8, #7d93c4);">
+              <span>Landing Page</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">SaaS 제품 랜딩 페이지</h4>
+            <p class="project-card-desc">스크롤 애니메이션이 적용된 프로모션 랜딩 페이지.</p>
+            <div class="project-card-tags">
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>GSAP</span>
+              <span>jQuery</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+        <!-- Project 3 -->
+        <article class="project-card fade-in" data-category="admin"
+          data-title="CMS 관리자 대시보드"
+          data-period="2022.10 - 2023.02"
+          data-role="메인 퍼블리셔"
+          data-client="(주) 데이터브릿지"
+          data-detail="콘텐츠 관리 시스템의 어드민 대시보드 퍼블리싱 프로젝트입니다. Chart.js를 활용한 데이터 시각화 컴포넌트와 복잡한 멀티스텝 폼을 구현했습니다."
+          data-video="assets/videos/project3.mp4"
+          data-pages="대시보드 메인|사용자 관리|콘텐츠 에디터|통계 리포트|설정 페이지"
+          data-contrib="Tailwind CSS 기반 디자인 시스템 구축|Chart.js 커스텀 차트 컴포넌트 5종 제작|멀티스텝 폼 유효성 검사 UI 구현|다크/라이트 테마 전환 기능"
+          data-tags="HTML5,Tailwind,JavaScript,Chart.js"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #ceb3c2, #1E2A35);">
+              <span>Admin Dashboard</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">CMS 관리자 대시보드</h4>
+            <p class="project-card-desc">데이터 시각화와 복잡한 폼이 포함된 어드민 페이지 퍼블리싱.</p>
+            <div class="project-card-tags">
+              <span>HTML5</span>
+              <span>Tailwind</span>
+              <span>JavaScript</span>
+              <span>Chart.js</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+        <!-- Project 4 -->
+        <article class="project-card fade-in" data-category="corporate"
+          data-title="이커머스 쇼핑몰"
+          data-period="2022.04 - 2022.08"
+          data-role="퍼블리셔"
+          data-client="(주) 패션하우스"
+          data-detail="패션 브랜드 이커머스 쇼핑몰의 프론트엔드 퍼블리싱입니다. 상품 목록, 상세 페이지, 장바구니, 결제 플로우 등 전체 쇼핑 경험을 커버했습니다."
+          data-video="assets/videos/project4.mp4"
+          data-pages="메인 페이지|카테고리/상품 목록|상품 상세|장바구니|결제 플로우|마이페이지"
+          data-contrib="Swiper.js 상품 갤러리 커스터마이징|필터/정렬 드롭다운 UI 구현|모바일 퍼스트 결제 플로우 최적화|상품 퀵뷰 모달 컴포넌트"
+          data-tags="HTML5,SCSS,JavaScript,Swiper"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #eef5ff, #79818F);">
+              <span>E-Commerce</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">이커머스 쇼핑몰</h4>
+            <p class="project-card-desc">상품 목록, 장바구니, 결제 플로우를 포함한 쇼핑몰 퍼블리싱.</p>
+            <div class="project-card-tags">
+              <span>HTML5</span>
+              <span>SCSS</span>
+              <span>JavaScript</span>
+              <span>Swiper</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+        <!-- Project 5 -->
+        <article class="project-card fade-in" data-category="landing"
+          data-title="브랜드 프로모션 이벤트"
+          data-period="2021.11 - 2022.01"
+          data-role="퍼블리셔"
+          data-client="(주) 뷰티랩"
+          data-detail="뷰티 브랜드의 연말 프로모션 이벤트 페이지입니다. Canvas API를 활용한 인터랙티브 룰렛 게임과 쿠폰 발급 UI를 구현했습니다."
+          data-video="assets/videos/project5.mp4"
+          data-pages="이벤트 메인|룰렛 게임|쿠폰 발급/확인|공유하기 페이지"
+          data-contrib="Canvas API 룰렛 게임 인터랙션 구현|카카오/페이스북 공유 API 연동|캠페인 기간 50만 PV 성능 대응|쿠폰 발급 애니메이션 효과"
+          data-tags="HTML5,CSS3,Canvas,jQuery"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #a25873, #ceb3c2);">
+              <span>Event Page</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">브랜드 프로모션 이벤트</h4>
+            <p class="project-card-desc">인터랙티브 요소가 풍부한 이벤트 프로모션 페이지.</p>
+            <div class="project-card-tags">
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>Canvas</span>
+              <span>jQuery</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+        <!-- Project 6 -->
+        <article class="project-card fade-in" data-category="admin"
+          data-title="데이터 분석 대시보드"
+          data-period="2021.06 - 2021.10"
+          data-role="퍼블리셔"
+          data-client="(주) 애널리틱스코어"
+          data-detail="실시간 데이터 모니터링이 가능한 분석 대시보드 UI를 퍼블리싱했습니다. D3.js를 활용한 커스텀 차트 컴포넌트와 드래그 앤 드롭 위젯 배치를 구현했습니다."
+          data-video="assets/videos/project6.mp4"
+          data-pages="대시보드 메인|실시간 모니터링|리포트 생성|위젯 관리|알림 센터"
+          data-contrib="D3.js 커스텀 차트 4종 구현 (라인/바/파이/히트맵)|드래그 앤 드롭 위젯 레이아웃 시스템|실시간 데이터 업데이트 UI 처리|다크/라이트 테마 토글"
+          data-tags="HTML5,SCSS,D3.js,반응형"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #79818F, #7d93c4);">
+              <span>Analytics</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">데이터 분석 대시보드</h4>
+            <p class="project-card-desc">실시간 데이터 모니터링이 가능한 분석 대시보드 UI.</p>
+            <div class="project-card-tags">
+              <span>HTML5</span>
+              <span>SCSS</span>
+              <span>D3.js</span>
+              <span>반응형</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- 개인 프로젝트 (기본 숨김) -->
+      <div class="projects-grid" id="personalGrid" role="tabpanel" aria-labelledby="tabPersonal" style="display: none;">
+        <article class="project-card fade-in"
+          data-title="개인 블로그"
+          data-period="2023.01 - 진행중"
+          data-role="기획 / 디자인 / 퍼블리싱"
+          data-client="개인 프로젝트"
+          data-detail="기술 학습 내용과 퍼블리싱 팁을 정리하는 개인 블로그입니다. 정적 사이트 생성기를 활용하여 제작했으며, 다크 모드 전환, 코드 하이라이팅, 반응형 레이아웃을 직접 구현했습니다."
+          data-tags="HTML5,SCSS,JavaScript,마크다운"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #c093a8, #eef5ff);">
+              <span>Tech Blog</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">개인 기술 블로그</h4>
+            <p class="project-card-desc">퍼블리싱 팁과 학습 내용을 기록하는 개인 블로그.</p>
+            <div class="project-card-tags">
+              <span>HTML5</span>
+              <span>SCSS</span>
+              <span>JavaScript</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+        <article class="project-card fade-in"
+          data-title="CSS 애니메이션 실험실"
+          data-period="2022.08 - 2023.03"
+          data-role="기획 / 퍼블리싱"
+          data-client="개인 프로젝트"
+          data-detail="순수 CSS만으로 다양한 애니메이션과 인터랙션을 구현하는 실험 프로젝트입니다. 로딩 스피너, 호버 이펙트, 스크롤 애니메이션 등 30개 이상의 예제를 정리했으며, CodePen에서 총 5,000회 이상의 조회수를 기록했습니다."
+          data-tags="CSS3,Animation,Keyframes,CodePen"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #7d93c4, #ceb3c2);">
+              <span>CSS Lab</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">CSS 애니메이션 실험실</h4>
+            <p class="project-card-desc">순수 CSS로 만든 30개 이상의 애니메이션 예제 모음.</p>
+            <div class="project-card-tags">
+              <span>CSS3</span>
+              <span>Animation</span>
+              <span>CodePen</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+        <article class="project-card fade-in"
+          data-title="UI 컴포넌트 라이브러리"
+          data-period="2023.06 - 2023.11"
+          data-role="기획 / 퍼블리싱"
+          data-client="개인 프로젝트"
+          data-detail="실무에서 자주 사용하는 UI 컴포넌트를 모아 재사용 가능한 라이브러리로 정리한 프로젝트입니다. 모달, 탭, 아코디언, 드롭다운, 토스트 알림 등 15종의 컴포넌트를 바닐라 JS로 구현하고 문서화했습니다."
+          data-tags="HTML5,CSS3,JavaScript,문서화"
+          data-url="#">
+          <div class="project-card-thumb">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #a25873, #7d93c4);">
+              <span>UI Library</span>
+            </div>
+          </div>
+          <div class="project-card-info">
+            <h4 class="project-card-title">UI 컴포넌트 라이브러리</h4>
+            <p class="project-card-desc">실무용 UI 컴포넌트 15종을 바닐라 JS로 구현.</p>
+            <div class="project-card-tags">
+              <span>HTML5</span>
+              <span>CSS3</span>
+              <span>JavaScript</span>
+            </div>
+            <div class="project-card-actions">
+              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
+              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About & Skills Section -->
+  <section class="section about" id="about" aria-label="소개 및 기술 스택">
+    <div class="container">
+      <h2 class="section-label">About</h2>
+      <h3 class="section-title">사용자 경험을 코드로<br>완성하는 퍼블리셔</h3>
+      <div class="about-grid">
+        <div class="about-text">
+          <p>
+            안녕하세요. 4년차 프론트엔드 퍼블리셔 김은지입니다.
+            웹 표준과 접근성을 준수하며, 디자인의 의도를 정확하게 구현하는 것을 목표로 합니다.
+          </p>
+          <p>
+            다양한 규모의 프로젝트에서 반응형 웹사이트, 랜딩 페이지, 관리자 시스템 등을
+            퍼블리싱해왔으며, 개발팀과의 원활한 협업을 위해 항상 깔끔하고 유지보수하기 좋은
+            코드를 작성하려 노력합니다.
+          </p>
+          <div class="about-links">
+            <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              <span>GitHub</span>
+            </a>
+            <a href="https://notion.so/" target="_blank" rel="noopener" aria-label="Notion">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.094c-.467-.373-.7-.653-1.493-.56l-12.75.933c-.467.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.934-.56.934-1.166V6.354c0-.606-.234-.933-.747-.887l-15.177.887c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.934-.234-1.495-.933l-4.577-7.186v6.952l1.45.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.234 4.764 7.28v-6.44l-1.215-.14c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.054-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.84.374-1.54 1.447-1.632z"/></svg>
+              <span>Notion</span>
+            </a>
+          </div>
+        </div>
+        <div class="about-info">
+          <div class="about-info-item">
+            <span class="about-info-number" data-count="4">0</span>
+            <span class="about-info-label">년 차 경력</span>
+          </div>
+          <div class="about-info-item">
+            <span class="about-info-number" data-count="30">0</span>
+            <span class="about-info-label">프로젝트 수행</span>
+          </div>
+        </div>
+      </div>
+      <div class="about-skills">
+        <h4 class="about-skills-label">기술 스택</h4>
+        <div class="about-skills-icons">
+          <div class="skill-icon" title="HTML5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.076-.757.076-.771.076-.757H6.627l.062.694.124 1.395.062.694h8.127l-.344 3.632-2.635.745-2.635-.744-.168-1.889H6.955l.336 3.748 4.733 1.314.023-.006 4.687-1.308.643-7.203H8.531z"/></svg><span>HTML5</span></div>
+          <div class="skill-icon" title="CSS3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.002l5.11-1.44 1.98-13.149z"/></svg><span>CSS3</span></div>
+          <div class="skill-icon" title="JavaScript"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.405-.6-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg><span>JavaScript</span></div>
+          <div class="skill-icon" title="jQuery"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.525 8.286C.613 9.452.258 10.42.053 11.87c1.078-1.643 2.193-2.7 3.835-3.592C5.142 7.598 6.69 7.104 8 6.934c-2.335-.287-4.675.321-6.475 1.352zm4.147-2.988C4.138 6.208 3.16 7.105 2.41 8.173c-.967 1.378-1.316 2.64-1.553 4.142 1.166-1.78 2.464-2.967 4.244-3.93 1.432-.776 3.478-1.4 5.158-1.445-2.886-.655-5.943-.13-4.587-1.642zm5.26-2.272C9.22 3.876 7.897 4.795 6.657 5.986c-1.275 1.225-2.09 2.46-2.777 4.058 1.476-1.88 3.243-3.247 5.458-4.2 1.604-.69 3.702-1.144 5.502-1.085-1.702-.576-3.282-.838-4.908-.737z"/></svg><span>jQuery</span></div>
+          <div class="skill-icon" title="SCSS"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0zM9.615 15.998c.175.645.156 1.248-.024 1.792l-.065.18c-.024.061-.052.12-.078.176-.14.29-.326.56-.555.81-.698.759-1.672 1.047-2.09.805-.45-.262-.226-1.335.584-2.19.871-.918 2.12-1.509 2.12-1.509v-.003l.108-.061zm9.911-10.861c-.542-2.133-4.077-2.834-7.422-1.645-1.989.707-4.144 1.818-5.693 3.267C4.568 8.48 4.275 9.98 4.396 10.607c.427 2.211 3.457 3.657 4.703 4.73v.006c-.367.18-3.056 1.529-3.686 2.925-.675 1.47.105 2.521.615 2.655 1.575.405 3.19-.324 4.06-1.527.84-1.163.78-2.672.375-3.368.465-.12.99-.18 1.695-.12 1.98.225 2.37 1.41 2.295 1.905-.075.494-.435.75-.555.825-.12.075-.165.105-.15.165l.045.12c.06.045.165.03.255 0 .12-.045.825-.345.855-1.125.045-1.005-.915-2.13-2.595-2.1-.69.015-1.125.075-1.44.195a3.04 3.04 0 00-.078-.09c-1.29-1.335-3.66-2.28-3.555-4.08.039-.66.27-2.4 4.5-4.5 3.48-1.71 6.27-1.245 6.75-.195.69 1.5-1.47 4.275-5.04 4.68-1.365.15-2.085-.375-2.265-.57-.195-.21-.225-.21-.3-.18-.12.06-.045.24 0 .345.12.27.585.75 1.395 1.005.705.21 2.43.33 4.5-.405 2.325-.825 4.14-3.12 3.6-5.04z"/></svg><span>SCSS</span></div>
+          <div class="skill-icon" title="Tailwind CSS"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/></svg><span>Tailwind</span></div>
+          <div class="skill-icon" title="Git"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.66 2.66c.645-.222 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.72.719-1.885.719-2.604 0-.538-.536-.67-1.32-.4-1.978l-2.48-2.48v6.53c.175.087.34.202.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"/></svg><span>Git</span></div>
+          <div class="skill-icon" title="Figma"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/></svg><span>Figma</span></div>
+        </div>
+      </div>
+      <div class="about-competencies">
+        <div class="competency">
+          <div class="competency-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <div class="competency-text"><h5>반응형 웹</h5><p>미디어쿼리와 모바일 퍼스트 접근 방식으로 모든 디바이스에서 최적의 사용자 경험을 구현합니다.</p></div>
+        </div>
+        <div class="competency">
+          <div class="competency-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div class="competency-text"><h5>웹 접근성</h5><p>WAI-ARIA, 키보드 내비게이션, 스크린리더 대응으로 WCAG 2.1 기준을 충족하는 마크업을 작성합니다.</p></div>
+        </div>
+        <div class="competency">
+          <div class="competency-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <div class="competency-text"><h5>크로스 브라우징</h5><p>Chrome, Safari, Firefox, Edge 등 주요 브라우저에서 동일한 UI를 보장합니다.</p></div>
+        </div>
+        <div class="competency">
+          <div class="competency-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <div class="competency-text"><h5>성능 최적화</h5><p>이미지 최적화, 레이지 로딩, CSS/JS 경량화로 빠른 페이지 로딩 속도를 달성합니다.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience & Certifications Section -->
+  <section class="section experience" id="experience" aria-label="경력 및 자격">
+    <div class="container">
+      <h2 class="section-label fade-in">Experience & Certifications</h2>
+      <h3 class="section-title fade-in">경력 및 자격</h3>
+      <div class="experience-grid">
+        <!-- Career -->
+        <div class="experience-col">
+          <h4 class="experience-col-title fade-in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+            경력 사항
+          </h4>
+          <div class="timeline">
+            <div class="timeline-item fade-in">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2022.03 - 현재</span>
+                <h4 class="timeline-role">시니어 퍼블리셔</h4>
+                <p class="timeline-company">(주) 디지털 크리에이티브</p>
+                <p class="timeline-desc">대규모 기업 사이트 및 서비스 플랫폼 퍼블리싱. 퍼블리싱 가이드 작성 및 주니어 멘토링.</p>
+              </div>
+            </div>
+            <div class="timeline-item fade-in">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2020.06 - 2022.02</span>
+                <h4 class="timeline-role">퍼블리셔</h4>
+                <p class="timeline-company">(주) 웹 솔루션즈</p>
+                <p class="timeline-desc">중소규모 웹사이트 및 랜딩 페이지 퍼블리싱. 반응형 웹 및 크로스 브라우징 대응.</p>
+              </div>
+            </div>
+            <div class="timeline-item fade-in">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2019.01 - 2020.05</span>
+                <h4 class="timeline-role">주니어 퍼블리셔</h4>
+                <p class="timeline-company">(주) 스타트업 허브</p>
+                <p class="timeline-desc">스타트업 서비스 웹/앱 퍼블리싱. HTML 이메일 템플릿 제작.</p>
+              </div>
+            </div>
+          </div>
+
+          <h4 class="experience-col-title experience-col-title--mt fade-in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/>
+            </svg>
+            학력
+          </h4>
+          <div class="timeline">
+            <div class="timeline-item fade-in">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2015.03 - 2019.02</span>
+                <h4 class="timeline-role">컴퓨터공학과 졸업</h4>
+                <p class="timeline-company">한국대학교</p>
+                <p class="timeline-desc">웹 프로그래밍, UI/UX 디자인 관련 교과 이수. 졸업 프로젝트로 반응형 포트폴리오 사이트 개발.</p>
+              </div>
+            </div>
+            <div class="timeline-item fade-in">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-date">2018.07 - 2018.12</span>
+                <h4 class="timeline-role">프론트엔드 웹 퍼블리싱 과정 수료</h4>
+                <p class="timeline-company">그린컴퓨터아카데미 (국비지원)</p>
+                <p class="timeline-desc">HTML/CSS/JavaScript 기초부터 실무 프로젝트까지. 반응형 웹, 웹 접근성, jQuery 플러그인 활용.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certifications -->
+        <div class="experience-col">
+          <h4 class="experience-col-title fade-in">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20">
+              <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+            </svg>
+            자격증
+          </h4>
+          <div class="cert-list">
+            <div class="cert-card fade-in">
+              <span class="cert-card-date">2023.06</span>
+              <h5 class="cert-card-name">정보처리기사</h5>
+              <p class="cert-card-org">한국산업인력공단</p>
+            </div>
+            <div class="cert-card fade-in">
+              <span class="cert-card-date">2022.11</span>
+              <h5 class="cert-card-name">웹디자인기능사</h5>
+              <p class="cert-card-org">한국산업인력공단</p>
+            </div>
+            <div class="cert-card fade-in">
+              <span class="cert-card-date">2021.09</span>
+              <h5 class="cert-card-name">SQLD</h5>
+              <p class="cert-card-org">한국데이터산업진흥원</p>
+            </div>
+            <div class="cert-card fade-in">
+              <span class="cert-card-date">2020.03</span>
+              <h5 class="cert-card-name">GTQ 1급</h5>
+              <p class="cert-card-org">한국생산성본부</p>
+            </div>
+            <div class="cert-card fade-in">
+              <span class="cert-card-date">2019.12</span>
+              <h5 class="cert-card-name">컴퓨터활용능력 1급</h5>
+              <p class="cert-card-org">대한상공회의소</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section contact" id="contact" aria-label="연락처">
+    <div class="container">
+      <h2 class="section-label fade-in">Contact</h2>
+      <h3 class="section-title fade-in">함께 일하고 싶으시다면</h3>
+      <div class="contact-grid">
+        <div class="fade-in">
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <div>
+              <p class="contact-item-label">Email</p>
+              <a href="mailto:hello@kejportfolio.com">hello@kejportfolio.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <div>
+              <p class="contact-item-label">Phone</p>
+              <a href="tel:010-1234-5678">010-1234-5678</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+            <div>
+              <p class="contact-item-label">Location</p>
+              <p>서울특별시</p>
+            </div>
+          </div>
+        </div>
+        <!--
+          EmailJS 설정 방법:
+          1. https://www.emailjs.com 가입
+          2. Email Services → Add New Service → Gmail 연결
+          3. Email Templates → Create New Template (아래 변수 사용)
+             - {{from_name}}, {{from_email}}, {{subject}}, {{message}}
+          4. 아래 3개 값을 본인 것으로 교체:
+             - YOUR_PUBLIC_KEY  → Account > API Keys에서 확인
+             - YOUR_SERVICE_ID  → Email Services에서 확인 (예: service_xxxxx)
+             - YOUR_TEMPLATE_ID → Email Templates에서 확인 (예: template_xxxxx)
+        -->
+        <form class="contact-form fade-in" id="contactForm"
+              data-emailjs-public-key="1VLcMmtVYo_vztKwc"
+              data-emailjs-service-id="service_qam7ucv"
+              data-emailjs-template-id="template_0lz2nhz">
+          <div class="form-group">
+            <label for="contact-name" class="sr-only">이름</label>
+            <input type="text" id="contact-name" name="from_name" placeholder="이름" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label for="contact-email" class="sr-only">이메일</label>
+            <input type="email" id="contact-email" name="from_email" placeholder="이메일" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label for="contact-subject" class="sr-only">제목</label>
+            <input type="text" id="contact-subject" name="subject" placeholder="제목">
+          </div>
+          <div class="form-group">
+            <label for="contact-message" class="sr-only">메시지</label>
+            <textarea id="contact-message" name="message" rows="5" placeholder="메시지" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary btn--full">메시지 보내기</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Project Detail Modal (single markup, swapped via data) -->
+  <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-backdrop" aria-hidden="true"></div>
+    <div class="modal-content">
+      <button type="button" class="modal-close" id="modalClose" aria-label="닫기">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <!-- 영상 -->
+      <div class="modal-video" id="modalVideo" style="display:none;">
+        <video id="modalVideoEl" controls playsinline></video>
+      </div>
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle"></h3>
+        <div class="modal-meta">
+          <span class="modal-meta-item" id="modalPeriod"></span>
+          <span class="modal-meta-item" id="modalRole"></span>
+          <span class="modal-meta-item" id="modalClient"></span>
+        </div>
+      </div>
+      <div class="modal-body">
+        <p class="modal-detail" id="modalDetail"></p>
+        <!-- 담당 페이지 -->
+        <div class="modal-section" id="modalPagesWrap" style="display:none;">
+          <h4 class="modal-section-title">담당 페이지</h4>
+          <ul class="modal-pages" id="modalPages"></ul>
+        </div>
+        <!-- 주요 기여 -->
+        <div class="modal-section" id="modalContribWrap" style="display:none;">
+          <h4 class="modal-section-title">주요 기여</h4>
+          <ul class="modal-contrib" id="modalContrib"></ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="modal-tags" id="modalTags"></div>
+        <a href="#" class="btn btn--primary modal-site-btn" id="modalUrl" target="_blank" rel="noopener">사이트 보기</a>
+      </div>
+    </div>
+  </div>
+
+  </main><!-- /main -->
+
+
+  <!-- 플로팅 캐릭터 (스크롤 시 우측 하단 고정) -->
+  <!-- assets/character.png 파일이 있으면 이미지로 표시, 없으면 SVG 아바타 -->
+  <div class="floating-char" id="floatingChar">
+    <div class="floating-char-face">
+      <img src="assets/character.png" alt="캐릭터" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="floating-char-avatar" style="display:none;">
+        <svg viewBox="0 0 100 100" width="100" height="100">
+          <circle cx="50" cy="50" r="50" fill="#f0ebe7"/>
+          <circle cx="50" cy="40" r="22" fill="#e0dbd6"/>
+          <circle cx="40" cy="36" r="3" fill="#202020"/>
+          <circle cx="60" cy="36" r="3" fill="#202020"/>
+          <path d="M40 48 Q50 56 60 48" stroke="#202020" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <rect x="30" y="12" width="6" height="12" rx="3" fill="#a25873" transform="rotate(-15 33 18)"/>
+          <rect x="64" y="12" width="6" height="12" rx="3" fill="#7d93c4" transform="rotate(15 67 18)"/>
+        </svg>
+      </div>
+    </div>
+    <div class="floating-char-bubble" id="charBubble">봐주셔서 감사합니다!</div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npx --version)",
+      "WebSearch",
+      "mcp__da35ecb6-5e53-424d-8874-e7911352e01d__use_figma"
+    ]
+  }
+}
