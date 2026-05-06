@@ -8,6 +8,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <!-- Theme init (FOUC prevention) -->
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('theme');
+        var dark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    })();
+  </script>
   <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
@@ -25,12 +35,21 @@
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </button>
-      <ul class="nav-menu" id="navMenu" role="menubar">
-        <li role="none"><a href="#projects" class="nav-link" role="menuitem">Projects</a></li>
-        <li role="none"><a href="#about" class="nav-link" role="menuitem">About</a></li>
-        <li role="none"><a href="#experience" class="nav-link" role="menuitem">Experience</a></li>
-        <li role="none"><a href="#contact" class="nav-link" role="menuitem">Contact</a></li>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#experience" class="nav-link">Experience</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
       </ul>
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="다크모드 전환" aria-pressed="false">
+        <svg class="theme-toggle-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+        <svg class="theme-toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
     </div>
   </nav>
 
@@ -38,65 +57,82 @@
 
   <!-- Hero Section -->
   <section class="hero" id="hero" aria-label="소개">
+    <!-- Background: aurora blobs + outline marquee -->
     <div class="hero-bg" aria-hidden="true">
+      <div class="hero-blob hero-blob--rose"></div>
+      <div class="hero-blob hero-blob--blue"></div>
       <div class="hero-marquee">
-        <span>PUBLISHER &mdash; FRONT-END &mdash; SEMANTIC &mdash; RESPONSIVE &mdash; ACCESSIBLE &mdash;&nbsp;</span>
-        <span>PUBLISHER &mdash; FRONT-END &mdash; SEMANTIC &mdash; RESPONSIVE &mdash; ACCESSIBLE &mdash;&nbsp;</span>
+        <span>PUBLISHER ✦ FRONT-END ✦ SEMANTIC ✦ RESPONSIVE ✦ ACCESSIBLE ✦&nbsp;</span>
+        <span>PUBLISHER ✦ FRONT-END ✦ SEMANTIC ✦ RESPONSIVE ✦ ACCESSIBLE ✦&nbsp;</span>
       </div>
     </div>
+
     <div class="hero-content">
-      <div class="hero-top">
-        <!-- Left: Text -->
+      <!-- Status pill -->
+      <div class="hero-meta fade-in">
+        <span class="hero-status">
+          <span class="hero-status-dot" aria-hidden="true"></span>
+          Available for work
+        </span>
+        <span class="hero-meta-text">Front-end Publisher · Seoul</span>
+      </div>
+
+      <!-- Main grid: text + photo card -->
+      <div class="hero-main">
         <div class="hero-text">
-          <p class="hero-sub fade-in">프론트엔드 퍼블리셔 포트폴리오</p>
           <h1 class="hero-title fade-in">
             좋아하니까,<br>
-            <em>코드</em>로 말하는 퍼블리셔
+            <em>코드</em>로 말하는<br>
+            퍼블리셔
           </h1>
           <p class="hero-desc fade-in">
-            시맨틱한 마크업과 섬세한 인터랙션을 추구하며,<br>
+            시맨틱한 마크업과 섬세한 인터랙션으로<br>
             디자인의 의도를 정확하게 구현합니다.
           </p>
-          <div class="hero-name-tag fade-in">
-            <strong>김은지</strong>
-            <span>1997.02.28 &middot; 한국대학교 컴퓨터공학과 &middot; 4년차 퍼블리셔 &middot; 서울</span>
-          </div>
         </div>
-        <!-- Right: Photo -->
-        <div class="hero-photo fade-in">
-          <img src="assets/profile.jpg" alt="김은지 프로필 사진" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-          <div class="hero-photo-fallback" style="display:none;">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="56" height="56">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-            </svg>
-            <span>사진을 넣어주세요</span>
+
+        <div class="hero-visual fade-in">
+          <div class="hero-photo">
+            <img src="assets/profile.jpg" alt="김은지 프로필 사진" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="hero-photo-fallback" style="display:none;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="56" height="56">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span>사진을 넣어주세요</span>
+            </div>
+          </div>
+          <div class="hero-photo-tag" aria-hidden="true">
+            <span class="hero-photo-tag-label">PROFILE</span>
+            <span class="hero-photo-tag-name">K.E.J / '97</span>
           </div>
         </div>
       </div>
-      <!-- Stats -->
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <em data-count="4">0</em>
-          <div class="hero-stat-label">
-            <strong>Years</strong>
-            <span>경력</span>
-          </div>
+
+      <!-- Bottom info bar: name + stats -->
+      <div class="hero-bottom fade-in">
+        <div class="hero-name">
+          <span class="hero-name-ko">김은지</span>
+          <span class="hero-name-en">Kim Eun Ji</span>
         </div>
-        <div class="hero-stat">
-          <em data-count="30">0</em>
-          <div class="hero-stat-label">
-            <strong>Projects</strong>
-            <span>수행</span>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <em data-count="4">0</em>
+            <span class="hero-stat-plus">+</span>
+            <span class="hero-stat-label">Years</span>
+          </div>
+          <div class="hero-stat">
+            <em data-count="30">0</em>
+            <span class="hero-stat-plus">+</span>
+            <span class="hero-stat-label">Projects</span>
           </div>
         </div>
       </div>
     </div>
-    <div class="hero-scroll fade-in">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M12 5v14M5 12l7 7 7-7"/>
-      </svg>
-      <span>스크롤 해주세요</span>
-    </div>
+
+    <a href="#projects" class="hero-scroll fade-in" aria-label="프로젝트 섹션으로 이동">
+      <span>SCROLL</span>
+      <span class="hero-scroll-line" aria-hidden="true"></span>
+    </a>
   </section>
 
   <!-- Projects Section -->
@@ -131,7 +167,7 @@
           data-tags="HTML5,SCSS,JavaScript,반응형"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #7d93c4, #a25873);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #0f172a, #2563eb);">
               <span>Corporate Website</span>
             </div>
           </div>
@@ -163,7 +199,7 @@
           data-tags="HTML5,CSS3,GSAP,jQuery"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #c093a8, #7d93c4);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #2563eb, #fde047);">
               <span>Landing Page</span>
             </div>
           </div>
@@ -195,7 +231,7 @@
           data-tags="HTML5,Tailwind,JavaScript,Chart.js"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #ceb3c2, #1E2A35);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #0f172a, #60a5fa);">
               <span>Admin Dashboard</span>
             </div>
           </div>
@@ -227,7 +263,7 @@
           data-tags="HTML5,SCSS,JavaScript,Swiper"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #eef5ff, #79818F);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #dbeafe, #2563eb);">
               <span>E-Commerce</span>
             </div>
           </div>
@@ -259,7 +295,7 @@
           data-tags="HTML5,CSS3,Canvas,jQuery"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #a25873, #ceb3c2);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #fde047, #2563eb);">
               <span>Event Page</span>
             </div>
           </div>
@@ -291,7 +327,7 @@
           data-tags="HTML5,SCSS,D3.js,반응형"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #79818F, #7d93c4);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #2563eb, #0f172a);">
               <span>Analytics</span>
             </div>
           </div>
@@ -323,7 +359,7 @@
           data-tags="HTML5,SCSS,JavaScript,마크다운"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #c093a8, #eef5ff);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #dbeafe, #0f172a);">
               <span>Tech Blog</span>
             </div>
           </div>
@@ -350,7 +386,7 @@
           data-tags="CSS3,Animation,Keyframes,CodePen"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #7d93c4, #ceb3c2);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #fde047, #60a5fa);">
               <span>CSS Lab</span>
             </div>
           </div>
@@ -377,7 +413,7 @@
           data-tags="HTML5,CSS3,JavaScript,문서화"
           data-url="#">
           <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #a25873, #7d93c4);">
+            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #60a5fa, #dbeafe);">
               <span>UI Library</span>
             </div>
           </div>

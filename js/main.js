@@ -8,48 +8,34 @@ document.addEventListener('DOMContentLoaded', () => {
   const floatingChar = document.getElementById('floatingChar');
   let charVisible = false;
 
-  // 초기 상태: 숨김
-  if (floatingChar) {
-    floatingChar.style.opacity = '0';
-    floatingChar.style.transform = 'translateY(40px) scale(0.8)';
-    floatingChar.style.pointerEvents = 'none';
-  }
-
   const navProgress = document.getElementById('navProgress');
 
-  window.addEventListener('scroll', () => {
-    // Scroll progress bar
+  let scrollTicking = false;
+  function handleScroll() {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
     if (navProgress) navProgress.style.width = scrollPercent + '%';
 
-    // Nav scroll effect
-    if (window.scrollY > 50) {
-      nav.classList.add('scrolled');
-    } else {
-      nav.classList.remove('scrolled');
+    nav.classList.toggle('scrolled', scrollTop > 50);
+
+    if (scrollTop > 0 && !charVisible) {
+      charVisible = true;
+      floatingChar?.classList.add('show');
+    } else if (scrollTop <= 0 && charVisible) {
+      charVisible = false;
+      floatingChar?.classList.remove('show');
     }
 
-    // Floating character: 스크롤 시작하면 등장
-    if (window.scrollY > 0 && !charVisible) {
-      charVisible = true;
-      if (floatingChar) {
-        floatingChar.style.opacity = '1';
-        floatingChar.style.transform = 'translateY(0) scale(1)';
-        floatingChar.style.pointerEvents = 'auto';
-        floatingChar.classList.add('show');
-      }
-    } else if (window.scrollY <= 0 && charVisible) {
-      charVisible = false;
-      if (floatingChar) {
-        floatingChar.style.opacity = '0';
-        floatingChar.style.transform = 'translateY(40px) scale(0.8)';
-        floatingChar.style.pointerEvents = 'none';
-        floatingChar.classList.remove('show');
-      }
+    scrollTicking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      requestAnimationFrame(handleScroll);
     }
-  });
+  }, { passive: true });
 
   // ========================================
   // Navigation - Active Link
@@ -147,18 +133,21 @@ document.addEventListener('DOMContentLoaded', () => {
     tabIndicator.style.width = btnRect.width + 'px';
   }
 
-  // 초기 위치 설정
+  // 초기 위치 설정: 폰트 로드 후 계산해야 너비가 정확
   const initialActiveTab = document.querySelector('.tab-btn.active');
-  if (initialActiveTab) {
-    // transition 없이 초기 위치 세팅
-    tabIndicator.style.transition = 'none';
-    setTimeout(() => {
+  if (initialActiveTab && tabIndicator) {
+    const setInitialIndicator = () => {
+      tabIndicator.classList.add('no-transition');
       moveIndicator(initialActiveTab);
-      // 다음 프레임에 transition 복원
       requestAnimationFrame(() => {
-        tabIndicator.style.transition = '';
+        tabIndicator.classList.remove('no-transition');
       });
-    }, 100);
+    };
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(setInitialIndicator);
+    } else {
+      setInitialIndicator();
+    }
   }
 
   tabBtns.forEach(btn => {
@@ -212,6 +201,52 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
+  // ========================================
+  // Theme Toggle (light / dark)
+  // ========================================
+  const themeToggle = document.getElementById('themeToggle');
+  const root = document.documentElement;
+  if (themeToggle) {
+    themeToggle.setAttribute('aria-pressed', root.getAttribute('data-theme') === 'dark' ? 'true' : 'false');
+    themeToggle.addEventListener('click', () => {
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      if (next === 'dark') {
+        root.setAttribute('data-theme', 'dark');
+      } else {
+        root.removeAttribute('data-theme');
+      }
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      themeToggle.setAttribute('aria-pressed', next === 'dark' ? 'true' : 'false');
+    });
+  }
+
+  // ========================================
+  // Project Magnetic Hover (3D tilt)
+  // ========================================
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReducedMotion) {
+    document.querySelectorAll('.project-card').forEach(card => {
+      let raf = null;
+      card.addEventListener('mousemove', e => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width;
+          const py = (e.clientY - rect.top) / rect.height;
+          const rx = (py - 0.5) * -8;
+          const ry = (px - 0.5) * 8;
+          card.style.setProperty('--rx', `${rx}deg`);
+          card.style.setProperty('--ry', `${ry}deg`);
+          raf = null;
+        });
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
 
   // ========================================
   // Project Detail Modal
@@ -422,13 +457,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let msgIndex = 0;
 
     setInterval(() => {
-      charBubble.style.opacity = '0';
-      charBubble.style.transform = 'translateY(8px)';
+      charBubble.classList.add('is-fading');
       setTimeout(() => {
         msgIndex = (msgIndex + 1) % messages.length;
         charBubble.textContent = messages[msgIndex];
-        charBubble.style.opacity = '1';
-        charBubble.style.transform = 'translateY(0)';
+        charBubble.classList.remove('is-fading');
       }, 300);
     }, 5000);
   }
