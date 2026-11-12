@@ -4,7 +4,6 @@
 
 ## 진행 중 · 보류
 
-- [ ] **push** — git 연결 · 첫 커밋 완료(`main`, remote `https://github.com/EunjiKU/eunjiku.github.io.git`). push 는 이 PC 로그인 계정에 저장소 push 권한이 생긴 뒤 — push 하면 GitHub Pages 실제 사이트가 바로 바뀐다
 - [ ] **히어로 「지금 작업 중」** — 지금 진행 중인 프로젝트(KTR)가 바뀌면 `.now-card .tit` 문구를 바꾼다. 「함께한 고객사」도 프로젝트가 늘면 갱신
 - [ ] **프로젝트 상세** — 노션에 담당 페이지 · 주요 기여가 없어 모달에 그 칸이 안 보인다. 카드에 `data-pages` · `data-contrib`(「|」 구분)를 넣으면 나타난다. 공개 주소가 없는 카드(서한그룹 · H-Biz · 글로비스 · HD한국조선해양 · KIOTI · 로템 카탈로그 · KAP · UI 팩토리 · KG · 미래에셋)는 주소가 생기면 `data-url` + 「사이트 보기」 링크. 영상은 `data-video`
 - [ ] **실제 내용으로 교체** — 실무 프로젝트는 노션 기준으로 채웠다. 개인 프로젝트 3건 · 경력 · 학력 · 자격 · 연락처(`hello@kejportfolio.com` · `010-1234-5678`) · 숫자(30+ 프로젝트 수행)는 아직 예시. GitHub · Notion 은 기본 주소
