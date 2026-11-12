@@ -1,0 +1,231 @@
+@use "../tools" as *;
+
+/* ==========================================================================
+   18. 오버레이 — 모달
+   · 동작은 common.js — .modal 은 id + hidden, .modal-box 에 role="dialog" + aria-modal (닫기 .close-btn)
+   · 상태: .is-open(열림 — 페이드) · .is-active(맨 위 모달 — 딤은 여기에만)
+   · 변형: .modal-page(서브페이지를 iframe 으로 — 화면 가득, 앱처럼 오른쪽에서 밀고 들어온다)
+   · 창 안: .modal-video(있을 때만) → .modal-head(.tit · .meta) → .modal-body(.detail · .modal-section) → .modal-foot(.tag-list · 버튼)
+   ========================================================================== */
+// · .modal 이 화면 전체를 덮는 딤 층이어야 한다 — 박스 바깥 클릭을 .modal 자신으로 판단한다
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  @include flex-center;
+  padding: 1.25rem;
+  background: transparent;
+  opacity: 0;
+  @include transition(opacity, background-color, $duration: 0.3s);
+
+  &.is-open { opacity: 1; }
+  &.is-active {
+    background: var(--color-bg-dim);
+    backdrop-filter: blur(6px);
+  }
+
+  .modal-box {
+    position: relative;
+    width: 45rem;
+    max-width: 100%;
+    max-height: 100%;
+    padding: 3rem;
+    overflow-y: auto;
+    background: var(--color-bg-surface);
+    border-radius: 1.25rem;
+    box-shadow: 0 24px 60px var(--color-shadow);
+    transform: translateY(1rem);
+    transition: transform 0.4s var(--ease-out);
+
+    .close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      z-index: var(--z-base);
+      @include flex-center(inline-flex);
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--color-bg-subtle);
+      border-radius: 50%;
+      transition: background-color 0.3s ease;
+      @include touch-area;
+
+      &::before {
+        @include icon-mask("icon-x-24");
+        width: 1rem;
+        height: 1rem;
+      }
+
+      @include hover { background: var(--color-line-default); }
+    }
+
+    .modal-video {
+      margin-bottom: 2rem;
+      overflow: hidden;
+      border-radius: 1rem;
+
+      video {
+        display: block;
+        width: 100%;
+      }
+    }
+
+    .modal-head {
+      margin-bottom: 1.5rem;
+      padding-right: 3rem;
+
+      .tit {
+        margin-bottom: 0.875rem;
+        font: var(--font-h1);
+        letter-spacing: var(--font-h1-ls);
+      }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.375rem;
+
+        .meta-item {
+          padding: 0.3125rem 0.75rem;
+          font: var(--font-b5-med);
+          letter-spacing: var(--font-b5-med-ls);
+          color: var(--color-text-point);
+          background: var(--color-bg-point-soft);
+          border-radius: 99rem;
+        }
+      }
+    }
+
+    .modal-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--color-line-default);
+
+      .detail {
+        font: var(--font-b2-reg);
+        letter-spacing: var(--font-b2-reg-ls);
+        color: var(--color-text-default-medium);
+      }
+
+      .modal-section {
+        .tit {
+          margin-bottom: 0.75rem;
+          font: var(--font-cap);
+          letter-spacing: var(--font-cap-ls);
+          color: var(--color-text-default-low);
+        }
+      }
+    }
+
+    .modal-foot {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+  }
+
+  &.is-open {
+    .modal-box { transform: none; }
+  }
+}
+
+/* 변형 — 페이지 화면 .modal-page: 화면 가득, 안에 서브페이지 iframe(.page-frame)
+   · 앱처럼 화면 전환 — 열면 오른쪽에서 밀고 들어오고 뒤 본문은 왼쪽으로 조금 밀리며 어두워진다. 닫으면 반대로
+   · 헤더는 화면 위에 그대로 남는다 — 누르면 화면을 닫고 그 섹션으로 (main.js 「전체 프로젝트 화면」) */
+.modal-page {
+  padding: 0;
+
+  .modal-box {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 0;
+    box-shadow: -24px 0 60px var(--color-shadow);
+    transform: none;
+
+    .close-btn {
+      top: calc(var(--gnb-height) + 1rem);
+      right: 1.25rem;
+      box-shadow: 0 4px 12px var(--color-shadow);
+    }
+
+    .page-frame {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  }
+}
+// 겹(.modal)은 열 때 바로 보이고 닫을 때는 밀려 나간 뒤 숨는다 — 전환 함수는 도착하는 상태의 것을 쓴다 (열림 jump-start · 닫힘 jump-end)
+@include motion {
+  .modal-page {
+    transition: opacity 0.6s steps(1, jump-end), background-color 0.6s ease;
+
+    .modal-box {
+      transform: translateX(100%);
+      transition: transform 0.6s var(--ease-out);
+    }
+
+    &.is-open {
+      transition: opacity 0.6s steps(1, jump-start), background-color 0.6s ease;
+
+      .modal-box { transform: none; }
+    }
+  }
+
+  // 뒤 본문 — 왼쪽으로 밀린다 (헤더는 그대로)
+  .wrapper {
+    main,
+    .footer { transition: translate 0.6s var(--ease-out); }
+  }
+  body:has(.modal-page.is-open) {
+    .wrapper {
+      main,
+      .footer { translate: -20% 0; }
+    }
+  }
+}
+// 헤더 — 전체 화면 페이지 위에 남는다
+// 스크롤 잠금(body overflow: hidden)이면 sticky 가 풀려 페이지 맨 위에 남는다 — 그동안 fixed 로 띄우고 자리는 wrapper 위 여백으로 지킨다 (본문이 튀지 않게)
+body:has(.modal-page.is-open) {
+  .wrapper {
+    padding-top: var(--gnb-height);
+
+    .gnb {
+      position: fixed;
+      right: 0;
+      left: 0;
+      z-index: var(--z-page-header);
+    }
+  }
+}
+
+/* 반응형 */
+@include sm {
+  .modal {
+    padding: 0.75rem;
+
+    .modal-box {
+      padding: 1.75rem 1.25rem;
+      border-radius: 1.25rem;
+
+      .modal-video { margin-bottom: 1.5rem; }
+    }
+  }
+
+  .modal-page {
+    padding: 0;
+
+    .modal-box {
+      padding: 0;
+      border-radius: 0;
+    }
+  }
+}

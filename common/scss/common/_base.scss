@@ -1,0 +1,62 @@
+@use "../tools" as *;
+
+/* ==========================================================================
+   3. 문서 기준 — rem 기준 · body
+   ========================================================================== */
+// (B) 100% — 1rem = 브라우저 기본 글자(보통 16px). 화면 폭에 비례하지 않고 고정 크기 · 브라우저 글자 크기 설정을 따른다 (시안 px ÷ 16)
+// ⚠️ _reset.scss 의 `font: inherit` 리셋 선택자에 html 이 없어야 이 선언이 살아남는다
+html {
+  width: 100%;
+  height: 100%;
+  font-size: 100%;
+}
+
+body {
+  position: relative;
+  height: 100%;
+  font: var(--font-b2-reg);
+  letter-spacing: var(--font-b2-reg-ls);
+  color: var(--color-text-default-highest);
+  background: var(--color-bg-default);
+  word-break: keep-all;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* 부드러운 스크롤(Lenis) — 켜지면 html 에 .lenis 가 붙는다 (common.js) */
+// lenis.css 의 필요한 줄만 옮겼다
+html.lenis,
+html.lenis body { height: auto; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* 스크롤 잠금 — 모달이 열려 있는 동안 (JS 가 .is-fixed 토글) */
+body.is-fixed { overflow: hidden; }
+
+/* 앵커 이동이 멈추는 위치 — 고정 헤더 아래 */
+[id] { scroll-margin-top: var(--gnb-height); }
+
+/* placeholder 색 */
+// 여기 한 곳 — 컴포넌트에서 다시 정하지 않는다
+input::placeholder, textarea::placeholder { color: var(--color-text-default-low); }
+
+/* 강조 — 문장 안 핵심 단어를 포인트 색으로 */
+em { color: var(--color-text-point); }
+
+/* ==========================================================================
+   3-1. 레이아웃 컨테이너
+   ========================================================================== */
+/* 페이지 최상위 래퍼 */
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  overflow-x: clip;
+}
+/* 콘텐츠 최대 폭 제한 컨테이너 — 섹션마다 하나 */
+.inner {
+  width: 100%;
+  max-width: calc(var(--content-width) + var(--side-padding) * 2);
+  margin: 0 auto;
+  padding: 0 var(--side-padding);
+}
+

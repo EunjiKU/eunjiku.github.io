@@ -3,758 +3,838 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KEJ Portfolio | Front-end Publisher</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <!-- Theme init (FOUC prevention) -->
-  <script>
-    (function() {
-      try {
-        var saved = localStorage.getItem('theme');
-        var dark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        if (dark) document.documentElement.setAttribute('data-theme', 'dark');
-      } catch (e) {}
-    })();
+  <title>웹 퍼블리셔 포트폴리오: 구은지</title>
+  <meta name="description" content="4년 차 웹 퍼블리셔 구은지입니다. HTML, SCSS, JavaScript로 웹 표준과 웹 접근성을 지키는 반응형 웹사이트를 만듭니다. 삼성화재, 현대로템, HD하이드로젠 등 실무 프로젝트를 소개합니다.">
+  <meta name="keywords" content="웹 퍼블리셔, 퍼블리셔 포트폴리오, 웹 포트폴리오, 프론트엔드 퍼블리셔, 웹 퍼블리싱, 웹 접근성, 웹 표준, 반응형 웹, 구은지">
+  <meta name="author" content="구은지">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://eunjiku.github.io/">
+  <meta name="theme-color" content="#ffffff">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="구은지 웹 퍼블리셔 포트폴리오">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="웹 퍼블리셔 포트폴리오: 구은지">
+  <meta property="og:description" content="웹 표준과 웹 접근성을 지키는 4년 차 웹 퍼블리셔 구은지의 포트폴리오 — 실무 프로젝트 · 경력 · 연락처">
+  <meta property="og:url" content="https://eunjiku.github.io/">
+  <meta property="og:image" content="https://eunjiku.github.io/common/images/og-default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="웹 퍼블리셔 구은지 포트폴리오 — 웹 표준 · 웹 접근성 · 반응형 웹">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="웹 퍼블리셔 포트폴리오: 구은지">
+  <meta name="twitter:description" content="웹 표준과 웹 접근성을 지키는 4년 차 웹 퍼블리셔 구은지의 포트폴리오">
+  <meta name="twitter:image" content="https://eunjiku.github.io/common/images/og-default.png">
+
+  <link rel="icon" href="common/images/favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" href="common/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="common/images/favicon-180.png">
+  <link rel="manifest" href="common/site.webmanifest">
+
+  <!-- 검색 결과에 이름 · 직무를 알리는 구조화 데이터 (schema.org) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://eunjiku.github.io/#website",
+        "url": "https://eunjiku.github.io/",
+        "name": "구은지 웹 퍼블리셔 포트폴리오",
+        "inLanguage": "ko-KR"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://eunjiku.github.io/#person",
+        "name": "구은지",
+        "alternateName": "Ku Eun Ji",
+        "jobTitle": "웹 퍼블리셔",
+        "url": "https://eunjiku.github.io/",
+        "image": "https://eunjiku.github.io/common/images/og-default.png",
+        "address": { "@type": "PostalAddress", "addressLocality": "서울", "addressCountry": "KR" },
+        "knowsAbout": ["HTML", "CSS", "SCSS", "JavaScript", "jQuery", "GSAP", "웹 접근성", "웹 표준", "반응형 웹"]
+      }
+    ]
+  }
   </script>
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <link rel="preload" href="common/fonts/Pretendard-Regular.subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="common/fonts/Pretendard-Bold.subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="common/css/common.css">
+  <script src="common/js/theme.js"></script>
 </head>
 <body>
-  <!-- Skip Navigation -->
-  <a href="#hero" class="skip-nav">본문 바로가기</a>
+  <a href="#content" class="skip">본문 바로가기</a>
 
-  <!-- Navigation -->
-  <nav class="nav" id="nav" aria-label="메인 내비게이션">
-    <div class="nav-progress" id="navProgress" role="progressbar" aria-hidden="true"></div>
-    <div class="nav-inner">
-      <a href="#hero" class="nav-logo" aria-label="KEJ 포트폴리오 홈">KEJ.</a>
-      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-expanded="false" aria-controls="navMenu">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </button>
-      <ul class="nav-menu" id="navMenu">
-        <li><a href="#projects" class="nav-link">Projects</a></li>
-        <li><a href="#about" class="nav-link">About</a></li>
-        <li><a href="#experience" class="nav-link">Experience</a></li>
-        <li><a href="#contact" class="nav-link">Contact</a></li>
-      </ul>
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="다크모드 전환" aria-pressed="false">
-        <svg class="theme-toggle-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true">
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
-        </svg>
-        <svg class="theme-toggle-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-        </svg>
-      </button>
-    </div>
-  </nav>
-
-  <main id="main">
-
-  <!-- Hero Section -->
-  <section class="hero" id="hero" aria-label="소개">
-    <!-- Background: aurora blobs + outline marquee -->
-    <div class="hero-bg" aria-hidden="true">
-      <div class="hero-blob hero-blob--rose"></div>
-      <div class="hero-blob hero-blob--blue"></div>
-      <div class="hero-marquee">
-        <span>PUBLISHER ✦ FRONT-END ✦ SEMANTIC ✦ RESPONSIVE ✦ ACCESSIBLE ✦&nbsp;</span>
-        <span>PUBLISHER ✦ FRONT-END ✦ SEMANTIC ✦ RESPONSIVE ✦ ACCESSIBLE ✦&nbsp;</span>
-      </div>
-    </div>
-
-    <div class="hero-content">
-      <!-- Status pill -->
-      <div class="hero-meta fade-in">
-        <span class="hero-status">
-          <span class="hero-status-dot" aria-hidden="true"></span>
-          Available for work
-        </span>
-        <span class="hero-meta-text">Front-end Publisher · Seoul</span>
-      </div>
-
-      <!-- Main grid: text + photo card -->
-      <div class="hero-main">
-        <div class="hero-text">
-          <h1 class="hero-title fade-in">
-            좋아하니까,<br>
-            <em>코드</em>로 말하는<br>
-            퍼블리셔
-          </h1>
-          <p class="hero-desc fade-in">
-            시맨틱한 마크업과 섬세한 인터랙션으로<br>
-            디자인의 의도를 정확하게 구현합니다.
-          </p>
-        </div>
-
-        <div class="hero-visual fade-in">
-          <div class="hero-photo">
-            <img src="assets/profile.jpg" alt="김은지 프로필 사진" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-            <div class="hero-photo-fallback" style="display:none;">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" width="56" height="56">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-              </svg>
-              <span>사진을 넣어주세요</span>
-            </div>
-          </div>
-          <div class="hero-photo-tag" aria-hidden="true">
-            <span class="hero-photo-tag-label">PROFILE</span>
-            <span class="hero-photo-tag-name">K.E.J / '97</span>
-          </div>
+  <div class="wrapper">
+    <!-- 헤더 -->
+    <header class="gnb">
+      <div class="bar">
+        <a href="#content" class="logo">KEJ<span class="dot">.</span><span class="blind"> 맨 위로</span></a>
+        <nav class="menu" id="gnbMenu" aria-label="섹션 메뉴">
+          <ul class="depth1">
+            <li class="depth1-item"><a href="#projects" class="depth1-link">프로젝트</a></li>
+            <li class="depth1-item"><a href="#about" class="depth1-link">소개</a></li>
+            <li class="depth1-item"><a href="#experience" class="depth1-link">경력</a></li>
+            <li class="depth1-item"><a href="#contact" class="depth1-link">연락</a></li>
+          </ul>
+        </nav>
+        <div class="util">
+          <button type="button" class="theme-btn" aria-pressed="false">
+            <span class="icon" aria-hidden="true"></span>
+            <span class="blind">다크 모드</span>
+          </button>
+          <button type="button" class="menu-btn" aria-expanded="false" aria-controls="gnbMenu">
+            <span class="bar-icon" aria-hidden="true"></span>
+            <span class="blind">메뉴</span>
+          </button>
         </div>
       </div>
+      <div class="progress" aria-hidden="true"></div>
+    </header>
 
-      <!-- Bottom info bar: name + stats -->
-      <div class="hero-bottom fade-in">
-        <div class="hero-name">
-          <span class="hero-name-ko">김은지</span>
-          <span class="hero-name-en">Kim Eun Ji</span>
-        </div>
-        <div class="hero-stats">
-          <div class="hero-stat">
-            <em data-count="4">0</em>
-            <span class="hero-stat-plus">+</span>
-            <span class="hero-stat-label">Years</span>
-          </div>
-          <div class="hero-stat">
-            <em data-count="30">0</em>
-            <span class="hero-stat-plus">+</span>
-            <span class="hero-stat-label">Projects</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <main id="content">
+      <!-- 히어로 -->
+      <section class="main-hero">
+        <!-- 핀 자리 지킴 래퍼 — 지우지 않는다. 무대(.stage)가 화면에 멈추고 다음 섹션이 덮으며 올라온다 -->
+        <div class="pin-spacer">
+          <div class="stage">
+            <div class="inner">
+              <div class="hero-grid">
+                <div class="intro" data-motion-group="each">
+                  <p class="status-badge"><span class="dot" aria-hidden="true"></span>새 프로젝트 함께할 수 있어요</p>
+                  <p class="eyebrow">구은지 · 웹 퍼블리셔 · 서울</p>
+                  <h1 class="tit">좋아하니까, <br><em>코드</em>로 말하는 <br>퍼블리셔</h1>
+                  <p class="txt">시맨틱한 마크업과 섬세한 인터랙션으로 <br>디자인의 의도를 정확하게 구현합니다.</p>
+                  <div class="btn-group">
+                    <a href="#projects" class="basic-btn">프로젝트 보기</a>
+                    <a href="#contact" class="basic-btn basic-btn-outline">연락하기</a>
+                  </div>
+                </div>
 
-    <a href="#projects" class="hero-scroll fade-in" aria-label="프로젝트 섹션으로 이동">
-      <span>SCROLL</span>
-      <span class="hero-scroll-line" aria-hidden="true"></span>
-    </a>
-  </section>
+                <div class="visual" aria-hidden="true" data-motion="fade">
+                  <div class="code-card">
+                    <div class="bar"><span class="dots"></span><span class="file">index.html</span></div>
+<pre class="code"><code><span class="dim">&lt;</span><span class="tag-name">section</span> <span class="attr">class</span>=<span class="val">"publisher"</span><span class="dim">&gt;</span>
+  <span class="dim">&lt;</span><span class="tag-name">h1</span><span class="dim">&gt;</span>구은지<span class="dim">&lt;/</span><span class="tag-name">h1</span><span class="dim">&gt;</span>
+  <span class="dim">&lt;</span><span class="tag-name">ul</span> <span class="attr">class</span>=<span class="val">"skills"</span><span class="dim">&gt;</span>
+    <span class="dim">&lt;</span><span class="tag-name">li</span><span class="dim">&gt;</span>시맨틱 마크업<span class="dim">&lt;/</span><span class="tag-name">li</span><span class="dim">&gt;</span>
+    <span class="dim">&lt;</span><span class="tag-name">li</span><span class="dim">&gt;</span>SCSS · 디자인 토큰<span class="dim">&lt;/</span><span class="tag-name">li</span><span class="dim">&gt;</span>
+    <span class="dim">&lt;</span><span class="tag-name">li</span><span class="dim">&gt;</span>웹 접근성<span class="dim">&lt;/</span><span class="tag-name">li</span><span class="dim">&gt;</span>
+  <span class="dim">&lt;/</span><span class="tag-name">ul</span><span class="dim">&gt;</span>
+<span class="dim">&lt;/</span><span class="tag-name">section</span><span class="dim">&gt;</span><span class="cursor"></span></code></pre>
+                  </div>
+                  <p class="float-chip">시맨틱 · 접근성 · 반응형</p>
+                  <!-- @ 지금 진행 중인 프로젝트 이름 -->
+                  <p class="now-card">
+                    <span class="label">지금 작업 중</span>
+                    <span class="tit">KTR 화재특화 재난안전산업 진흥시설</span>
+                  </p>
+                </div>
+              </div>
 
-  <!-- Projects Section -->
-  <section class="section projects" id="projects" aria-label="프로젝트">
-    <div class="container">
-      <h2 class="section-label fade-in">Projects</h2>
-      <h3 class="section-title fade-in">작업한 프로젝트</h3>
-      <!-- 실무 / 개인 탭 -->
-      <div class="projects-tabs fade-in" role="tablist" aria-label="프로젝트 유형">
-        <button class="tab-btn active" data-tab="work" role="tab" aria-selected="true" aria-controls="workGrid" id="tabWork">실무 프로젝트</button>
-        <button class="tab-btn" data-tab="personal" role="tab" aria-selected="false" aria-controls="personalGrid" id="tabPersonal">개인 프로젝트</button>
-        <div class="tab-indicator" aria-hidden="true"></div>
-      </div>
-      <!-- 실무 필터 -->
-      <div class="projects-filter fade-in" id="workFilter">
-        <button class="filter-btn active" data-filter="all">전체</button>
-        <button class="filter-btn" data-filter="corporate">기업 사이트</button>
-        <button class="filter-btn" data-filter="landing">랜딩 페이지</button>
-        <button class="filter-btn" data-filter="admin">관리자 페이지</button>
-      </div>
-      <div class="projects-grid" id="workGrid" role="tabpanel" aria-labelledby="tabWork">
-        <!-- Project 1 -->
-        <article class="project-card fade-in" data-category="corporate"
-          data-title="글로벌 테크 기업 사이트"
-          data-period="2023.09 - 2023.12"
-          data-role="메인 퍼블리셔"
-          data-client="(주) 글로벌테크"
-          data-detail="글로벌 IT 기업의 공식 웹사이트를 전면 리뉴얼한 프로젝트입니다. 영문/국문/일문 3개 국어를 지원하며, WCAG 2.1 AA 기준의 접근성을 충족하도록 시맨틱 마크업을 설계했습니다."
-          data-video="assets/videos/project1.mp4"
-          data-pages="메인 페이지|회사소개|채용 페이지|뉴스룸|글로벌 언어 전환 시스템"
-          data-contrib="CSS Grid 기반 레이아웃 시스템 설계|다국어(3개국어) 전환 UI 구현|WCAG 2.1 AA 접근성 마크업|LCP 2.1초 → 0.8초 성능 개선"
-          data-tags="HTML5,SCSS,JavaScript,반응형"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #0f172a, #2563eb);">
-              <span>Corporate Website</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">글로벌 테크 기업 사이트</h4>
-            <p class="project-card-desc">반응형 기업 웹사이트 퍼블리싱. 다국어 지원 및 접근성 준수.</p>
-            <div class="project-card-tags">
-              <span>HTML5</span>
-              <span>SCSS</span>
-              <span>JavaScript</span>
-              <span>반응형</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-        <!-- Project 2 -->
-        <article class="project-card fade-in" data-category="landing"
-          data-title="SaaS 제품 랜딩 페이지"
-          data-period="2023.05 - 2023.07"
-          data-role="퍼블리셔"
-          data-client="(주) 클라우드솔루션"
-          data-detail="B2B SaaS 제품의 신규 런칭을 위한 프로모션 랜딩 페이지입니다. GSAP를 활용한 스크롤 트리거 애니메이션으로 제품의 핵심 기능을 시각적으로 전달했습니다."
-          data-video="assets/videos/project2.mp4"
-          data-pages="히어로 섹션|기능 소개 (스크롤 애니메이션)|요금제 비교 테이블|CTA 및 문의 폼"
-          data-contrib="GSAP ScrollTrigger 기반 섹션별 애니메이션 구현|A/B 테스트 가능한 모듈형 CTA 컴포넌트|요금제 비교 테이블 반응형 처리"
-          data-tags="HTML5,CSS3,GSAP,jQuery"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #2563eb, #fde047);">
-              <span>Landing Page</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">SaaS 제품 랜딩 페이지</h4>
-            <p class="project-card-desc">스크롤 애니메이션이 적용된 프로모션 랜딩 페이지.</p>
-            <div class="project-card-tags">
-              <span>HTML5</span>
-              <span>CSS3</span>
-              <span>GSAP</span>
-              <span>jQuery</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-        <!-- Project 3 -->
-        <article class="project-card fade-in" data-category="admin"
-          data-title="CMS 관리자 대시보드"
-          data-period="2022.10 - 2023.02"
-          data-role="메인 퍼블리셔"
-          data-client="(주) 데이터브릿지"
-          data-detail="콘텐츠 관리 시스템의 어드민 대시보드 퍼블리싱 프로젝트입니다. Chart.js를 활용한 데이터 시각화 컴포넌트와 복잡한 멀티스텝 폼을 구현했습니다."
-          data-video="assets/videos/project3.mp4"
-          data-pages="대시보드 메인|사용자 관리|콘텐츠 에디터|통계 리포트|설정 페이지"
-          data-contrib="Tailwind CSS 기반 디자인 시스템 구축|Chart.js 커스텀 차트 컴포넌트 5종 제작|멀티스텝 폼 유효성 검사 UI 구현|다크/라이트 테마 전환 기능"
-          data-tags="HTML5,Tailwind,JavaScript,Chart.js"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #0f172a, #60a5fa);">
-              <span>Admin Dashboard</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">CMS 관리자 대시보드</h4>
-            <p class="project-card-desc">데이터 시각화와 복잡한 폼이 포함된 어드민 페이지 퍼블리싱.</p>
-            <div class="project-card-tags">
-              <span>HTML5</span>
-              <span>Tailwind</span>
-              <span>JavaScript</span>
-              <span>Chart.js</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-        <!-- Project 4 -->
-        <article class="project-card fade-in" data-category="corporate"
-          data-title="이커머스 쇼핑몰"
-          data-period="2022.04 - 2022.08"
-          data-role="퍼블리셔"
-          data-client="(주) 패션하우스"
-          data-detail="패션 브랜드 이커머스 쇼핑몰의 프론트엔드 퍼블리싱입니다. 상품 목록, 상세 페이지, 장바구니, 결제 플로우 등 전체 쇼핑 경험을 커버했습니다."
-          data-video="assets/videos/project4.mp4"
-          data-pages="메인 페이지|카테고리/상품 목록|상품 상세|장바구니|결제 플로우|마이페이지"
-          data-contrib="Swiper.js 상품 갤러리 커스터마이징|필터/정렬 드롭다운 UI 구현|모바일 퍼스트 결제 플로우 최적화|상품 퀵뷰 모달 컴포넌트"
-          data-tags="HTML5,SCSS,JavaScript,Swiper"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #dbeafe, #2563eb);">
-              <span>E-Commerce</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">이커머스 쇼핑몰</h4>
-            <p class="project-card-desc">상품 목록, 장바구니, 결제 플로우를 포함한 쇼핑몰 퍼블리싱.</p>
-            <div class="project-card-tags">
-              <span>HTML5</span>
-              <span>SCSS</span>
-              <span>JavaScript</span>
-              <span>Swiper</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-        <!-- Project 5 -->
-        <article class="project-card fade-in" data-category="landing"
-          data-title="브랜드 프로모션 이벤트"
-          data-period="2021.11 - 2022.01"
-          data-role="퍼블리셔"
-          data-client="(주) 뷰티랩"
-          data-detail="뷰티 브랜드의 연말 프로모션 이벤트 페이지입니다. Canvas API를 활용한 인터랙티브 룰렛 게임과 쿠폰 발급 UI를 구현했습니다."
-          data-video="assets/videos/project5.mp4"
-          data-pages="이벤트 메인|룰렛 게임|쿠폰 발급/확인|공유하기 페이지"
-          data-contrib="Canvas API 룰렛 게임 인터랙션 구현|카카오/페이스북 공유 API 연동|캠페인 기간 50만 PV 성능 대응|쿠폰 발급 애니메이션 효과"
-          data-tags="HTML5,CSS3,Canvas,jQuery"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #fde047, #2563eb);">
-              <span>Event Page</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">브랜드 프로모션 이벤트</h4>
-            <p class="project-card-desc">인터랙티브 요소가 풍부한 이벤트 프로모션 페이지.</p>
-            <div class="project-card-tags">
-              <span>HTML5</span>
-              <span>CSS3</span>
-              <span>Canvas</span>
-              <span>jQuery</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-        <!-- Project 6 -->
-        <article class="project-card fade-in" data-category="admin"
-          data-title="데이터 분석 대시보드"
-          data-period="2021.06 - 2021.10"
-          data-role="퍼블리셔"
-          data-client="(주) 애널리틱스코어"
-          data-detail="실시간 데이터 모니터링이 가능한 분석 대시보드 UI를 퍼블리싱했습니다. D3.js를 활용한 커스텀 차트 컴포넌트와 드래그 앤 드롭 위젯 배치를 구현했습니다."
-          data-video="assets/videos/project6.mp4"
-          data-pages="대시보드 메인|실시간 모니터링|리포트 생성|위젯 관리|알림 센터"
-          data-contrib="D3.js 커스텀 차트 4종 구현 (라인/바/파이/히트맵)|드래그 앤 드롭 위젯 레이아웃 시스템|실시간 데이터 업데이트 UI 처리|다크/라이트 테마 토글"
-          data-tags="HTML5,SCSS,D3.js,반응형"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #2563eb, #0f172a);">
-              <span>Analytics</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">데이터 분석 대시보드</h4>
-            <p class="project-card-desc">실시간 데이터 모니터링이 가능한 분석 대시보드 UI.</p>
-            <div class="project-card-tags">
-              <span>HTML5</span>
-              <span>SCSS</span>
-              <span>D3.js</span>
-              <span>반응형</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-      </div>
-
-      <!-- 개인 프로젝트 (기본 숨김) -->
-      <div class="projects-grid" id="personalGrid" role="tabpanel" aria-labelledby="tabPersonal" style="display: none;">
-        <article class="project-card fade-in"
-          data-title="개인 블로그"
-          data-period="2023.01 - 진행중"
-          data-role="기획 / 디자인 / 퍼블리싱"
-          data-client="개인 프로젝트"
-          data-detail="기술 학습 내용과 퍼블리싱 팁을 정리하는 개인 블로그입니다. 정적 사이트 생성기를 활용하여 제작했으며, 다크 모드 전환, 코드 하이라이팅, 반응형 레이아웃을 직접 구현했습니다."
-          data-tags="HTML5,SCSS,JavaScript,마크다운"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #dbeafe, #0f172a);">
-              <span>Tech Blog</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">개인 기술 블로그</h4>
-            <p class="project-card-desc">퍼블리싱 팁과 학습 내용을 기록하는 개인 블로그.</p>
-            <div class="project-card-tags">
-              <span>HTML5</span>
-              <span>SCSS</span>
-              <span>JavaScript</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-        <article class="project-card fade-in"
-          data-title="CSS 애니메이션 실험실"
-          data-period="2022.08 - 2023.03"
-          data-role="기획 / 퍼블리싱"
-          data-client="개인 프로젝트"
-          data-detail="순수 CSS만으로 다양한 애니메이션과 인터랙션을 구현하는 실험 프로젝트입니다. 로딩 스피너, 호버 이펙트, 스크롤 애니메이션 등 30개 이상의 예제를 정리했으며, CodePen에서 총 5,000회 이상의 조회수를 기록했습니다."
-          data-tags="CSS3,Animation,Keyframes,CodePen"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #fde047, #60a5fa);">
-              <span>CSS Lab</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">CSS 애니메이션 실험실</h4>
-            <p class="project-card-desc">순수 CSS로 만든 30개 이상의 애니메이션 예제 모음.</p>
-            <div class="project-card-tags">
-              <span>CSS3</span>
-              <span>Animation</span>
-              <span>CodePen</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-        <article class="project-card fade-in"
-          data-title="UI 컴포넌트 라이브러리"
-          data-period="2023.06 - 2023.11"
-          data-role="기획 / 퍼블리싱"
-          data-client="개인 프로젝트"
-          data-detail="실무에서 자주 사용하는 UI 컴포넌트를 모아 재사용 가능한 라이브러리로 정리한 프로젝트입니다. 모달, 탭, 아코디언, 드롭다운, 토스트 알림 등 15종의 컴포넌트를 바닐라 JS로 구현하고 문서화했습니다."
-          data-tags="HTML5,CSS3,JavaScript,문서화"
-          data-url="#">
-          <div class="project-card-thumb">
-            <div class="project-card-placeholder" style="background: linear-gradient(135deg, #60a5fa, #dbeafe);">
-              <span>UI Library</span>
-            </div>
-          </div>
-          <div class="project-card-info">
-            <h4 class="project-card-title">UI 컴포넌트 라이브러리</h4>
-            <p class="project-card-desc">실무용 UI 컴포넌트 15종을 바닐라 JS로 구현.</p>
-            <div class="project-card-tags">
-              <span>HTML5</span>
-              <span>CSS3</span>
-              <span>JavaScript</span>
-            </div>
-            <div class="project-card-actions">
-              <a href="#" class="btn-card btn-card-site" target="_blank" rel="noopener">사이트 보기</a>
-              <button type="button" class="btn-card btn-card-detail">설명 보기</button>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- About & Skills Section -->
-  <section class="section about" id="about" aria-label="소개 및 기술 스택">
-    <div class="container">
-      <h2 class="section-label">About</h2>
-      <h3 class="section-title">사용자 경험을 코드로<br>완성하는 퍼블리셔</h3>
-      <div class="about-grid">
-        <div class="about-text">
-          <p>
-            안녕하세요. 4년차 프론트엔드 퍼블리셔 김은지입니다.
-            웹 표준과 접근성을 준수하며, 디자인의 의도를 정확하게 구현하는 것을 목표로 합니다.
-          </p>
-          <p>
-            다양한 규모의 프로젝트에서 반응형 웹사이트, 랜딩 페이지, 관리자 시스템 등을
-            퍼블리싱해왔으며, 개발팀과의 원활한 협업을 위해 항상 깔끔하고 유지보수하기 좋은
-            코드를 작성하려 노력합니다.
-          </p>
-          <div class="about-links">
-            <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              <span>GitHub</span>
-            </a>
-            <a href="https://notion.so/" target="_blank" rel="noopener" aria-label="Notion">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22" aria-hidden="true"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L18.29 2.094c-.467-.373-.7-.653-1.493-.56l-12.75.933c-.467.047-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.934-.56.934-1.166V6.354c0-.606-.234-.933-.747-.887l-15.177.887c-.56.047-.747.327-.747.934zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.747 0-.934-.234-1.495-.933l-4.577-7.186v6.952l1.45.327s0 .84-1.168.84l-3.222.187c-.093-.187 0-.653.327-.727l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.234 4.764 7.28v-6.44l-1.215-.14c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.054-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.84.374-1.54 1.447-1.632z"/></svg>
-              <span>Notion</span>
-            </a>
-          </div>
-        </div>
-        <div class="about-info">
-          <div class="about-info-item">
-            <span class="about-info-number" data-count="4">0</span>
-            <span class="about-info-label">년 차 경력</span>
-          </div>
-          <div class="about-info-item">
-            <span class="about-info-number" data-count="30">0</span>
-            <span class="about-info-label">프로젝트 수행</span>
-          </div>
-        </div>
-      </div>
-      <div class="about-skills">
-        <h4 class="about-skills-label">기술 스택</h4>
-        <div class="about-skills-icons">
-          <div class="skill-icon" title="HTML5"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.564-2.438L1.5 0zm7.031 9.75l-.232-2.718 10.059.003.076-.757.076-.771.076-.757H6.627l.062.694.124 1.395.062.694h8.127l-.344 3.632-2.635.745-2.635-.744-.168-1.889H6.955l.336 3.748 4.733 1.314.023-.006 4.687-1.308.643-7.203H8.531z"/></svg><span>HTML5</span></div>
-          <div class="skill-icon" title="CSS3"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.5 0h21l-1.91 21.563L11.977 24l-8.565-2.438L1.5 0zm17.09 4.413L5.41 4.41l.213 2.622 10.125.002-.255 2.716h-6.64l.24 2.573h6.182l-.366 3.523-2.91.804-2.956-.81-.188-2.11h-2.61l.29 3.855L12 19.002l5.11-1.44 1.98-13.149z"/></svg><span>CSS3</span></div>
-          <div class="skill-icon" title="JavaScript"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M0 0h24v24H0V0zm22.034 18.276c-.175-1.095-.888-2.015-3.003-2.873-.736-.345-1.554-.585-1.797-1.14-.091-.33-.105-.51-.046-.705.15-.646.915-.84 1.515-.66.39.12.75.42.976.9 1.034-.676 1.034-.676 1.755-1.125-.27-.42-.405-.6-.586-.78-.63-.705-1.469-1.065-2.834-1.034l-.705.089c-.676.165-1.32.525-1.71 1.005-1.14 1.291-.811 3.541.569 4.471 1.365 1.02 3.361 1.244 3.616 2.205.24 1.17-.87 1.545-1.966 1.41-.811-.18-1.26-.586-1.755-1.336l-1.83 1.051c.21.48.45.689.81 1.109 1.74 1.756 6.09 1.666 6.871-1.004.029-.09.24-.705.074-1.65l.046.067zm-8.983-7.245h-2.248c0 1.938-.009 3.864-.009 5.805 0 1.232.063 2.363-.138 2.711-.33.689-1.18.601-1.566.48-.396-.196-.597-.466-.83-.855-.063-.105-.11-.196-.127-.196l-1.825 1.125c.305.63.75 1.172 1.324 1.517.855.51 2.004.675 3.207.405.783-.226 1.458-.691 1.811-1.411.51-.93.402-2.07.397-3.346.012-2.054 0-4.109 0-6.179l.004-.056z"/></svg><span>JavaScript</span></div>
-          <div class="skill-icon" title="jQuery"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.525 8.286C.613 9.452.258 10.42.053 11.87c1.078-1.643 2.193-2.7 3.835-3.592C5.142 7.598 6.69 7.104 8 6.934c-2.335-.287-4.675.321-6.475 1.352zm4.147-2.988C4.138 6.208 3.16 7.105 2.41 8.173c-.967 1.378-1.316 2.64-1.553 4.142 1.166-1.78 2.464-2.967 4.244-3.93 1.432-.776 3.478-1.4 5.158-1.445-2.886-.655-5.943-.13-4.587-1.642zm5.26-2.272C9.22 3.876 7.897 4.795 6.657 5.986c-1.275 1.225-2.09 2.46-2.777 4.058 1.476-1.88 3.243-3.247 5.458-4.2 1.604-.69 3.702-1.144 5.502-1.085-1.702-.576-3.282-.838-4.908-.737z"/></svg><span>jQuery</span></div>
-          <div class="skill-icon" title="SCSS"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c6.627 0 12 5.373 12 12s-5.373 12-12 12S0 18.627 0 12 5.373 0 12 0zM9.615 15.998c.175.645.156 1.248-.024 1.792l-.065.18c-.024.061-.052.12-.078.176-.14.29-.326.56-.555.81-.698.759-1.672 1.047-2.09.805-.45-.262-.226-1.335.584-2.19.871-.918 2.12-1.509 2.12-1.509v-.003l.108-.061zm9.911-10.861c-.542-2.133-4.077-2.834-7.422-1.645-1.989.707-4.144 1.818-5.693 3.267C4.568 8.48 4.275 9.98 4.396 10.607c.427 2.211 3.457 3.657 4.703 4.73v.006c-.367.18-3.056 1.529-3.686 2.925-.675 1.47.105 2.521.615 2.655 1.575.405 3.19-.324 4.06-1.527.84-1.163.78-2.672.375-3.368.465-.12.99-.18 1.695-.12 1.98.225 2.37 1.41 2.295 1.905-.075.494-.435.75-.555.825-.12.075-.165.105-.15.165l.045.12c.06.045.165.03.255 0 .12-.045.825-.345.855-1.125.045-1.005-.915-2.13-2.595-2.1-.69.015-1.125.075-1.44.195a3.04 3.04 0 00-.078-.09c-1.29-1.335-3.66-2.28-3.555-4.08.039-.66.27-2.4 4.5-4.5 3.48-1.71 6.27-1.245 6.75-.195.69 1.5-1.47 4.275-5.04 4.68-1.365.15-2.085-.375-2.265-.57-.195-.21-.225-.21-.3-.18-.12.06-.045.24 0 .345.12.27.585.75 1.395 1.005.705.21 2.43.33 4.5-.405 2.325-.825 4.14-3.12 3.6-5.04z"/></svg><span>SCSS</span></div>
-          <div class="skill-icon" title="Tailwind CSS"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.001 4.8c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624C13.666 10.618 15.027 12 18.001 12c3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C16.337 6.182 14.976 4.8 12.001 4.8zm-6 7.2c-3.2 0-5.2 1.6-6 4.8 1.2-1.6 2.6-2.2 4.2-1.8.913.228 1.565.89 2.288 1.624 1.177 1.194 2.538 2.576 5.512 2.576 3.2 0 5.2-1.6 6-4.8-1.2 1.6-2.6 2.2-4.2 1.8-.913-.228-1.565-.89-2.288-1.624C10.337 13.382 8.976 12 6.001 12z"/></svg><span>Tailwind</span></div>
-          <div class="skill-icon" title="Git"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.546 10.93L13.067.452c-.604-.603-1.582-.603-2.188 0L8.708 2.627l2.76 2.76c.645-.215 1.379-.07 1.889.441.516.515.658 1.258.438 1.9l2.66 2.66c.645-.222 1.387-.078 1.9.435.721.72.721 1.884 0 2.604-.72.719-1.885.719-2.604 0-.538-.536-.67-1.32-.4-1.978l-2.48-2.48v6.53c.175.087.34.202.488.348.713.721.713 1.883 0 2.6-.719.721-1.889.721-2.609 0-.719-.719-.719-1.879 0-2.598.182-.18.387-.316.605-.406V8.835c-.217-.091-.424-.222-.6-.401-.545-.545-.676-1.342-.396-2.009L7.636 3.7.45 10.881c-.6.605-.6 1.584 0 2.189l10.48 10.477c.604.604 1.582.604 2.186 0l10.43-10.43c.605-.603.605-1.582 0-2.187"/></svg><span>Git</span></div>
-          <div class="skill-icon" title="Figma"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51a3.023 3.023 0 0 0-3.019 3.019c0 1.665 1.365 3.019 3.044 3.019 1.705 0 3.093-1.376 3.093-3.068v-2.97H8.148zm7.704 0h-.098c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h.098c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.49-4.49 4.49zm-.097-7.509c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h.098c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-.098z"/></svg><span>Figma</span></div>
-        </div>
-      </div>
-      <div class="about-competencies">
-        <div class="competency">
-          <div class="competency-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-          <div class="competency-text"><h5>반응형 웹</h5><p>미디어쿼리와 모바일 퍼스트 접근 방식으로 모든 디바이스에서 최적의 사용자 경험을 구현합니다.</p></div>
-        </div>
-        <div class="competency">
-          <div class="competency-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-          <div class="competency-text"><h5>웹 접근성</h5><p>WAI-ARIA, 키보드 내비게이션, 스크린리더 대응으로 WCAG 2.1 기준을 충족하는 마크업을 작성합니다.</p></div>
-        </div>
-        <div class="competency">
-          <div class="competency-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
-          <div class="competency-text"><h5>크로스 브라우징</h5><p>Chrome, Safari, Firefox, Edge 등 주요 브라우저에서 동일한 UI를 보장합니다.</p></div>
-        </div>
-        <div class="competency">
-          <div class="competency-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-          <div class="competency-text"><h5>성능 최적화</h5><p>이미지 최적화, 레이지 로딩, CSS/JS 경량화로 빠른 페이지 로딩 속도를 달성합니다.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Experience & Certifications Section -->
-  <section class="section experience" id="experience" aria-label="경력 및 자격">
-    <div class="container">
-      <h2 class="section-label fade-in">Experience & Certifications</h2>
-      <h3 class="section-title fade-in">경력 및 자격</h3>
-      <div class="experience-grid">
-        <!-- Career -->
-        <div class="experience-col">
-          <h4 class="experience-col-title fade-in">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20">
-              <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-            </svg>
-            경력 사항
-          </h4>
-          <div class="timeline">
-            <div class="timeline-item fade-in">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="timeline-date">2022.03 - 현재</span>
-                <h4 class="timeline-role">시니어 퍼블리셔</h4>
-                <p class="timeline-company">(주) 디지털 크리에이티브</p>
-                <p class="timeline-desc">대규모 기업 사이트 및 서비스 플랫폼 퍼블리싱. 퍼블리싱 가이드 작성 및 주니어 멘토링.</p>
+              <div class="hero-foot" data-motion>
+                <dl class="stat-list">
+                  <div class="stat-item">
+                    <dt class="label">년 차 경력</dt>
+                    <dd class="num"><span data-count="4">4</span>+</dd>
+                  </div>
+                  <div class="stat-item">
+                    <dt class="label">프로젝트 수행</dt>
+                    <dd class="num"><span data-count="30">30</span>+</dd>
+                  </div>
+                </dl>
+                <div class="client">
+                  <p class="label">함께한 고객사</p>
+                  <ul class="client-list">
+                    <li class="client-item">삼성화재</li>
+                    <li class="client-item">현대로템</li>
+                    <li class="client-item">HD하이드로젠</li>
+                    <li class="client-item">HD한국조선해양</li>
+                    <li class="client-item">현대글로비스</li>
+                    <li class="client-item">힐스테이트</li>
+                    <li class="client-item">대동 KIOTI</li>
+                    <li class="client-item">KTR</li>
+                  </ul>
+                </div>
               </div>
             </div>
-            <div class="timeline-item fade-in">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="timeline-date">2020.06 - 2022.02</span>
-                <h4 class="timeline-role">퍼블리셔</h4>
-                <p class="timeline-company">(주) 웹 솔루션즈</p>
-                <p class="timeline-desc">중소규모 웹사이트 및 랜딩 페이지 퍼블리싱. 반응형 웹 및 크로스 브라우징 대응.</p>
-              </div>
-            </div>
-            <div class="timeline-item fade-in">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="timeline-date">2019.01 - 2020.05</span>
-                <h4 class="timeline-role">주니어 퍼블리셔</h4>
-                <p class="timeline-company">(주) 스타트업 허브</p>
-                <p class="timeline-desc">스타트업 서비스 웹/앱 퍼블리싱. HTML 이메일 템플릿 제작.</p>
-              </div>
-            </div>
+            <a href="#projects" class="scroll-link"><span>스크롤</span><span class="blind"> — 프로젝트로 이동</span></a>
           </div>
+        </div>
+      </section>
 
-          <h4 class="experience-col-title experience-col-title--mt fade-in">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20">
-              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.657 2.686 3 6 3s6-1.343 6-3v-5"/>
-            </svg>
-            학력
-          </h4>
-          <div class="timeline">
-            <div class="timeline-item fade-in">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="timeline-date">2015.03 - 2019.02</span>
-                <h4 class="timeline-role">컴퓨터공학과 졸업</h4>
-                <p class="timeline-company">한국대학교</p>
-                <p class="timeline-desc">웹 프로그래밍, UI/UX 디자인 관련 교과 이수. 졸업 프로젝트로 반응형 포트폴리오 사이트 개발.</p>
+      <!-- 프로젝트 -->
+      <section class="main-projects sec" id="projects">
+        <div class="inner">
+          <div class="project-layout project-layout-stack">
+            <div class="side">
+              <div class="side-sticky">
+                <div class="sec-head" data-motion-group="each">
+                  <h2 class="tit" data-motion="custom" data-split>프로젝트</h2>
+                </div>
+                <!-- @ 「전체 프로젝트 보기」: 서브페이지(projects.html) — 스크립트가 있으면 이동 대신 화면(#projectsModal)으로 밀고 들어온다 · 「건너뛰기」: 소개로 -->
+                <div class="more" data-motion>
+                  <a href="projects.html" class="basic-btn basic-btn-outline more-btn" aria-haspopup="dialog" aria-controls="projectsModal">전체 프로젝트 보기</a>
+                  <a href="#about" class="skip-btn">프로젝트 건너뛰기</a>
+                </div>
               </div>
             </div>
-            <div class="timeline-item fade-in">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="timeline-date">2018.07 - 2018.12</span>
-                <h4 class="timeline-role">프론트엔드 웹 퍼블리싱 과정 수료</h4>
-                <p class="timeline-company">그린컴퓨터아카데미 (국비지원)</p>
-                <p class="timeline-desc">HTML/CSS/JavaScript 기초부터 실무 프로젝트까지. 반응형 웹, 웹 접근성, jQuery 플러그인 활용.</p>
+
+            <div class="list">
+              <!-- @ 카드 data-* 가 「설명 보기」 모달 내용 — data-pages · data-contrib 는 「|」 구분, data-tags 는 「,」 구분, data-url(사이트) · data-video(영상)는 있을 때만
+                   「사이트 보기」 링크는 공개 주소가 있는 카드에만 둔다 (href + target="_blank" rel="noopener" + 새 창 안내) -->
+              <div class="stack-list" id="workGrid" data-motion-group="row">
+                <article class="project-card project-card-bg3"
+                  data-category="build"
+                  data-period="2026.10 - 진행중"
+                  data-role="퍼블리셔"
+                  data-client="KTR 한국화학융합시험연구원"
+                  data-detail="KTR 화재특화 재난안전산업 진흥시설 웹사이트 구축 — SCSS 디자인 토큰 · 공통 컴포넌트 · UI 가이드 기반 퍼블리싱."
+                  data-tags="구축,기관 사이트">
+                  <div class="thumb" aria-hidden="true"><span class="genre">KTR</span><span class="frame"><span class="genre">KTR</span></span></div>
+                  <div class="info">
+                    <p class="period">2026.10 - 진행중</p>
+                    <h3 class="tit">KTR 화재특화 재난안전산업 진흥시설</h3>
+                    <p class="txt">KTR 화재특화 재난안전산업 진흥시설 웹사이트 구축 — SCSS 디자인 토큰 · 공통 컴포넌트 · UI 가이드 기반 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">기관 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KTR 화재특화 재난안전산업 진흥시설</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg1"
+                  data-category="build"
+                  data-period="2026.10 - 진행중"
+                  data-role="퍼블리셔"
+                  data-client="서한그룹"
+                  data-detail="서한그룹 인재채용 웹사이트를 새로 구축하는 프로젝트입니다."
+                  data-tags="구축,채용 사이트">
+                  <div class="thumb" aria-hidden="true"><span class="genre">서한그룹 채용</span><span class="frame"><span class="genre">서한그룹 채용</span></span></div>
+                  <div class="info">
+                    <p class="period">2026.10 - 진행중</p>
+                    <h3 class="tit">서한그룹 인재채용 웹사이트 구축</h3>
+                    <p class="txt">서한그룹 인재채용 웹사이트를 새로 구축하는 프로젝트입니다.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">채용 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 서한그룹 인재채용 웹사이트 구축</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg2"
+                  data-category="dispatch"
+                  data-period="2026.09 - 2026.10"
+                  data-role="퍼블리셔"
+                  data-client="H-Biz"
+                  data-detail="H-Biz 항공 서비스 화면 퍼블리싱 — 파견 근무."
+                  data-tags="파견,항공">
+                  <div class="thumb" aria-hidden="true"><span class="genre">H-Biz</span><span class="frame"><span class="genre">H-Biz</span></span></div>
+                  <div class="info">
+                    <p class="period">2026.09 - 2026.10</p>
+                    <h3 class="tit">H-Biz 항공</h3>
+                    <p class="txt">H-Biz 항공 서비스 화면 퍼블리싱 — 파견 근무.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">파견</li><li class="tag">항공</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — H-Biz 항공</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg3"
+                  data-category="dispatch"
+                  data-period="2026.05 - 2026.08"
+                  data-role="퍼블리셔"
+                  data-client="삼성화재"
+                  data-detail="삼성화재 다이렉트 장기 · 일반보험 화면 리뉴얼 퍼블리싱 — 파견 근무."
+                  data-tags="파견,리뉴얼,PC/MO"
+                  data-url="https://direct.samsungfire.com/">
+                  <div class="thumb" aria-hidden="true"><span class="genre">삼성화재 다이렉트</span><span class="frame"><span class="genre">삼성화재 다이렉트</span></span></div>
+                  <div class="info">
+                    <p class="period">2026.05 - 2026.08</p>
+                    <h3 class="tit">삼성화재 다이렉트 장기/일반 리뉴얼</h3>
+                    <p class="txt">삼성화재 다이렉트 장기 · 일반보험 화면 리뉴얼 퍼블리싱 — 파견 근무.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">파견</li><li class="tag">리뉴얼</li><li class="tag">PC/MO</li>
+                    </ul>
+                    <div class="btn-group">
+                      <a href="https://direct.samsungfire.com/" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 삼성화재 다이렉트 장기/일반 리뉴얼(새 창)</span></a>
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 다이렉트 장기/일반 리뉴얼</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg1"
+                  data-category="dispatch"
+                  data-period="2025.06 - 2026.03"
+                  data-role="퍼블리셔"
+                  data-client="삼성화재"
+                  data-detail="삼성화재 고객케어서비스 앱과 세일즈웹 PC · 모바일 화면 퍼블리싱 — 파견 근무."
+                  data-tags="파견,App,PC/MO"
+                  data-url="https://direct.samsungfire.com/">
+                  <div class="thumb" aria-hidden="true"><span class="genre">삼성화재 앱</span><span class="frame"><span class="genre">삼성화재 앱</span></span></div>
+                  <div class="info">
+                    <p class="period">2025.06 - 2026.03</p>
+                    <h3 class="tit">삼성화재 고객케어서비스 App &amp; 세일즈웹</h3>
+                    <p class="txt">삼성화재 고객케어서비스 앱과 세일즈웹 PC · 모바일 화면 퍼블리싱 — 파견 근무.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">파견</li><li class="tag">App</li><li class="tag">PC/MO</li>
+                    </ul>
+                    <div class="btn-group">
+                      <a href="https://direct.samsungfire.com/" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 삼성화재 고객케어서비스 App &amp; 세일즈웹(새 창)</span></a>
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 고객케어서비스 App &amp; 세일즈웹</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg2"
+                  data-category="build"
+                  data-period="2025.06 - 2026.06"
+                  data-role="퍼블리셔"
+                  data-client="현대글로비스"
+                  data-detail="현대글로비스 임직원 복리후생 안내 플랫폼 퍼블리싱."
+                  data-tags="구축,복리후생 플랫폼">
+                  <div class="thumb" aria-hidden="true"><span class="genre">현대글로비스</span><span class="frame"><span class="genre">현대글로비스</span></span></div>
+                  <div class="info">
+                    <p class="period">2025.06 - 2026.06</p>
+                    <h3 class="tit">현대글로비스 복리후생</h3>
+                    <p class="txt">현대글로비스 임직원 복리후생 안내 플랫폼 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">복리후생 플랫폼</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대글로비스 복리후생</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg3"
+                  data-category="build"
+                  data-period="2025.03 - 2025.06"
+                  data-role="퍼블리셔"
+                  data-client="HD한국조선해양"
+                  data-detail="HD한국조선해양 기업 웹사이트 퍼블리싱."
+                  data-tags="구축,기업 사이트">
+                  <div class="thumb" aria-hidden="true"><span class="genre">HD한국조선해양</span><span class="frame"><span class="genre">HD한국조선해양</span></span></div>
+                  <div class="info">
+                    <p class="period">2025.03 - 2025.06</p>
+                    <h3 class="tit">HD한국조선해양</h3>
+                    <p class="txt">HD한국조선해양 기업 웹사이트 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">기업 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — HD한국조선해양</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg1"
+                  data-category="build"
+                  data-period="2025.01 - 2025.03"
+                  data-role="퍼블리셔"
+                  data-client="HD하이드로젠"
+                  data-detail="HD하이드로젠 기업 웹사이트 구축 퍼블리싱."
+                  data-tags="구축,기업 사이트"
+                  data-url="https://hdhydrogen.com/kr/main">
+                  <div class="thumb" aria-hidden="true"><span class="genre">HD하이드로젠</span><span class="frame"><span class="genre">HD하이드로젠</span></span></div>
+                  <div class="info">
+                    <p class="period">2025.01 - 2025.03</p>
+                    <h3 class="tit">HD하이드로젠</h3>
+                    <p class="txt">HD하이드로젠 기업 웹사이트 구축 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">기업 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <a href="https://hdhydrogen.com/kr/main" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — HD하이드로젠(새 창)</span></a>
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — HD하이드로젠</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg2"
+                  data-category="dispatch"
+                  data-period="2024.09 - 2024.12"
+                  data-role="퍼블리셔"
+                  data-client="현대드림투어"
+                  data-detail="현대드림투어 호텔 HUB API 통합시스템 화면 퍼블리싱 — 파견 근무."
+                  data-tags="파견,통합시스템"
+                  data-url="https://www.therailntel.com/hotel/main">
+                  <div class="thumb" aria-hidden="true"><span class="genre">현대드림투어</span><span class="frame"><span class="genre">현대드림투어</span></span></div>
+                  <div class="info">
+                    <p class="period">2024.09 - 2024.12</p>
+                    <h3 class="tit">현대드림투어 호텔 HUB API 통합시스템</h3>
+                    <p class="txt">현대드림투어 호텔 HUB API 통합시스템 화면 퍼블리싱 — 파견 근무.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">파견</li><li class="tag">통합시스템</li>
+                    </ul>
+                    <div class="btn-group">
+                      <a href="https://www.therailntel.com/hotel/main" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 현대드림투어 호텔 HUB API 통합시스템(새 창)</span></a>
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대드림투어 호텔 HUB API 통합시스템</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg3"
+                  data-category="build"
+                  data-period="2024.02 - 2024.06"
+                  data-role="퍼블리셔"
+                  data-client="대동"
+                  data-detail="대동 KIOTI 브랜드 웹사이트 퍼블리싱."
+                  data-tags="구축,브랜드 사이트">
+                  <div class="thumb" aria-hidden="true"><span class="genre">대동 KIOTI</span><span class="frame"><span class="genre">대동 KIOTI</span></span></div>
+                  <div class="info">
+                    <p class="period">2024.02 - 2024.06</p>
+                    <h3 class="tit">대동 KIOTI</h3>
+                    <p class="txt">대동 KIOTI 브랜드 웹사이트 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">브랜드 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 대동 KIOTI</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg1"
+                  data-category="build"
+                  data-period="2024.01 - 2024.04"
+                  data-role="퍼블리셔"
+                  data-client="현대로템"
+                  data-detail="현대로템 제품 디지털 카탈로그 퍼블리싱."
+                  data-tags="구축,디지털 카탈로그">
+                  <div class="thumb" aria-hidden="true"><span class="genre">현대로템 카탈로그</span><span class="frame"><span class="genre">현대로템 카탈로그</span></span></div>
+                  <div class="info">
+                    <p class="period">2024.01 - 2024.04</p>
+                    <h3 class="tit">현대로템 디지털 카탈로그</h3>
+                    <p class="txt">현대로템 제품 디지털 카탈로그 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">디지털 카탈로그</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대로템 디지털 카탈로그</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg2"
+                  data-category="build"
+                  data-period="2023.10 - 2024.03"
+                  data-role="퍼블리셔"
+                  data-client="자동차부품산업진흥재단"
+                  data-detail="자동차부품산업진흥재단(KAP) 웹사이트 퍼블리싱."
+                  data-tags="구축,기관 사이트">
+                  <div class="thumb" aria-hidden="true"><span class="genre">KAP</span><span class="frame"><span class="genre">KAP</span></span></div>
+                  <div class="info">
+                    <p class="period">2023.10 - 2024.03</p>
+                    <h3 class="tit">KAP 자동차부품산업진흥재단</h3>
+                    <p class="txt">자동차부품산업진흥재단(KAP) 웹사이트 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">기관 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KAP 자동차부품산업진흥재단</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg3"
+                  data-category="build"
+                  data-period="2023.06 - 2023.08"
+                  data-role="퍼블리셔"
+                  data-client="삼성화재"
+                  data-detail="삼성화재 UI 팩토리 프로젝트 화면 퍼블리싱."
+                  data-tags="UI,삼성화재">
+                  <div class="thumb" aria-hidden="true"><span class="genre">삼성화재 UI 팩토리</span><span class="frame"><span class="genre">삼성화재 UI 팩토리</span></span></div>
+                  <div class="info">
+                    <p class="period">2023.06 - 2023.08</p>
+                    <h3 class="tit">삼성화재 UI 팩토리</h3>
+                    <p class="txt">삼성화재 UI 팩토리 프로젝트 화면 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">UI</li><li class="tag">삼성화재</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 UI 팩토리</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg1"
+                  data-category="build"
+                  data-period="2023.04 - 2023.05"
+                  data-role="퍼블리셔"
+                  data-client="KG그룹"
+                  data-detail="KG그룹 웹사이트 퍼블리싱."
+                  data-tags="구축,그룹 사이트">
+                  <div class="thumb" aria-hidden="true"><span class="genre">KG그룹</span><span class="frame"><span class="genre">KG그룹</span></span></div>
+                  <div class="info">
+                    <p class="period">2023.04 - 2023.05</p>
+                    <h3 class="tit">KG그룹</h3>
+                    <p class="txt">KG그룹 웹사이트 퍼블리싱.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">그룹 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KG그룹</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg2"
+                  data-category="build"
+                  data-period="2023.02 - 2023.05"
+                  data-role="퍼블리셔 (중간 투입)"
+                  data-client="현대로템"
+                  data-detail="레일솔루션 · 디펜스솔루션 · 에코플랜트 등 기업 정보를 안내하는 현대로템 공식 홈페이지 — 프로젝트 중간 투입."
+                  data-tags="구축,기업 사이트"
+                  data-url="https://www.hyundai-rotem.co.kr/ko/main/index.do">
+                  <div class="thumb" aria-hidden="true"><span class="genre">현대로템</span><span class="frame"><span class="genre">현대로템</span></span></div>
+                  <div class="info">
+                    <p class="period">2023.02 - 2023.05</p>
+                    <h3 class="tit">현대로템</h3>
+                    <p class="txt">레일솔루션 · 디펜스솔루션 · 에코플랜트 등 기업 정보를 안내하는 현대로템 공식 홈페이지 — 프로젝트 중간 투입.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">기업 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <a href="https://www.hyundai-rotem.co.kr/ko/main/index.do" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 현대로템(새 창)</span></a>
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대로템</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg3"
+                  data-category="build"
+                  data-period="2023.02 - 2023.03"
+                  data-role="퍼블리셔"
+                  data-client="미래에셋자산운용"
+                  data-detail="미래에셋자산운용 월간 리포트 페이지 작업."
+                  data-tags="운영,리포트">
+                  <div class="thumb" aria-hidden="true"><span class="genre">미래에셋</span><span class="frame"><span class="genre">미래에셋</span></span></div>
+                  <div class="info">
+                    <p class="period">2023.02 - 2023.03</p>
+                    <h3 class="tit">미래에셋자산운용 월간 리포트</h3>
+                    <p class="txt">미래에셋자산운용 월간 리포트 페이지 작업.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">운영</li><li class="tag">리포트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 미래에셋자산운용 월간 리포트</span></button>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="project-card project-card-bg1"
+                  data-category="build"
+                  data-period="2022.09 - 2023.04"
+                  data-role="퍼블리셔"
+                  data-client="현대건설 · 현대엔지니어링"
+                  data-detail="현대건설 · 현대엔지니어링 아파트 브랜드 사이트 — 분양 · 공사 · 입주 단지 정보 제공."
+                  data-tags="구축,브랜드 사이트"
+                  data-url="https://www.hillstate.co.kr/gate/index">
+                  <div class="thumb" aria-hidden="true"><span class="genre">힐스테이트</span><span class="frame"><span class="genre">힐스테이트</span></span></div>
+                  <div class="info">
+                    <p class="period">2022.09 - 2023.04</p>
+                    <h3 class="tit">힐스테이트</h3>
+                    <p class="txt">현대건설 · 현대엔지니어링 아파트 브랜드 사이트 — 분양 · 공사 · 입주 단지 정보 제공.</p>
+                    <ul class="tag-list" aria-label="구분">
+                      <li class="tag">구축</li><li class="tag">브랜드 사이트</li>
+                    </ul>
+                    <div class="btn-group">
+                      <a href="https://www.hillstate.co.kr/gate/index" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 힐스테이트(새 창)</span></a>
+                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 힐스테이트</span></button>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+
+            <!-- @ 지금 보고 있는 카드 — 사진 자리 면색 · 이름 · 순번 · 연도 · 구분 (main.js 가 바꾼다) -->
+            <div class="preview" aria-hidden="true">
+              <div class="preview-sticky" data-motion>
+                <div class="mini project-card-bg3"><span class="genre">KTR</span></div>
+                <p class="count"><span class="num">01</span> / <span class="total">17</span></p>
+                <p class="now-tag"><span class="year">#2026</span> <span class="type">#구축</span></p>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        <!-- Certifications -->
-        <div class="experience-col">
-          <h4 class="experience-col-title fade-in">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20">
-              <circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
-            </svg>
-            자격증
-          </h4>
-          <div class="cert-list">
-            <div class="cert-card fade-in">
-              <span class="cert-card-date">2023.06</span>
-              <h5 class="cert-card-name">정보처리기사</h5>
-              <p class="cert-card-org">한국산업인력공단</p>
+      <!-- 소개 -->
+      <section class="main-about sec" id="about">
+        <div class="inner">
+          <div class="sec-head" data-motion-group="each">
+            <h2 class="tit" data-motion="custom" data-split>사용자 경험을 코드로 완성하는 퍼블리셔</h2>
+          </div>
+
+          <div class="about-grid">
+            <div class="profile" data-motion-group="each">
+              <p class="lead">안녕하세요. 4년차 프론트엔드 퍼블리셔 구은지입니다. 웹 표준과 접근성을 준수하며, 디자인의 의도를 정확하게 구현하는 것을 목표로 합니다.</p>
+              <p class="txt">다양한 규모의 프로젝트에서 반응형 웹사이트, 랜딩 페이지, 관리자 시스템 등을 퍼블리싱해왔으며, 개발팀과의 원활한 협업을 위해 항상 깔끔하고 유지보수하기 좋은 코드를 작성하려 노력합니다.</p>
+              <ul class="link-list">
+                <li>
+                  <a href="https://github.com/" target="_blank" rel="noopener" class="out-link">
+                    <span class="github-icon" aria-hidden="true"></span>GitHub<span class="blind">(새 창)</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="https://notion.so/" target="_blank" rel="noopener" class="out-link">
+                    <span class="notion-icon" aria-hidden="true"></span>Notion<span class="blind">(새 창)</span>
+                  </a>
+                </li>
+              </ul>
             </div>
-            <div class="cert-card fade-in">
-              <span class="cert-card-date">2022.11</span>
-              <h5 class="cert-card-name">웹디자인기능사</h5>
-              <p class="cert-card-org">한국산업인력공단</p>
-            </div>
-            <div class="cert-card fade-in">
-              <span class="cert-card-date">2021.09</span>
-              <h5 class="cert-card-name">SQLD</h5>
-              <p class="cert-card-org">한국데이터산업진흥원</p>
-            </div>
-            <div class="cert-card fade-in">
-              <span class="cert-card-date">2020.03</span>
-              <h5 class="cert-card-name">GTQ 1급</h5>
-              <p class="cert-card-org">한국생산성본부</p>
-            </div>
-            <div class="cert-card fade-in">
-              <span class="cert-card-date">2019.12</span>
-              <h5 class="cert-card-name">컴퓨터활용능력 1급</h5>
-              <p class="cert-card-org">대한상공회의소</p>
-            </div>
+            <dl class="stat-grid" data-motion-group="row">
+              <div class="stat-card">
+                <dt class="label">년 차 경력</dt>
+                <dd class="num"><span data-count="4">4</span>+</dd>
+              </div>
+              <div class="stat-card">
+                <dt class="label">프로젝트 수행</dt>
+                <dd class="num"><span data-count="30">30</span>+</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="skill-box" data-motion>
+            <ul class="chip-list">
+              <li class="skill-chip"><span class="logo html5-icon" aria-hidden="true"></span>HTML5</li>
+              <li class="skill-chip"><span class="logo css3-icon" aria-hidden="true"></span>CSS3</li>
+              <li class="skill-chip"><span class="logo javascript-icon" aria-hidden="true"></span>JavaScript</li>
+              <li class="skill-chip"><span class="logo jquery-icon" aria-hidden="true"></span>jQuery</li>
+              <li class="skill-chip"><span class="logo sass-icon" aria-hidden="true"></span>SCSS</li>
+              <li class="skill-chip"><span class="logo tailwind-icon" aria-hidden="true"></span>Tailwind</li>
+              <li class="skill-chip"><span class="logo git-icon" aria-hidden="true"></span>Git</li>
+              <li class="skill-chip"><span class="logo figma-icon" aria-hidden="true"></span>Figma</li>
+            </ul>
+          </div>
+
+          <ul class="feature-list" data-motion-group="row">
+            <li class="feature-item">
+              <span class="icon device-icon" aria-hidden="true"></span>
+              <div class="cont">
+                <h3 class="tit">반응형 웹</h3>
+                <p class="txt">미디어쿼리와 모바일 퍼스트 접근 방식으로 모든 디바이스에서 최적의 사용자 경험을 구현합니다.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <span class="icon eye-icon" aria-hidden="true"></span>
+              <div class="cont">
+                <h3 class="tit">웹 접근성</h3>
+                <p class="txt">WAI-ARIA, 키보드 내비게이션, 스크린리더 대응으로 WCAG 2.1 기준을 충족하는 마크업을 작성합니다.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <span class="icon globe-icon" aria-hidden="true"></span>
+              <div class="cont">
+                <h3 class="tit">크로스 브라우징</h3>
+                <p class="txt">Chrome, Safari, Firefox, Edge 등 주요 브라우저에서 동일한 UI를 보장합니다.</p>
+              </div>
+            </li>
+            <li class="feature-item">
+              <span class="icon bolt-icon" aria-hidden="true"></span>
+              <div class="cont">
+                <h3 class="tit">성능 최적화</h3>
+                <p class="txt">이미지 최적화, 레이지 로딩, CSS/JS 경량화로 빠른 페이지 로딩 속도를 달성합니다.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 경력 및 자격 -->
+      <section class="main-experience sec" id="experience">
+        <div class="inner">
+          <div class="sec-head" data-motion-group="each">
+            <h2 class="tit" data-motion="custom" data-split>경력 및 자격</h2>
+          </div>
+
+          <div class="career">
+            <h3 class="block-tit">경력 · 학력</h3>
+            <!-- @ 지금 다니는 곳: .career-item.is-active -->
+            <ol class="career-line">
+              <li class="career-item">
+                <p class="date"><time datetime="2015-03">2015.03</time></p>
+                <div class="cont">
+                  <p class="kind">학력 —</p>
+                  <h4 class="tit">컴퓨터공학과 졸업</h4>
+                  <p class="org">한국대학교 · ~ <time datetime="2019-02">2019.02</time></p>
+                  <p class="txt">웹 프로그래밍, UI/UX 디자인 관련 교과 이수. 졸업 프로젝트로 반응형 포트폴리오 사이트 개발.</p>
+                </div>
+              </li>
+              <li class="career-item">
+                <p class="date"><time datetime="2018-07">2018.07</time></p>
+                <div class="cont">
+                  <p class="kind">학력 —</p>
+                  <h4 class="tit">프론트엔드 웹 퍼블리싱 과정 수료</h4>
+                  <p class="org">그린컴퓨터아카데미 (국비지원) · ~ <time datetime="2018-12">2018.12</time></p>
+                  <p class="txt">HTML/CSS/JavaScript 기초부터 실무 프로젝트까지. 반응형 웹, 웹 접근성, jQuery 플러그인 활용.</p>
+                </div>
+              </li>
+              <li class="career-item is-active">
+                <p class="date"><time datetime="2022-08-22">2022.08</time></p>
+                <div class="cont">
+                  <p class="kind">재직 중 —</p>
+                  <h4 class="tit">시니어 퍼블리셔</h4>
+                  <p class="org">(주) 디지털 크리에이티브 · 현재</p>
+                  <p class="txt">대규모 기업 사이트 및 서비스 플랫폼 퍼블리싱. 퍼블리싱 가이드 작성 및 주니어 멘토링.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="cert" data-motion>
+            <h3 class="block-tit">자격증</h3>
+            <ul class="cert-list">
+              <li class="cert-item">
+                <p class="tit">정보처리기사</p>
+                <p class="org">한국산업인력공단</p>
+                <time class="date" datetime="2023-06">2023.06</time>
+              </li>
+              <li class="cert-item">
+                <p class="tit">GTQ 1급</p>
+                <p class="org">한국생산성본부</p>
+                <time class="date" datetime="2020-03">2020.03</time>
+              </li>
+              <li class="cert-item">
+                <p class="tit">컴퓨터활용능력 1급</p>
+                <p class="org">대한상공회의소</p>
+                <time class="date" datetime="2019-12">2019.12</time>
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-  <!-- Contact Section -->
-  <section class="section contact" id="contact" aria-label="연락처">
-    <div class="container">
-      <h2 class="section-label fade-in">Contact</h2>
-      <h3 class="section-title fade-in">함께 일하고 싶으시다면</h3>
-      <div class="contact-grid">
-        <div class="fade-in">
-          <div class="contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
-            </svg>
-            <div>
-              <p class="contact-item-label">Email</p>
-              <a href="mailto:hello@kejportfolio.com">hello@kejportfolio.com</a>
-            </div>
+      <!-- 연락 -->
+      <section class="main-contact sec" id="contact">
+        <div class="inner">
+          <div class="sec-head" data-motion-group="each">
+            <h2 class="tit" data-motion="custom" data-split>함께 일하고 싶으시다면</h2>
           </div>
-          <div class="contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            <div>
-              <p class="contact-item-label">Phone</p>
-              <a href="tel:010-1234-5678">010-1234-5678</a>
+
+          <div class="contact-panel" data-motion>
+            <div class="info">
+              <ul class="contact-list">
+                <li class="contact-item">
+                  <span class="feature-icon mail-icon" aria-hidden="true"></span>
+                  <p class="label">이메일</p>
+                  <a href="mailto:hello@kejportfolio.com" class="value">hello@kejportfolio.com</a>
+                </li>
+                <li class="contact-item">
+                  <span class="feature-icon phone-icon" aria-hidden="true"></span>
+                  <p class="label">전화</p>
+                  <a href="tel:010-1234-5678" class="value">010-1234-5678</a>
+                </li>
+                <li class="contact-item">
+                  <span class="feature-icon pin-icon" aria-hidden="true"></span>
+                  <p class="label">위치</p>
+                  <p class="value">서울특별시</p>
+                </li>
+              </ul>
             </div>
-          </div>
-          <div class="contact-item">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="24" height="24">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-            </svg>
-            <div>
-              <p class="contact-item-label">Location</p>
-              <p>서울특별시</p>
-            </div>
-          </div>
-        </div>
-        <!--
-          EmailJS 설정 방법:
-          1. https://www.emailjs.com 가입
-          2. Email Services → Add New Service → Gmail 연결
-          3. Email Templates → Create New Template (아래 변수 사용)
-             - {{from_name}}, {{from_email}}, {{subject}}, {{message}}
-          4. 아래 3개 값을 본인 것으로 교체:
-             - YOUR_PUBLIC_KEY  → Account > API Keys에서 확인
-             - YOUR_SERVICE_ID  → Email Services에서 확인 (예: service_xxxxx)
-             - YOUR_TEMPLATE_ID → Email Templates에서 확인 (예: template_xxxxx)
-        -->
-        <form class="contact-form fade-in" id="contactForm"
+
+            <!-- @ 보내기는 EmailJS — data-emailjs-* 세 값 · 설정 방법은 README 「연락 폼」 -->
+            <form class="contact-form" id="contactForm"
               data-emailjs-public-key="1VLcMmtVYo_vztKwc"
               data-emailjs-service-id="service_qam7ucv"
               data-emailjs-template-id="template_0lz2nhz">
-          <div class="form-group">
-            <label for="contact-name" class="sr-only">이름</label>
-            <input type="text" id="contact-name" name="from_name" placeholder="이름" required autocomplete="name">
+              <div class="form-row">
+                <div class="text-field">
+                  <label for="cfName" class="label">이름</label>
+                  <input type="text" class="control" id="cfName" name="from_name" required autocomplete="name">
+                </div>
+                <div class="text-field">
+                  <label for="cfEmail" class="label">이메일</label>
+                  <input type="email" class="control" id="cfEmail" name="from_email" required autocomplete="email">
+                </div>
+              </div>
+              <div class="text-field">
+                <label for="cfSubject" class="label">제목</label>
+                <input type="text" class="control" id="cfSubject" name="subject">
+              </div>
+              <div class="text-field">
+                <label for="cfMessage" class="label">메시지</label>
+                <textarea class="control control-multi" id="cfMessage" name="message" rows="5" required></textarea>
+              </div>
+              <button type="submit" class="basic-btn basic-btn-full">
+                <span class="txt" aria-live="polite">메시지 보내기</span>
+              </button>
+            </form>
           </div>
-          <div class="form-group">
-            <label for="contact-email" class="sr-only">이메일</label>
-            <input type="email" id="contact-email" name="from_email" placeholder="이메일" required autocomplete="email">
-          </div>
-          <div class="form-group">
-            <label for="contact-subject" class="sr-only">제목</label>
-            <input type="text" id="contact-subject" name="subject" placeholder="제목">
-          </div>
-          <div class="form-group">
-            <label for="contact-message" class="sr-only">메시지</label>
-            <textarea id="contact-message" name="message" rows="5" placeholder="메시지" required></textarea>
-          </div>
-          <button type="submit" class="btn btn--primary btn--full">메시지 보내기</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- Project Detail Modal (single markup, swapped via data) -->
-  <div class="modal" id="projectModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
-    <div class="modal-backdrop" aria-hidden="true"></div>
-    <div class="modal-content">
-      <button type="button" class="modal-close" id="modalClose" aria-label="닫기">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-      <!-- 영상 -->
-      <div class="modal-video" id="modalVideo" style="display:none;">
-        <video id="modalVideoEl" controls playsinline></video>
-      </div>
-      <div class="modal-header">
-        <h3 class="modal-title" id="modalTitle"></h3>
-        <div class="modal-meta">
-          <span class="modal-meta-item" id="modalPeriod"></span>
-          <span class="modal-meta-item" id="modalRole"></span>
-          <span class="modal-meta-item" id="modalClient"></span>
         </div>
+      </section>
+    </main>
+
+    <!-- 푸터 -->
+    <footer class="footer">
+      <div class="inner">
+        <p class="copy">© 2026 구은지 · 웹 퍼블리셔</p>
+        <a href="#content" class="top-link">맨 위로</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- 프로젝트 설명 — 카드의 data-* 로 채운다 (main.js) -->
+  <div class="modal" id="projectModal" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle" data-lenis-prevent>
+      <button type="button" class="close-btn"><span class="blind">닫기</span></button>
+      <div class="modal-video" hidden>
+        <video data-field="video" controls playsinline></video>
+      </div>
+      <div class="modal-head">
+        <h2 class="tit" id="modalTitle"></h2>
+        <ul class="meta">
+          <li class="meta-item" data-field="period"></li>
+          <li class="meta-item" data-field="role"></li>
+          <li class="meta-item" data-field="client"></li>
+        </ul>
       </div>
       <div class="modal-body">
-        <p class="modal-detail" id="modalDetail"></p>
-        <!-- 담당 페이지 -->
-        <div class="modal-section" id="modalPagesWrap" style="display:none;">
-          <h4 class="modal-section-title">담당 페이지</h4>
-          <ul class="modal-pages" id="modalPages"></ul>
+        <p class="detail" data-field="detail"></p>
+        <div class="modal-section" hidden>
+          <h3 class="tit">담당 페이지</h3>
+          <ul class="slash-list" data-field="pages"></ul>
         </div>
-        <!-- 주요 기여 -->
-        <div class="modal-section" id="modalContribWrap" style="display:none;">
-          <h4 class="modal-section-title">주요 기여</h4>
-          <ul class="modal-contrib" id="modalContrib"></ul>
+        <div class="modal-section" hidden>
+          <h3 class="tit">주요 기여</h3>
+          <ul class="slash-list" data-field="contrib"></ul>
         </div>
       </div>
-      <div class="modal-footer">
-        <div class="modal-tags" id="modalTags"></div>
-        <a href="#" class="btn btn--primary modal-site-btn" id="modalUrl" target="_blank" rel="noopener">사이트 보기</a>
+      <div class="modal-foot">
+        <ul class="tag-list" aria-label="사용 기술" data-field="tags"></ul>
+        <a href="javascript:" class="basic-btn" data-field="url" target="_blank" rel="noopener" hidden>사이트 보기<span class="blind">(새 창)</span></a>
       </div>
     </div>
   </div>
 
-  </main><!-- /main -->
-
-
-  <!-- 플로팅 캐릭터 (스크롤 시 우측 하단 고정) -->
-  <!-- assets/character.png 파일이 있으면 이미지로 표시, 없으면 SVG 아바타 -->
-  <div class="floating-char" id="floatingChar">
-    <div class="floating-char-face">
-      <img src="assets/character.png" alt="캐릭터" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-      <div class="floating-char-avatar" style="display:none;">
-        <svg viewBox="0 0 100 100" width="100" height="100">
-          <circle cx="50" cy="50" r="50" fill="#f0ebe7"/>
-          <circle cx="50" cy="40" r="22" fill="#e0dbd6"/>
-          <circle cx="40" cy="36" r="3" fill="#202020"/>
-          <circle cx="60" cy="36" r="3" fill="#202020"/>
-          <path d="M40 48 Q50 56 60 48" stroke="#202020" stroke-width="2" fill="none" stroke-linecap="round"/>
-          <rect x="30" y="12" width="6" height="12" rx="3" fill="#a25873" transform="rotate(-15 33 18)"/>
-          <rect x="64" y="12" width="6" height="12" rx="3" fill="#7d93c4" transform="rotate(15 67 18)"/>
-        </svg>
-      </div>
+  <!-- 전체 프로젝트 — 서브페이지(projects.html)를 화면 가득 보여 준다. 앱처럼 오른쪽에서 밀고 들어온다 -->
+  <div class="modal modal-page" id="projectsModal" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-label="전체 프로젝트">
+      <button type="button" class="close-btn"><span class="blind">전체 프로젝트 닫기</span></button>
+      <iframe class="page-frame" src="projects.html" title="전체 프로젝트" loading="lazy"></iframe>
     </div>
-    <div class="floating-char-bubble" id="charBubble">봐주셔서 감사합니다!</div>
   </div>
 
-  <script src="js/main.js"></script>
+  <!-- 떠 있는 캐릭터 — 장식 -->
+  <div class="main-float is-hidden" aria-hidden="true">
+    <div class="face"><img src="common/images/img-character.svg" alt="" width="60" height="60"></div>
+    <p class="bubble">봐주셔서 감사합니다!</p>
+  </div>
+
+  <script src="common/js/lib/jquery.min.js"></script>
+  <script src="common/js/lib/gsap.min.js"></script>
+  <script src="common/js/lib/ScrollTrigger.min.js"></script>
+  <script src="common/js/lib/lenis.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+  <script src="common/js/common.js"></script>
+  <script src="common/js/main.js"></script>
 </body>
 </html>

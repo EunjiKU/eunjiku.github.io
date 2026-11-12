@@ -1,0 +1,45 @@
+// ※ 유일한 엔트리다 — 내용은 부분 파일에 있고, 여기서는 @use 로 순서만 정한다 (@use 순서가 곧 출력 순서 = 아래 목차)
+// ※ 판정 기준 — index.html 의 골격(헤더 · 푸터 · 섹션 제목)은 common/, 여러 번 들어가는 독립 부품(버튼 · 라벨 · 폼 · 모달 · 아이콘)은 components/, 메인 섹션 디자인은 components/_main
+// ※ 브라우저 기본값 초기화는 common/_reset.scss (맨 앞). :root 토큰은 common/_tokens.scss 에만 둔다.
+// ※ 반응형(1024 → 600)은 부분 파일마다 그 파일 끝에 둔다
+// ※ 새 부품 종류는 components/_이름.scss 를 만들고 컴포넌트 @use 끝(_main 앞)과 목차에 한 줄씩 더한다
+// ※ 믹스인은 scss/_tools.scss — 쓰는 부분 파일 맨 위에 @use "../tools" as *;
+// ※ 주석 — CSS 에도 보일 것(섹션 제목 · 상태 · 사용법)은 /* */, 소스에만 둘 것(구현 이유)은 //
+// ※ css/ 는 컴파일 산출물이다 — 고치려면 scss/ 를 고치고 npm run scss
+
+/* ==========================================================================
+   common.css — 리셋 → 공통 → 컴포넌트 → 메인
+
+   목차
+   0. 리셋 ................. common/_reset            브라우저 기본값 초기화
+   1. 디자인 토큰 ........... common/_tokens           :root (색 · 텍스트 스타일 --font-{style} · 레이아웃 · z-index) + 다크 모드 + 1024/600 재선언
+   2. 웹폰트 ............... common/_fonts            @font-face — Pretendard 400 · 500 · 600 · 700 (common/fonts/)
+   3. 문서 기준 ............. common/_base             html(rem 기준) · body · 강조 em(포인트 색) · 앵커 멈춤 위치
+   3-1. 레이아웃 컨테이너 .. common/_base             .wrapper · .inner
+   4. 접근성·공통 클래스 .... common/_utilities        .blind · .skip · 포커스 링 · 정렬 · 화면 폭별 노출 · [data-motion]
+   7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-scrolled · .is-open · .depth1-link.is-active
+   8. 푸터 ................. common/_footer           .footer
+   9. 섹션 골격 ............ common/_page             .sec · .sec-head
+   10. 폼 .................. components/_form        .form-row · .text-field
+   11. 버튼 ................ components/_button      .basic-btn(-outline · -small · -full) · .btn-group
+   12. 라벨 ................ components/_label       .status-badge · .chip-list · .skill-chip · .tag-list
+   13-3. 리스트 ............ components/_list        .slash-list
+   15-3. 아이콘 ............ components/_icon        {이름}-icon(로고 · 선 아이콘) · 원 안 아이콘 .feature-icon
+   18. 오버레이 ............ components/_modal       .modal · .modal-box (.modal-video · .modal-head · .modal-body · .modal-foot)
+   19. 메인 ................ components/_main        main- (히어로 · 프로젝트 · 소개 · 경력 및 자격 · 연락 · 캐릭터)
+   ========================================================================== */
+@use "common/reset";
+@use "common/tokens";
+@use "common/fonts";
+@use "common/base";
+@use "common/utilities";
+@use "common/header";
+@use "common/footer";
+@use "common/page";
+@use "components/form";
+@use "components/button";
+@use "components/label";
+@use "components/list";
+@use "components/icon";
+@use "components/modal";
+@use "components/main";

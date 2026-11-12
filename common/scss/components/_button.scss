@@ -1,0 +1,53 @@
+@use "../tools" as *;
+
+/* ==========================================================================
+   11. 버튼
+   · .basic-btn — 네이비 채움. 종류 .basic-btn-outline(테두리) · 크기 .basic-btn-small · 폭 .basic-btn-full. <a> · <button> 둘 다
+   · .btn-group — 버튼 묶음
+   ========================================================================== */
+.basic-btn {
+  @include flex-center(inline-flex);
+  gap: 0.5rem;
+  height: 3.25rem;
+  padding: 0 1.75rem;
+  font: var(--font-b2-sb);
+  letter-spacing: var(--font-b2-sb-ls);
+  color: var(--color-text-default-inverse);
+  background: var(--color-bg-inverse);
+  border: 1px solid var(--color-line-strong);
+  border-radius: 99rem;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.3s var(--ease-out), box-shadow 0.3s ease;
+
+  &:disabled { opacity: 0.6; }
+
+  @include hover {
+    box-shadow: 0 8px 20px var(--color-shadow);
+    transform: translateY(-0.125rem);
+  }
+}
+.basic-btn-outline {
+  color: var(--color-text-default-highest);
+  background: transparent;
+  border-color: var(--color-line-default);
+
+  @include hover {
+    background: var(--color-bg-surface);
+    border-color: var(--color-line-strong);
+  }
+}
+.basic-btn-small {
+  position: relative;
+  height: 2.5rem;
+  padding: 0 1.125rem;
+  font: var(--font-b4-med);
+  letter-spacing: var(--font-b4-med-ls);
+  @include touch-area;
+}
+.basic-btn-full { width: 100%; }
+
+/* 버튼 묶음 */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

@@ -1,0 +1,372 @@
+// ==========================================================================
+// 도구 — 믹스인 (출력 CSS 없음)
+// · 반복되는 「구조」만 둔다 — 색 · 크기 · 간격 같은 값은 :root 토큰(common/_tokens)에. 여기에 값을 박지 않는다
+// · 쓰는 부분 파일 맨 위에 한 줄:  @use "../tools" as *;   (common/ · components/ 에서 한 단계 위 — 상대경로라 어느 컴파일러에서도 같다. 엔트리 common.scss 에는 넣지 않는다 — 출력이 없다)
+// · 믹스인이 만드는 출력도 컨벤션 그대로다 — 네스팅은 마크업 경로 그대로 · 구조 선택자 없음 · hover 는 @media (hover: hover) · 단위 rem(보더 · 터치 타깃만 px)
+// · 쓰는 법은 각 믹스인 위 주석. 출력 CSS 로 결과를 확인한다
+// · 한 파일 안에서만 쓰는 믹스인 · 변수는 그 부분 파일 머리에 둔다 — 두 파일 이상이 쓰게 되면 여기로 옮긴다
+//
+// 목차
+//   1. 미디어쿼리 ........ mo · sm · hover · reduced-motion · motion
+//   2. 글자 ............... ellipsis · line-clamp
+//   3. 아이콘 ............. icon-mask · icon-bg
+//   4. 배치 ............... flex · flex-center · fill · abs-center · pseudo · grid-auto · sticky-top · cover-dim
+//   5. 이미지 ............. img-cover · thumb · bg-cover
+//   6. 접근성 ............. blind · touch-area · ring-to-wrapper
+//   7. 스크롤 · 기기 ...... scroll-x · scroll-x-bar · scroll-y · safe-area
+//   8. 전환 ............... transition
+// ==========================================================================
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+
+// --------------------------------------------------------------------------
+// 1. 미디어쿼리
+// --------------------------------------------------------------------------
+
+// 브레이크포인트 — 1024(모바일) → 600(소형) 두 단계만. 부분 파일 끝에서 쓴다
+//   @include mo { .card-list { grid-template-columns: 1fr 1fr; } }
+@mixin mo {
+  @media (max-width: 1024px) { @content; }
+}
+@mixin sm {
+  @media (max-width: 600px) { @content; }
+}
+
+// hover — :focus-visible 을 같이 선언하고 @media (hover: hover) 로 감싼다 (터치 기기에 hover 가 남지 않게)
+//   .basic-btn { @include hover { background: var(--color-btn-hover-secondary); } }
+//   → @media (hover: hover) { .basic-btn:hover, .basic-btn:focus-visible { … } }
+//   포커스 모양을 밖에서 따로 잡았으면(.is-active 와 같은 모양 등) $focus: false 로 :hover 만
+@mixin hover($focus: true) {
+  @media (hover: hover) {
+    @if $focus {
+      &:hover,
+      &:focus-visible { @content; }
+    } @else {
+      &:hover { @content; }
+    }
+  }
+}
+
+// 모션 줄이기 — 애니메이션 · 전환을 끄는 블록
+//   .marquee { @include reduced-motion { animation: none; } }
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) { @content; }
+}
+
+// 모션 허용 — 움직임의 시작 상태(첫 숨김 · 확대 · 끌어올림)를 거는 블록. 모션 줄이기 사용자는 이 블록 없이 최종 상태로 본다
+//   .page-kv-fixed { @include motion { &:not(.is-shown) { .visual { transform: scale(1.1); } } } }
+@mixin motion {
+  @media (prefers-reduced-motion: no-preference) { @content; }
+}
+
+// --------------------------------------------------------------------------
+// 2. 글자
+// --------------------------------------------------------------------------
+
+// 한 줄 말줄임 — 폭이 정해진 블록(인라인이면 display 를 따로 준다)
+@mixin ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 여러 줄 말줄임 — 줄 수는 시안대로. 행간은 글자 변수(--font-{style})가 정하므로 높이를 따로 고정하지 않는다
+//   .card-list .tit { @include line-clamp(2); }
+@mixin line-clamp($lines) {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+  line-clamp: $lines;
+}
+
+// --------------------------------------------------------------------------
+// 3. 아이콘 — SVG 파일 + CSS (assets.md 「아이콘」). 인라인 <svg> 금지
+// --------------------------------------------------------------------------
+
+// 단색 아이콘 — 모양은 mask, 색은 부모 color (상태는 부모의 color 만 바꾼다)
+//   포커스를 받는 요소 자체가 아니라 ::before / ::after 에 건다 (outline 이 잘린다). 크기 · 위치는 쓰는 쪽에서
+//   .search-btn::before { @include icon-mask("icon-search-24"); position: absolute; inset: 0; }
+//   아이콘이 박스보다 작으면 $size 로 mask 크기를 준다 — @include icon-mask("icon-arrow-down-16", 1rem)
+@mixin icon-mask($name, $size: contain) {
+  content: "";
+  display: block;
+  background-color: currentColor;
+  -webkit-mask: url("../images/#{$name}.svg") no-repeat center / #{$size};
+  mask: url("../images/#{$name}.svg") no-repeat center / #{$size};
+}
+
+// 여러 색 아이콘 · 색이 바뀌지 않는 아이콘 — background 로
+//   .clear-btn::before { @include icon-bg("icon-delete-x-circle-20"); width: 1.25rem; height: 1.25rem; }
+@mixin icon-bg($name, $size: contain) {
+  content: "";
+  display: block;
+  background: url("../images/#{$name}.svg") no-repeat center / #{$size};
+}
+
+// --------------------------------------------------------------------------
+// 4. 배치
+// --------------------------------------------------------------------------
+
+// flex 한 줄 — 간격은 gap 을 쓰는 쪽에서 (자식 margin 금지)
+//   .sec-head { @include flex(space-between); }
+@mixin flex($justify: flex-start, $align: center, $direction: row) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+// 가운데 정렬 — 아이콘 버튼 · 뱃지처럼 안쪽을 중앙에 모을 때
+@mixin flex-center($display: flex) {
+  display: $display;
+  align-items: center;
+  justify-content: center;
+}
+
+// 부모를 꽉 채우는 절대 배치 — 딤 · 오버레이 · 링크 전체 덮기. 부모에 position: relative
+@mixin fill {
+  position: absolute;
+  inset: 0;
+}
+
+// 절대 배치 가운데 — 로딩 · 재생 버튼처럼 부모 중앙에 하나 띄울 때. 부모에 position: relative
+@mixin abs-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// 가상 요소 시작 — 구분선 · 장식 · 밑줄
+//   .tit::after { @include pseudo; width: 2.5rem; height: 2px; }
+@mixin pseudo($display: block) {
+  content: "";
+  display: $display;
+}
+
+// 항목 수에 따라 열이 늘고 주는 그리드 — 1개든 10개든 깨지지 않게 (설계 원칙 2). 열 수 고정이 시안이면 그냥 repeat(n, 1fr)
+//   .card-list { @include grid-auto(17.5rem); gap: 1.5rem; }
+//   $fit: true 면 항목이 적을 때 남은 폭을 채워 늘어난다 (auto-fit)
+@mixin grid-auto($min, $fit: false) {
+  display: grid;
+  @if $fit {
+    grid-template-columns: repeat(auto-fit, minmax($min, 1fr));
+  } @else {
+    grid-template-columns: repeat(auto-fill, minmax($min, 1fr));
+  }
+}
+
+// 스크롤 고정 — 고정 헤더 아래. 그리드 안이면 align-self: start 가 있어야 고정된다 (css-rules.md 「position: sticky」)
+//   .aside { @include sticky-top; }   /  @include sticky-top(0)
+@mixin sticky-top($top: var(--gnb-height)) {
+  position: sticky;
+  top: $top;
+  align-self: start;
+}
+
+// 덮이는 무대 딤 — 다음 섹션이 위로 올라와 덮는 동안 무대가 서서히 어두워진다. JS(ScrollTrigger onUpdate)가 무대에 --cover-dim(0 → 1)을 넣고, 여기 ::after 가 그만큼 불투명해진다
+//   무대에 position: relative 필요. ::after 를 이미 썼으면 쓰는 쪽에서 다른 가상 요소로 같은 선언을 둔다
+//   .main-hero .stage { @include cover-dim; }   /  @include cover-dim(var(--overlay-content-dim-high))
+@mixin cover-dim($color: var(--color-bg-dim)) {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: var(--z-base);
+    background: $color;
+    opacity: var(--cover-dim, 0);
+    pointer-events: none;
+  }
+}
+
+// --------------------------------------------------------------------------
+// 5. 이미지
+// --------------------------------------------------------------------------
+
+// 틀을 채우는 이미지 — 틀 안 <img> 에. 마크업의 <img> 에는 width · height 속성 없음
+@mixin img-cover($fit: cover) {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: $fit;
+}
+
+// 썸네일 틀 — 비율 고정 + 안쪽 img 가 채운다. 폭은 부모(grid · flex)가 정한다
+//   .card-list .thumb { @include thumb(16, 9); }   → aspect-ratio: 16 / 9
+//   출력: .card-list .thumb { … }  .card-list .thumb img { … }
+@mixin thumb($width, $height, $fit: cover) {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: #{$width} / #{$height};
+  img { @include img-cover($fit); }
+}
+
+// 배경 이미지 — 가운데 · 채우기. 파일은 쓰는 쪽에서 (bg- 접두어, 2배율)
+//   .bg { @include bg-cover; background-image: url("../images/bg-main.jpg"); }
+@mixin bg-cover($position: center) {
+  background-repeat: no-repeat;
+  background-position: $position;
+  background-size: cover;
+}
+
+// --------------------------------------------------------------------------
+// 6. 접근성
+// --------------------------------------------------------------------------
+
+// 화면에서 숨기고 스크린리더에는 읽히게 — 마크업에서는 .blind 클래스(common/_utilities)를 쓰고,
+// 클래스를 붙일 수 없는 자리(선택자로만 잡히는 글자)에만 이 믹스인
+@mixin blind {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// 터치 타깃 넓히기 — 시안이 44px 보다 작은 아이콘 버튼 · 닫기 · 페이지 번호. 모양은 그대로 두고 ::after 로 누르는 영역만 키운다
+//   요소에 position: relative 필요. ::after 를 아이콘에 이미 썼으면 아이콘을 ::before 로
+//   .close-btn { position: relative; @include touch-area; }
+@mixin touch-area($min: 44px) {
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, $min);
+    height: max(100%, $min);
+    transform: translate(-50%, -50%);
+  }
+}
+
+// touch-area 와 같고 ::before 에 — ::after 를 아이콘으로 쓰는 요소 (맨 위로 링크 등)
+@mixin touch-area-before($min: 44px) {
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, $min);
+    height: max(100%, $min);
+    transform: translate(-50%, -50%);
+  }
+}
+
+// 포커스 링을 래퍼가 그린다 — 시안에 포커스 테두리가 없는 입력 부품(.input)만. 안쪽 input 의 링을 끄고 래퍼가 전역과 같은 링을 그린다 (포커스 테두리가 있으면 그 테두리가 포커스 표시라 이 믹스인 없이 안쪽 outline 만 끈다)
+//   .input { @include ring-to-wrapper; }   /  select 면 @include ring-to-wrapper(select)
+//   전역 :focus-visible(common/_utilities)과 같은 모양을 유지한다 — 모양을 바꾸려면 둘 다 바꾼다
+@mixin ring-to-wrapper($inner: input) {
+  &:has(#{$inner}:focus-visible) {
+    outline: 2px solid var(--color-border-focused);
+    outline-offset: 2px;
+  }
+  #{$inner}:focus-visible { outline: none; }
+}
+
+// --------------------------------------------------------------------------
+// 7. 스크롤 · 기기
+// --------------------------------------------------------------------------
+
+// 가로 스크롤 — 1024↓ 탭 · 카테고리처럼 한 줄로 넘기는 목록. 스크롤바는 숨긴다
+//   .tab-list { @include mo { @include scroll-x; } }
+@mixin scroll-x {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+// 가로 스크롤바 보이기 — scroll-x 로 숨긴 막대를 마우스 환경(hover · 정밀 포인터)에서만 $size 굵기 회색 막대로 보인다. 터치는 숨긴 채 손가락으로 민다
+//   막대가 다니는 길은 좌우 $inset 만큼 짧다 (풀 블리드 영역의 막대를 콘텐츠 줄에 맞출 때)
+//   내용과 막대 사이 $gap 은 투명한 스크롤바 칸 — 보이는 막대는 $size 지만 $gap 까지 잡고 끌 수 있다 (Firefox 는 막대를 꾸밀 수 없어 같은 높이의 padding-bottom)
+//   .table-wrap { @include scroll-x; @include scroll-x-bar(4px, var(--side-padding), 1rem); }
+//   Chrome 은 scrollbar-width 가 auto 가 아니면 ::-webkit-scrollbar 를 무시해 auto 로 되돌리고, 표준 속성은 Firefox 에만 준다
+@mixin scroll-x-bar($size: 4px, $inset: 0px, $gap: 0px) {
+  @media (hover: hover) and (pointer: fine) {
+    scrollbar-width: auto;
+    -ms-overflow-style: auto;
+
+    &::-webkit-scrollbar {
+      display: block;
+      height: calc(#{$gap} + #{$size});
+    }
+    // 라운드 — 칠한 막대(padding-box)의 양끝이 반원이 되게 위 모서리 세로 반지름에 투명 칸 높이를 더한다 (999px 면 칸 전체 높이로 줄어 막대 끝이 비스듬히 잘린다)
+    &::-webkit-scrollbar-track,
+    &::-webkit-scrollbar-thumb {
+      border-top: $gap solid transparent;
+      border-radius: calc(#{$size} / 2) / calc(#{$gap} + #{$size} / 2) calc(#{$gap} + #{$size} / 2) calc(#{$size} / 2) calc(#{$size} / 2);
+    }
+    &::-webkit-scrollbar-track {
+      @if $inset != 0px { margin: 0 $inset; }
+      background: var(--color-bg-neutral-light-level-2) padding-box;
+    }
+    &::-webkit-scrollbar-thumb { background: var(--color-bg-neutral-light-level-4) padding-box; }
+
+    @supports not selector(::-webkit-scrollbar) {
+      @if $gap != 0px { padding-bottom: $gap; }
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-bg-neutral-light-level-4) var(--color-bg-neutral-light-level-2);
+    }
+  }
+}
+
+// 세로 스크롤바 — $size 굵기 회색 막대(라운드). 막대 왼쪽 $gap · 오른쪽 $edge 만큼 비운 칸(gutter)을 스크롤 영역 오른쪽에 늘 잡는다
+//   감싼 요소의 오른쪽 패딩을 0 으로 두면 막대가 그 패딩 자리에 그려진다. 막대가 다니는 길은 위아래 $inset 만큼 짧다
+//   $gap · $edge 는 비슷하게 — 차이가 크면 막대 끝 라운드가 한쪽으로 비뚤어진다. 막대를 끝에 붙일 때는 (0px, 0px) + 요소 오른쪽 패딩으로 띄운다
+//   .textarea textarea { @include scroll-y(0.375rem, 0.5rem); }
+//   .modal-body { @include scroll-y(0px, 0px, 4px, 1.5rem); }   // 팝업 — 4 굵기 · 창 오른쪽 끝 · 위아래 24 안쪽
+//   Chrome 은 scrollbar-width · scrollbar-color 가 있으면 ::-webkit-scrollbar 를 무시해 표준 속성은 Firefox 에만 준다
+@mixin scroll-y($gap: 0.375rem, $edge: 0.5rem, $size: 2px, $inset: 0px) {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar { width: calc(#{$gap} + #{$size} + #{$edge}); }
+  &::-webkit-scrollbar-track {
+    @if $inset != 0px { margin: $inset 0; }
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-style: solid;
+    border-color: transparent;
+    border-width: 0 #{$edge} 0 #{$gap};
+    border-radius: 999px;
+    background: var(--color-bg-neutral-light-level-4) padding-box;
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-bg-neutral-light-level-4) transparent;
+  }
+}
+
+// 홈 바 · 노치 여백 — 화면 하단 고정 바(MO 하단 버튼 · 바텀시트). $base 는 시안 패딩
+//   .bottom-bar { @include safe-area(bottom, 1rem); }
+@mixin safe-area($side: bottom, $base: 0) {
+  padding-#{$side}: calc(#{$base} + env(safe-area-inset-#{$side}));
+}
+
+// --------------------------------------------------------------------------
+// 8. 전환
+// --------------------------------------------------------------------------
+
+// transition — 속성을 명시한다 (all 금지). 시간 · 이징은 프로젝트 기본값 한 곳 — 시안 모션 가이드가 있으면 그 값으로 바꾼다
+//   .basic-btn { @include transition(color, background-color); }
+//   @include transition(transform, $duration: 0.4s, $easing: ease-out)
+@mixin transition($args...) {
+  $kw: meta.keywords($args);
+  $duration: 0.2s;
+  $easing: ease;
+  @if map.has-key($kw, "duration") { $duration: map.get($kw, "duration"); }
+  @if map.has-key($kw, "easing") { $easing: map.get($kw, "easing"); }
+  $list: ();
+  @each $prop in $args {
+    $list: list.append($list, $prop $duration $easing, comma);
+  }
+  transition: $list;
+}

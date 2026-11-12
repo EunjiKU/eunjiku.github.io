@@ -1,0 +1,242 @@
+@use "../tools" as *;
+
+/* ==========================================================================
+   4. 접근성·공통 클래스
+   ========================================================================== */
+/* 화면에는 숨기고 스크린리더에는 읽히는 텍스트 */
+.blind { @include blind; }
+
+/* 스킵 링크 — 포커스 시에만 노출. body 첫 자식 .skip(href="#content")과 main#content 가 짝 */
+// 어떤 뷰포트에서도 읽혀야 하므로 rem 이 아닌 px
+.skip {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  z-index: var(--z-skip);
+  padding: 12px 16px;   // 높이 44 이상 — 터치 타깃
+  font: 400 14px / 1.5 var(--font-family-kor);
+  color: var(--color-text-default-inverse);
+  background: var(--color-bg-inverse);
+
+  &:focus { top: 0; }
+}
+
+
+/* 키보드 포커스 링 — 포커스 가능한 모든 요소의 기본값. 마우스 클릭에는 나오지 않는다 */
+// hover 와 같은 모양을 쓰는 컴포넌트도 이 링으로 포커스가 구분된다. 입력 부품은 링 없이 래퍼 테두리(:focus-within)가 포커스 표시 — components/_form
+:focus-visible {
+  outline: 2px solid var(--color-border-focused);
+  outline-offset: 2px;
+}
+
+/* 글자 정렬 — 어느 요소에나 더해 쓴다 */
+// 부품이 정한 정렬(표 칸 가운데 등)보다 늘 이겨야 해서 !important — 한 가지 속성만 바꾸는 공통 속성 클래스라 예외
+.txt-left { text-align: left !important; }
+.txt-center { text-align: center !important; }
+.txt-right { text-align: right !important; }
+
+/* 놓는 자리 — 어느 블록에나 더해 쓴다. 이름은 {속성}-{값} — 부품과 상관없이 뜻이 하나 */
+/* 오른쪽 끝 — 블록을 부모 오른쪽 끝에 붙인다. 폭은 블록이 갖는다 */
+// .sec-txt 에 붙으면 오른쪽 칸 708 — common/_page
+.pos-end { margin-left: auto; }
+/* 위에 붙기 — 스크롤하면 헤더 아래에, 내려가며 헤더가 숨으면 화면 맨 위에 붙는다 */
+// · 헤더 top 전환과 같은 0.3s. 붙어 있는 범위는 부모 요소 — 부모가 끝나면 같이 올라간다
+// · 쌓임(z-index)은 붙이는 블록이 갖는다 — 헤더(--z-sticky)보다 아래로
+.pos-sticky {
+  position: sticky;
+  top: var(--gnb-height);
+  transition: top 0.3s;
+}
+.wrapper:has(.gnb.is-hidden:not(.is-open, :focus-within)) {
+  .pos-sticky { top: 0; }
+}
+
+/* 가로 배치 — 감싸는 블록에 더한다. 자식을 한 줄로 놓고 가로 자리를 정한다 (세로 정렬은 .align-*) */
+.flex-start {   /* 왼쪽부터 */
+  display: flex;
+  justify-content: flex-start;
+}
+.flex-center {   /* 가운데 */
+  display: flex;
+  justify-content: center;
+}
+.flex-end {   /* 오른쪽 끝 */
+  display: flex;
+  justify-content: flex-end;
+}
+.flex-between {   /* 양끝 — 첫 자식 왼쪽 · 마지막 자식 오른쪽 끝 (제목 + 더보기 버튼 등) */
+  display: flex;
+  justify-content: space-between;
+}
+/* 세로 정렬 — flex · grid 블록에 더한다 (.flex-between.align-end — 제목 아래 끝에 더보기 버튼) */
+.align-start { align-items: flex-start; }   /* 위 끝 */
+.align-center { align-items: center; }      /* 가운데 */
+.align-end { align-items: flex-end; }       /* 아래 끝 */
+
+/* 꽉 찬 이미지 — <img> 에 더한다. 부모 폭에 맞춰 원본 비율대로 줄어든다 (width · height 속성은 원본 크기로) */
+.img-full {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* 화면 폭별 노출 — 다른 구간에서 숨기기만 한다 (보이는 구간의 display 는 요소 · 부품 값 그대로, hidden 이 있으면 숨김)
+   · .only-pc 1025px 이상 · .only-mob 1024px 이하 — 선언은 파일 끝 「반응형」 */
+
+/* --------------------------------------------------------------------------
+   진입 모션 — 쓰는 법은 UI 가이드 Motion
+   · 블록: data-motion(값 없음 · rise · fade · zoom · custom) · 묶음 부모: data-motion-group(each · row)
+   · .is-shown 은 common.js 가 붙인다
+   -------------------------------------------------------------------------- */
+// 필요 없으면 이 블록과 common.js 의 진입 모션을 지운다
+// 숨김은 CSS 가 처음부터 — 첫 화면부터 숨겨져 있어야 스크립트를 받는 동안 보였다 사라지지 않는다. .is-shown 은 common.js 가 붙인다(JS 가 실패하면 보이지 않는다)
+// 모션 줄이기 사용자에게는 숨기지도 움직이지도 않는다
+
+/* 수치 — 프로젝트마다 여기만 바꾼다. 블록 하나만 바꾸려면 그 선택자에 같은 변수를 준다 */
+// :where() 로 특이도 0 — 부품 CSS 의 같은 변수가 순서와 상관없이 이긴다. 묶음 부모에 주면 자식이 물려받는다
+// 묶음을 바로 품은 상자도 받는다 — 묶음 대신 상자째 떠오르는 부품이 같은 수치를 쓰게
+:where([data-motion], [data-motion-group], :has(> [data-motion-group])) {
+  --motion-duration: 0.7s;              // 한 번 나타나는 시간 (기본 · rise · fade · 핀 안 내용)
+  --motion-ease: ease-out;
+  --motion-distance: min(3.75rem, 100%);  // 떠오르는 거리 — 60 과 자기 높이 중 작은 쪽(한 줄 글자가 자기 높이보다 튀지 않게)
+  --motion-pin-distance: 3.75rem;         // 핀을 품은 블록 안의 내용이 떠오르는 거리 (틀 높이와 상관없이 고정)
+  --motion-step: 0.2s;                  // 묶음(each · row) 차례 간격
+  --motion-zoom-duration: 1.4s;
+  --motion-zoom-scale: 1.15;            // zoom 시작 배율
+}
+/* 묶음 차례 — 지연 = 순번(--motion-order, common.js 가 자식에 적는다) × 간격. 자식에 --motion-delay 를 직접 주면 그 값이 이긴다 */
+:where([data-motion-group] > *) { --motion-delay: calc(var(--motion-order, 0) * var(--motion-step)); }
+
+@include motion {
+  [data-motion]:where(:not([data-motion="custom"])),
+  [data-motion-group] > :where(:not([data-motion="custom"])) {
+    opacity: 0;
+    transform: translateY(var(--motion-distance));
+  }
+  [data-motion]:where(:not([data-motion="custom"])).is-shown,
+  [data-motion-group] > .is-shown:where(:not([data-motion="custom"])) {
+    opacity: 1;
+    transform: none;   // 끝난 뒤 transform 을 남기지 않는다(forwards X) — 안의 position: fixed(핀 · 고정 KV)의 기준이 이 블록으로 바뀌지 않게. 지연 동안은 backwards 가 from 상태를 유지
+    animation: motion-up var(--motion-duration) var(--motion-ease) var(--motion-delay, 0s) 1 normal backwards;
+  }
+}
+@keyframes motion-up {
+  from { opacity: 0; transform: translateY(var(--motion-distance)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 핀을 품은 블록(값 없는 data-motion · 묶음 자식) — 틀은 페이드, .stage 안의 내용만 떠오른다. 값(fade 등)이 있으면 그 변형대로 */
+// 블록 · 틀에 transform 이 걸리면 안의 핀(position: fixed)의 기준이 그쪽으로 바뀌어 새로고침 · 빠른 스크롤 때 핀 대상이 밀렸다 돌아온다 — 자손만 움직인다. 지연(--motion-delay)은 상속
+@include motion {
+  [data-motion=""]:has(.pin-spacer),
+  [data-motion-group] > :where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) { transform: none; }
+  [data-motion=""]:has(.pin-spacer) .stage > *,
+  [data-motion-group] > :where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) .stage > * { transform: translateY(var(--motion-pin-distance)); }
+  [data-motion=""]:has(.pin-spacer) .stage > img,
+  [data-motion-group] > :where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) .stage > img {   // 사진은 떠오르는 거리만큼 위로 늘린다 — 올라오는 동안 틀 위쪽이 비어 라운드 모서리가 줄어드는 듯 보이지 않게
+    top: calc(var(--motion-pin-distance) * -1);
+    height: calc(100% + var(--motion-pin-distance));
+  }
+  [data-motion=""]:has(.pin-spacer).is-shown,
+  [data-motion-group] > .is-shown:where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) { animation-name: motion-fade; }
+  [data-motion=""]:has(.pin-spacer).is-shown .stage > *,
+  [data-motion-group] > .is-shown:where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) .stage > * {
+    transform: none;
+    animation: motion-rise-inner var(--motion-duration) var(--motion-ease) var(--motion-delay, 0s) 1 normal backwards;
+  }
+}
+@keyframes motion-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes motion-rise-inner {
+  from { transform: translateY(var(--motion-pin-distance)); }
+  to   { transform: translateY(0); }
+}
+
+/* 변형 — data-motion="rise": 속성이 붙은 요소가 틀(overflow: hidden)이고, 안의 글자(span)가 틀 아래에서 올라온다 */
+// · 틀은 숨기지 않고 자식만 움직인다. 자식 선택은 [data-motion-group] > * 와 같은 결합자 예외
+[data-motion="rise"] {
+  overflow: hidden;
+
+  > * { display: block; }
+}
+@include motion {
+  [data-motion="rise"] {
+    opacity: 1;
+    transform: none;
+  }
+  [data-motion="rise"] > * { transform: translateY(110%); }
+  [data-motion="rise"].is-shown { animation: none; }
+  [data-motion="rise"].is-shown > * {
+    transform: none;
+    animation: motion-rise var(--motion-duration) var(--motion-ease) var(--motion-delay, 0s) 1 normal backwards;
+  }
+}
+@keyframes motion-rise {
+  from { transform: translateY(110%); }   // 틀 아래로 완전히 — 글자 높이 기준
+  to   { transform: translateY(0); }
+}
+
+/* 변형 — data-motion="fade": 떠오르지 않고 제자리에서 나타난다 */
+@include motion {
+  [data-motion="fade"] { transform: none; }
+  [data-motion="fade"].is-shown { animation-name: motion-fade; }
+}
+
+/* 변형 — data-motion="zoom": 사진(::before 배경 또는 바로 안의 img)이 커진 상태에서 원래 크기로 줄어든다. 블록 자체는 숨기지 않는다. 블록에 overflow: hidden 필요 */
+// · 블록째 나타나게 하려면 감싸는 요소에 data-motion(떠오름) · data-motion="fade"(제자리) 를 따로 준다 (속성 값은 하나뿐)
+@include motion {
+  [data-motion="zoom"] {
+    opacity: 1;
+    transform: none;
+  }
+  [data-motion="zoom"]::before,
+  [data-motion="zoom"] > img { transform: scale(var(--motion-zoom-scale)); }
+  [data-motion="zoom"].is-shown { animation: none; }
+  [data-motion="zoom"].is-shown::before,
+  [data-motion="zoom"].is-shown > img { animation: motion-zoom var(--motion-zoom-duration) var(--motion-ease) 1 normal forwards; }
+}
+@keyframes motion-zoom {
+  from { transform: scale(var(--motion-zoom-scale)); }
+  to   { transform: scale(1); }
+}
+
+/* 변형 — 글자 나눠 등장 [data-split] + data-motion="custom": common.js 가 글자를 .char 로 나누고, .is-shown 이 붙으면 글자가 차례로 올라온다 */
+// 글자 하나 시작 모습: 아래로 · 뒤로 젖힘 · 작게 · 투명 → 제자리. 지연 = 블록 차례(--motion-delay) + 글자 순번 × --split-step
+:where([data-split]) { --split-step: 0.035s; }
+[data-split] {
+  .word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .char { display: inline-block; }
+}
+@include motion {
+  [data-split] {
+    perspective: 600px;
+
+    .char {
+      transition: opacity 0.6s ease-out, transform 0.9s var(--ease-out);
+      transition-delay: calc(var(--motion-delay, 0s) + var(--char-i, 0) * var(--split-step));
+    }
+
+    &:not(.is-shown) {
+      .char {
+        opacity: 0;
+        transform: translateY(0.6em) rotateX(-15deg) scale(0.8);
+      }
+    }
+  }
+}
+
+/* 반응형 — 화면 폭별 노출 (숨김만) */
+// 부품이 정한 display 보다 늘 이겨야 해서 !important — .txt-* 와 같은 공통 속성 클래스 예외
+// 보이는 구간에 display: block 을 강제하지 않는다 — [hidden] 을 되살리고 flex 부품을 block 으로 바꾸기 때문. 「~보다 넓을 때」는 not all and (max-width) 로 (브레이크포인트 값은 1024 그대로)
+@media not all and (max-width: 1024px) {
+  .only-mob { display: none !important; }
+}
+@include mo {
+  .only-pc { display: none !important; }
+}

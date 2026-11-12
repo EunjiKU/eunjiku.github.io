@@ -1,0 +1,14 @@
+{
+  "name": "eunjiku-portfolio",
+  "private": true,
+  "description": "구은지 웹 퍼블리셔 포트폴리오 — SCSS 컴파일(css + map)과 로컬 미리보기. VS Code 확장을 안 쓸 때 npm install 한 번 뒤 npm run scss:watch · npm run serve",
+  "scripts": {
+    "scss": "sass common/scss:common/css --style=expanded --source-map",
+    "scss:watch": "sass --watch common/scss:common/css --style=expanded --source-map",
+    "serve": "http-server . -c-1"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1",
+    "sass": "^1.99.0"
+  }
+}

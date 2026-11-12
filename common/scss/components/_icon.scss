@@ -1,0 +1,50 @@
+@use "../tools" as *;
+
+/* ==========================================================================
+   15-3. 아이콘 — 단독 표시 아이콘 {이름}-icon (글자 앞 로고 · 표시)
+   · 색은 부모 color 를 따른다(mask). 기본 18 — 크기는 쓰는 부품이 바꾼다
+   · 장식이면 aria-hidden="true", 뜻이 있으면 옆에 글자를 둔다
+   · .feature-icon 을 같이 붙이면 연한 세이지 원 안에 아이콘 (<span class="feature-icon mail-icon">)
+   ========================================================================== */
+// 이름 → 이미지 파일 (common/images/)
+$icons: (
+  html5: "logo-html5", css3: "logo-css3", javascript: "logo-javascript", jquery: "logo-jquery",
+  sass: "logo-sass", tailwind: "logo-tailwind", git: "logo-git", figma: "logo-figma",
+  github: "logo-github", notion: "logo-notion",
+  device: "icon-device-24", eye: "icon-eye-24", globe: "icon-globe-24", bolt: "icon-bolt-24",
+  mail: "icon-mail-24", phone: "icon-phone-24", pin: "icon-pin-24"
+);
+
+@each $name, $file in $icons {
+  .#{$name}-icon {
+    --icon: url("../images/#{$file}.svg");
+    display: inline-block;
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    background-color: currentColor;
+    -webkit-mask: var(--icon) no-repeat center / contain;
+    mask: var(--icon) no-repeat center / contain;
+  }
+}
+
+/* 원 안 아이콘 — {이름}-icon 과 같이 붙인다. 원은 바탕, 아이콘은 ::before */
+.feature-icon {
+  @include flex-center(inline-flex);
+  width: 3rem;
+  height: 3rem;
+  color: var(--color-text-point);
+  background: var(--color-bg-point-soft);
+  border-radius: 0.75rem;
+  -webkit-mask: none;
+  mask: none;
+
+  &::before {
+    content: "";
+    width: 1.375rem;
+    height: 1.375rem;
+    background-color: currentColor;
+    -webkit-mask: var(--icon) no-repeat center / contain;
+    mask: var(--icon) no-repeat center / contain;
+  }
+}

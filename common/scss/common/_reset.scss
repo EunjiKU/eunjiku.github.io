@@ -1,0 +1,272 @@
+/* ==========================================================================
+   0. 리셋 — 브라우저 기본 스타일(UA 스타일) 초기화
+   ========================================================================== */
+// ※ common.scss 의 맨 앞에 들어간다
+// ※ 디자인 토큰(var(--*))·프로젝트 고유 값은 쓰지 않는다. 어느 프로젝트에 옮겨도 그대로 동작해야 한다.
+// ※ 색·폰트·여백 같은 "디자인"은 여기 두지 않는다. 그건 common/_base 와 components/ 의 일이다.
+//
+// 대상 — PC(Chrome · Edge · Whale · Safari · Firefox) / 태블릿 · 모바일(iOS Safari · Android Chrome ·
+// Samsung Internet · Whale 모바일) / 인앱 웹뷰.
+//
+// ⚠️ 「마진·패딩·폰트 리셋」 선택자에 html 을 넣지 않는다.
+//    html 에 `font: inherit` 이 걸리면 부모가 없어 브라우저 기본값(16px)으로 돌아가고,
+//    common.css 의 rem 기준(`html { font-size: 0.052vw }`)이 무효가 되어 모든 치수가 16배가 된다.
+
+/* --------------------------------------------------------------------------
+   1. 박스 모델
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+/* --------------------------------------------------------------------------
+   2. 문서 루트
+   -------------------------------------------------------------------------- */
+// font-size 는 common/_base 가 선언한다 — 여기서 건드리지 않는다
+html {
+  // iOS Safari · Android Chrome — 가로 회전·확대 시 글자만 임의로 커지는 것을 막는다
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  // Android Chrome · Samsung Internet · Whale — 탭 시 파란(회색) 하이라이트 제거
+  -webkit-tap-highlight-color: transparent;
+  // 하단 바운스·당겨서 새로고침은 그대로 둔다. 필요한 화면(모달·지도)만 overscroll-behavior 로 개별 제어한다
+  -moz-tab-size: 4;
+  tab-size: 4;
+}
+
+/* --------------------------------------------------------------------------
+   3. 마진·패딩·보더·폰트 리셋
+   -------------------------------------------------------------------------- */
+// html 제외 — 상단 경고 참조
+// `font: inherit` 는 size·weight·style·line-height·family 를 한 번에 부모 값으로 되돌린다.
+// → h1~h6·em·i·small·code·input·button 이 모두 본문과 같은 글자로 시작한다. strong · b 는 제외 — 브라우저 기본 굵기(bolder)
+body, div, span, main, h1, h2, h3, h4, h5, h6, p, blockquote, pre, hr,
+a, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, sub, sup, i, u, mark, var, time,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, input, select, textarea, button, optgroup, output, progress, meter,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, summary, dialog, figcaption, figure,
+footer, header, hgroup, menu, nav, section, picture, iframe, embed, object, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+// HTML5 블록 요소 — 구형 웹뷰·일부 인앱 브라우저 보정
+article, aside, details, dialog, figcaption, figure, footer,
+header, hgroup, main, menu, nav, section, summary { display: block; }
+
+/* --------------------------------------------------------------------------
+   4. 본문 기본
+   -------------------------------------------------------------------------- */
+body {
+  min-height: 100%;
+  // 긴 URL·영문 단어가 컨테이너를 뚫지 않게. 국문 줄바꿈(word-break: keep-all)은 common.css 가 정한다
+  overflow-wrap: break-word;
+  // macOS Safari · Chrome — 서브픽셀 AA 를 끄고 피그마와 같은 굵기로 렌더
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  // 긁어서 선택 중 터치 콜아웃(iOS 길게 눌러 복사 메뉴)은 유지 — 접근성
+}
+
+/* --------------------------------------------------------------------------
+   5. 텍스트 요소
+   -------------------------------------------------------------------------- */
+// 이탤릭·밑줄은 태그 자체에 주지 않는다. strong · b 는 굵기를 남긴다 — 의미 없이 굵게만 할 글자는 <b>
+address, cite, dfn, em, i, var { font-style: normal; }
+abbr[title] { text-decoration: none; }
+mark { color: inherit; background: none; }
+s, del, ins, u { text-decoration: none; }
+
+// 따옴표·인용 부호 자동 삽입 제거
+blockquote, q { quotes: none; }
+blockquote::before, blockquote::after,
+q::before, q::after { content: none; }
+
+// 위·아래 첨자 — 줄 높이를 밀지 않게 (normalize)
+sub, sup {
+  position: relative;
+  font-size: 75%;
+  line-height: 0;
+  vertical-align: baseline;
+}
+sub { bottom: -0.25em; }
+sup { top: -0.5em; }
+
+// 코드류 — 글자는 본문을 따르되(위 font: inherit) 줄바꿈만 보존
+pre { white-space: pre-wrap; overflow: auto; }
+
+hr {
+  display: block;
+  height: 0;
+  overflow: visible;
+  color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   6. 리스트
+   -------------------------------------------------------------------------- */
+ol, ul, menu { list-style: none; }
+
+/* --------------------------------------------------------------------------
+   7. 링크 · 터치 대상
+   -------------------------------------------------------------------------- */
+a {
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+// 더블탭 확대 제거·탭 반응 지연 제거 (모바일). 핀치 줌은 그대로 허용된다
+a, button, label, select, summary,
+input:not([type="range"]), textarea,
+[role="button"], [tabindex] { touch-action: manipulation; }
+
+/* --------------------------------------------------------------------------
+   8. 미디어
+   -------------------------------------------------------------------------- */
+// display 는 바꾸지 않는다 (인라인 아이콘이 깨진다). 베이스라인 공백만 제거한다.
+img, svg, video, canvas, audio, iframe, embed, object, picture {
+  max-width: 100%;
+  vertical-align: top;
+}
+img { border: 0; }                       // 링크 안 이미지 보더 (구형 웹뷰)
+img:not([src]), img[src=""] { visibility: hidden; }  // 로드 전 깨진 아이콘·alt 텍스트 노출 방지
+svg:not([fill]) { fill: currentColor; }  // 인라인 svg 아이콘은 글자색을 따른다
+iframe { border: 0; }
+video { object-fit: contain; }
+
+/* --------------------------------------------------------------------------
+   9. 표
+   -------------------------------------------------------------------------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: auto;
+}
+th { text-align: inherit; }   // UA 기본 center 를 해제 — 정렬은 컴포넌트가 정한다
+caption { text-align: inherit; }
+
+/* --------------------------------------------------------------------------
+   10. 폼
+   -------------------------------------------------------------------------- */
+// appearance 를 지우고 시작한다. 체크박스·라디오·셀렉트 화살표는 모두 컴포넌트가 직접 그린다.
+// ⚠️ iOS Safari 는 포커스된 input/select/textarea 의 글자가 16px 미만이면 화면을 자동 확대한다.
+//    모바일 입력 요소의 font-size 는 16px 이상으로 둔다 (디자인 토큰에서 보장).
+button, input, select, textarea {
+  color: inherit;
+  background: none;
+  border-radius: 0;
+  letter-spacing: inherit;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+button, select { text-transform: none; }
+
+button,
+[type="button"], [type="reset"], [type="submit"],
+[role="button"], label[for], summary { cursor: pointer; }
+button:disabled,
+input:disabled, select:disabled, textarea:disabled,
+[aria-disabled="true"] { cursor: default; }
+
+// Firefox — 버튼·인풋 내부 점선 포커스 테두리 제거
+button::-moz-focus-inner,
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner { padding: 0; border: 0; }
+
+// 셀렉트 — 레거시 Edge/IE 화살표
+select::-ms-expand { display: none; }
+
+// 텍스트 영역 — 가로 리사이즈·스크롤바 기본값 정리. 고정이 필요한 곳만 resize: none 을 준다
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
+// 플레이스홀더 — Firefox 가 낮추는 opacity 를 1 로. 색은 common.css 가 토큰으로 지정한다
+::placeholder { opacity: 1; }
+
+// 검색 인풋 — Chrome/Safari 가 넣는 X 버튼·돋보기 제거
+[type="search"] { outline-offset: -2px; }
+[type="search"]::-webkit-search-decoration,
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-results-button,
+[type="search"]::-webkit-search-results-decoration { -webkit-appearance: none; display: none; }
+
+// 숫자 인풋 — 스핀 버튼 제거
+[type="number"] { -moz-appearance: textfield; }
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+
+// 날짜·시간 인풋 — iOS Safari 가 값을 가운데 정렬하고 높이를 줄이는 것 보정
+::-webkit-date-and-time-value { text-align: inherit; min-height: 1.2em; }
+::-webkit-datetime-edit { padding: 0; }
+
+// Edge(Chromium) — 비밀번호 보기 눈 아이콘·X 버튼. 토글은 컴포넌트가 직접 제공한다
+::-ms-reveal, ::-ms-clear { display: none; }
+
+// 파일 인풋 버튼 — 글자를 본문과 맞춘다
+::-webkit-file-upload-button { font: inherit; -webkit-appearance: button; }
+::file-selector-button { font: inherit; }
+
+// 체크박스·라디오 — 네이티브 마진 제거. 모양은 .checkbox / .radio 컴포넌트가 그린다
+[type="checkbox"], [type="radio"] { margin: 0; padding: 0; }
+
+// fieldset — Chrome 이 min-width: min-content 를 줘서 flex/grid 안에서 넘치는 것 방지
+fieldset { min-width: 0; }
+legend { display: block; }
+
+// 자동완성 배경(노란색) — 글자색은 상속하고, 배경색 전환을 아주 길게(9999s) 걸어 자동완성 색이 칠해지지 않게 한다
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus { -webkit-text-fill-color: inherit; transition: background-color 9999s ease-out; }
+
+/* --------------------------------------------------------------------------
+   11. 포커스 — 마우스 클릭엔 숨기고 키보드(Tab) 포커스만 남긴다
+   -------------------------------------------------------------------------- */
+// 컴포넌트가 :focus-visible 로 자기 스타일을 덧입힌다. :focus 전체를 지우지 않는다.
+:focus:not(:focus-visible) { outline: none; }
+
+/* --------------------------------------------------------------------------
+   12. 기타
+   -------------------------------------------------------------------------- */
+[hidden], template { display: none !important; }
+
+// details/summary — 기본 삼각형 마커 제거
+summary { list-style: none; }
+summary::-webkit-details-marker,
+summary::marker { display: none; content: ""; }
+
+// dialog — UA 보더·패딩·최대 크기 해제. 위치·배경은 컴포넌트가 정한다
+dialog {
+  max-width: none;
+  max-height: none;
+  color: inherit;
+  background: none;
+}
+dialog::backdrop { background: none; }
+
+// progress/meter — 베이스라인 정렬
+progress, meter { vertical-align: baseline; }
+
+// 모션 축소 설정 사용자 — 애니메이션·전환을 즉시 끝낸다
+// 지연(delay)도 0 — visibility 를 지연으로 늦게 끄는 전환이 투명한 채 남아 클릭 · 스크린리더에 걸리지 않게
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}

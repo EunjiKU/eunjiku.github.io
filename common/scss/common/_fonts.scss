@@ -1,0 +1,46 @@
+/* ==========================================================================
+   2. 웹폰트 — Pretendard 로컬 (common/fonts/)
+   ========================================================================== */
+// 쓰는 weight 만 선언한다 — 공식 KS X 1001 서브셋(한글 2,780자 · 영문 · 기본 기호). 범위 밖 글자는 시스템 폰트로 보인다
+@font-face {
+  font-family: "Pretendard";
+  src: url("../fonts/Pretendard-Regular.subset.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("../fonts/Pretendard-Medium.subset.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("../fonts/Pretendard-SemiBold.subset.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Pretendard";
+  src: url("../fonts/Pretendard-Bold.subset.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+// 2-1. 텍스트 스타일 클래스(.font-*) — 에디터 본문 같은 콘텐츠 텍스트가 없어 두지 않는다. 생기면 _tokens 의 --font-* 와 1:1 로 추가
+
+/* 세리프 숫자 강조 — Cormorant Garamond 500 (라틴 글자만, OFL) */
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("../fonts/CormorantGaramond-Medium.latin.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+

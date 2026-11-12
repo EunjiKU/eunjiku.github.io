@@ -1,0 +1,15 @@
+.DS_Store
+Thumbs.db
+desktop.ini
+node_modules/
+*.log
+.env
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# Claude Code 개인/머신별 설정 · 워크트리 (공유하지 않음)
+.claude/settings.local.json
+.claude/worktrees/
+

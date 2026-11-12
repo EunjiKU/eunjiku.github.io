@@ -1,0 +1,7 @@
+# 줄끝은 저장소에 LF 로, 작업 PC 는 OS 기본값 — Windows · Mac 이 섞여도 경고 없이 같은 파일
+* text=auto
+*.woff2 binary
+*.png binary
+*.jpg binary
+*.gif binary
+*.ico binary

@@ -1,0 +1,271 @@
+@use "../tools" as *;
+
+/* ==========================================================================
+   7. GNB — 고정 헤더 (로고 · 섹션 메뉴 · 테마 · 600↓ 햄버거)
+   · common.js 가 붙이는 상태: .gnb.is-scrolled(맨 위가 아님) · .gnb.is-open(600↓ 메뉴 열림)
+   · 현재 섹션 메뉴: .depth1-link.is-active + aria-current="true"
+   · 스크롤 진행 막대: .progress 의 --progress(0 ~ 1)
+   · 테마 버튼: aria-pressed="true" 면 다크 (html[data-theme="dark"])
+   · 첫 진입: .gnb.is-shown 이 붙으며 위에서 내려온다 (common.js — html 에 직접 쓰지 않는다)
+   · 모양: 화면 위에 떠 있는 둥근 바(.bar) — 맨 위가 아니면(.is-scrolled) 테두리 · 그림자
+   ========================================================================== */
+.gnb {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  padding: 0.5rem 1.25rem 0;
+
+  &.is-scrolled {
+    .bar {
+      border-color: var(--color-line-default);
+      box-shadow: 0 8px 24px var(--color-shadow);
+    }
+  }
+
+  /* 첫 진입 — 위에 숨어 있다가 .is-shown 이 붙으면 내려온다 (common.js). 모션 줄이기는 처음부터 제자리 */
+  // 시작값을 CSS 가 갖는다 — JS 가 걸면 제자리에 보였다가 튄다. sticky 헤더라 top 대신 transform 으로 올린다
+  @include motion {
+    &:not(.is-shown) { transform: translateY(-100%); }
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    max-width: calc(var(--content-width) + var(--header-padding) * 2);
+    height: calc(var(--gnb-height) - 0.5rem);
+    margin: 0 auto;
+    padding: 0 0.75rem 0 1.5rem;
+    background: var(--color-bg-header);
+    border: 1px solid transparent;
+    border-radius: 1.25rem;
+    backdrop-filter: blur(16px);
+    transition: background-color 0.4s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      min-width: 2.75rem;    // 누르는 영역 44 × 44
+      min-height: 2.75rem;
+      font: var(--font-logo);
+      letter-spacing: var(--font-logo-ls);
+
+      .dot { color: var(--color-text-point); }
+    }
+
+    .menu {
+      margin: 0 auto;
+
+      .depth1 {
+        display: flex;
+        gap: 2.25rem;
+
+        .depth1-item {
+          .depth1-link {
+            display: inline-block;
+            position: relative;
+            padding: 0.375rem 0;
+            font: var(--font-b3-sb);
+            letter-spacing: var(--font-b3-sb-ls);
+            color: var(--color-text-default-medium);
+            transition: color 0.3s ease;
+
+            &::after {
+              content: "";
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              width: 0.25rem;
+              height: 0.25rem;
+              margin-left: -0.125rem;
+              background: var(--color-bg-point);
+              border-radius: 50%;
+              opacity: 0;
+              transition: opacity 0.3s ease;
+            }
+
+            &.is-active {
+              color: var(--color-text-default-highest);
+
+              &::after { opacity: 1; }
+            }
+
+            @include hover { color: var(--color-text-default-highest); }
+          }
+        }
+      }
+    }
+
+    .util {
+      display: flex;
+      flex-shrink: 0;
+      gap: 0.5rem;
+
+      .theme-btn,
+      .menu-btn {
+        @include flex-center(inline-flex);
+        position: relative;
+        width: 2.5rem;
+        height: 2.5rem;
+        background: var(--color-bg-surface);
+        border: 1px solid var(--color-line-default);
+        border-radius: 50%;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+        @include touch-area;
+
+        @include hover { border-color: var(--color-line-strong); }
+      }
+
+      /* 해 · 달 아이콘이 돌며 바뀐다 */
+      .theme-btn {
+        overflow: hidden;
+
+        .icon {
+          width: 1.125rem;
+          height: 1.125rem;
+
+          &::before,
+          &::after {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 1.125rem;
+            height: 1.125rem;
+            margin: -0.5625rem 0 0 -0.5625rem;
+            transition: transform 0.4s var(--ease-out), opacity 0.3s ease;
+          }
+          &::before { @include icon-mask("icon-sun-24"); }
+          &::after {
+            @include icon-mask("icon-moon-24");
+            opacity: 0;
+            transform: scale(0.4) rotate(-90deg);
+          }
+        }
+
+        &[aria-pressed="true"] {
+          .icon {
+            &::before {
+              opacity: 0;
+              transform: scale(0.4) rotate(90deg);
+            }
+            &::after {
+              opacity: 1;
+              transform: none;
+            }
+          }
+        }
+      }
+
+      /* 햄버거 — 600↓ 에서만 보인다 */
+      .menu-btn {
+        display: none;
+
+        .bar-icon {
+          position: relative;
+          width: 1rem;
+          height: 2px;
+          background: currentColor;
+          border-radius: 1px;
+          transition: background-color 0.3s ease;
+
+          &::before,
+          &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: currentColor;
+            border-radius: 1px;
+            transition: transform 0.3s ease;
+          }
+          &::before { transform: translateY(-0.3125rem); }
+          &::after { transform: translateY(0.3125rem); }
+        }
+
+        &[aria-expanded="true"] {
+          .bar-icon {
+            background: transparent;
+
+            &::before { transform: rotate(45deg); }
+            &::after { transform: rotate(-45deg); }
+          }
+        }
+      }
+    }
+  }
+
+  /* 스크롤 진행 막대 — 둥근 바 아래 가장자리 (모서리 곡선 안쪽) */
+  .progress {
+    position: absolute;
+    right: 2.5rem;
+    bottom: 0;
+    left: 2.5rem;
+    max-width: calc(var(--content-width) + var(--header-padding) * 2 - 2.5rem);
+    height: 2px;
+    margin: 0 auto;
+    border-radius: 1px;
+    background: var(--color-bg-point);
+    transform: scaleX(var(--progress, 0));
+    transform-origin: left center;
+  }
+}
+
+/* 반응형 */
+@include mo {
+  .gnb {
+    .bar {
+      gap: 1.5rem;
+
+      .menu {
+        .depth1 { gap: 1.5rem; }
+      }
+    }
+  }
+}
+@include sm {
+  .gnb {
+    padding: 0.5rem 0.75rem 0;
+
+    .bar {
+      padding: 0 0.5rem 0 1rem;
+      flex-wrap: wrap;
+      height: auto;
+      min-height: var(--gnb-height);
+      gap: 0;
+
+      .menu {
+        display: none;
+        order: 1;
+        flex-basis: 100%;
+        margin-left: 0;
+
+        .depth1 {
+          flex-direction: column;
+          gap: 0.25rem;
+          padding: 0.25rem 0 1rem;
+
+          .depth1-item {
+            .depth1-link {
+              display: flex;
+              align-items: center;
+              min-height: 2.75rem;
+            }
+          }
+        }
+      }
+
+      .util {
+        margin-left: auto;
+
+        .menu-btn { display: inline-flex; }
+      }
+    }
+
+    &.is-open {
+      .bar {
+        .menu { display: block; }
+      }
+    }
+  }
+}

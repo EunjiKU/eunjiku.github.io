@@ -1,0 +1,29 @@
+{
+  "// Live Sass Compiler": "common/scss/common.scss → common/css/common.css + .map (npm run scss 와 같은 출력 — expanded · 소스맵 · autoprefix 없음)",
+  "liveSassCompile.settings.formats": [
+    {
+      "format": "expanded",
+      "extensionName": ".css",
+      "savePath": "/common/css"
+    }
+  ],
+  "liveSassCompile.settings.includeItems": [
+    "/common/scss/common.scss"
+  ],
+  "liveSassCompile.settings.excludeList": [
+    "/**/node_modules/**",
+    "/.vscode/**"
+  ],
+  "liveSassCompile.settings.generateMap": true,
+  "liveSassCompile.settings.autoprefix": null,
+  "liveSassCompile.settings.showOutputWindowOn": "Warning",
+  "liveSassCompile.settings.watchOnLaunch": true,
+  "// Live Server": "루트 index.html 을 Open with Live Server. SCSS 저장은 CSS 가 바뀔 때 한 번만 새로고침",
+  "liveServer.settings.root": "/",
+  "liveServer.settings.ignoreFiles": [
+    ".vscode/**",
+    "**/*.scss",
+    "**/*.map"
+  ],
+  "liveServer.settings.port": 5193
+}
