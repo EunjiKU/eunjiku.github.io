@@ -3069,7 +3069,10 @@ body:has(.modal-page.is-open) .wrapper .gnb {
     gap: 4rem;
   }
   .main-projects .inner .project-layout-stack .list .stack-list .project-card {
-    top: calc(var(--gnb-height) + 1.5rem);
+    position: relative;
+    top: auto;
+    translate: none;
+    scale: none;
   }
   .main-projects .inner .project-layout-stack .list .stack-list .project-card .info {
     grid-template-areas: "period btn" "tit tit" "txt txt" "tags tags";

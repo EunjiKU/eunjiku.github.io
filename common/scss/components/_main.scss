@@ -1370,8 +1370,12 @@
           .stack-list {
             gap: 4rem;
 
+            // 쌓이지 않고 그냥 흘러간다 — 화면에 붙지(sticky) 않고, 덮일 때 작아지며 밀리는 모션도 없다 (작은 화면에서는 정신없어서)
             .project-card {
-              top: calc(var(--gnb-height) + 1.5rem);
+              position: relative;
+              top: auto;
+              translate: none;
+              scale: none;
 
               .info {
                 grid-template-areas:
