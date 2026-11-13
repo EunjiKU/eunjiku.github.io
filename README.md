@@ -33,7 +33,7 @@ common/
 ├── css/                   ← 컴파일 산출물 (직접 고치지 않는다)
 ├── js/
 │   ├── theme.js           ← <head> — 팝업 안(iframe)이면 data-embed (헤더 · 푸터 감춤)
-│   ├── common.js          ← 공통 UI — 헤더(테마 · 메뉴 · 첫 진입 · 진행 막대 · 현재 섹션) · 부드러운 스크롤 · 앵커 스크롤 · 진입 모션 · 모달 · 공개 API window.UI
+│   ├── common.js          ← 공통 UI — 헤더(600↓ 메뉴 · 첫 진입 · 진행 막대 · 현재 섹션) · 부드러운 스크롤 · 앵커 스크롤 · 진입 모션 · 모달 · 공개 API window.UI
 │   ├── main.js            ← 메인 섹션 — 히어로 덮기 · 히어로 단어 · 숫자 세기 · 경력 타임라인 · 프로젝트 탭 · 필터(전체 프로젝트) · 지금 보는 카드 · 쌓이는 카드 · 설명 모달 · 연락 폼(EmailJS) · 맨 위로 버튼 · 마우스 커서
 │   └── lib/               ← jQuery 3.7.1 · GSAP 3.12.5 + ScrollTrigger · Lenis 1.3.27 (로컬)
 ├── images/                ← icon-* · logo-* (SVG) · @img-sample-* (더미 사진 — 히어로 · 프로젝트 카드) · favicon* · og-default.png
@@ -53,6 +53,8 @@ CLAUDE.md · PROJECT.md · TODO.md   ← 작업 규칙 · 결정 기록 · 할 �
 | 지금 보는 카드 | 메인 오른쪽 `.preview`(사진 · 이름 · 순번 · `.now-tag`) — `main.js` 「지금 보는 카드 표시」가 지금 붙어 있는 카드의 `data-period` 연도 · `data-category` 로 바꾼다 |
 | 분류 필터 (전체 프로젝트) | `projects.html` `.filter-btn[data-filter]` 값 = 카드 `data-category` (`build` 구축 · `dispatch` 파견) |
 | 소개 인적 사항 | `.about-grid` 오른쪽 절반에 위에서 아래로 — `.profile-info`(값만 — 이름 · 생년월일 · 사는 곳, 이름표 dt 는 `.blind`, 히어로와 같은 값, JSON-LD `birthDate` · `address` 도 같이) → 큰 숫자 `.stat-grid` → 굵은 선 아래 `.profile`(인사말 · 글 · 링크) |
+| 헤더 | PC 메인은 첫 화면에서 히어로 가운데 상자 위끝 높이(로고 왼쪽 · 메뉴 오른쪽)에 있다가 스크롤해 화면 위끝에 닿으면 붙는다(sticky — `_header.scss` 「PC」, 위 여백 13.76vw). 다른 페이지 · 1024↓ 은 처음부터 위 |
+| 장식 | 소개 왼쪽 `.about-deco`(점 격자 + 도는 별표) — 모두 aria-hidden, 1024↓ 숨김 |
 | 히어로 | 큰 영문 `.hero-name` · 가운데 상자 글자 `.hero-media .media-item`(한 자씩 — `main.js` 「히어로 글자」) · 슬로건 `.intro .tit` · 아래 줄 `.hero-foot`(세 칸 — 이름 · 생년월일 · 사는 곳 한 줄 + 주요 기술 한 줄 `.info-list`(값만 — 이름표 dt 는 `.blind`, 주요 기술은 `.info-item-full`) | 숫자 `.stat-list` | 흐르는 프로젝트 `.client-list` 두 벌) |
 | 맨 위로 버튼 · 마우스 커서 | `.top-btn`(맨 위가 아니면 보임 — `main.js` 「맨 위로 버튼」) · `.cursor` 점 + 뒤따라오는 `.cursor-ring`(PC 마우스에서만 — 「마우스 커서」) |
 | 흐르는 띠(연락) · 검정 구획 · 큰 문장 | `.sec-band`(흐르는 제목 `h2.band-tit` — 같은 묶음 `.set` 두 벌) · 섹션에 `data-tone="dark"` · `.statement[data-fill]`(`main.js` 「문장 채우기」, 왼쪽 정렬 `.statement-left`) |
