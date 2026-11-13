@@ -49,9 +49,10 @@
         "name": "구은지",
         "alternateName": "Ku Eun Ji",
         "jobTitle": "웹 퍼블리셔",
+        "birthDate": "1998-12-08",
+        "address": { "@type": "PostalAddress", "addressRegion": "인천광역시", "addressLocality": "부평구", "addressCountry": "KR" },
         "url": "https://eunjiku.github.io/",
         "image": "https://eunjiku.github.io/common/images/og-default.png",
-        "address": { "@type": "PostalAddress", "addressRegion": "인천광역시", "addressLocality": "부평구", "addressCountry": "KR" },
         "sameAs": ["https://github.com/EunjiKU"],
         "knowsAbout": ["HTML", "CSS", "SCSS", "JavaScript", "jQuery", "GSAP", "웹 접근성", "웹 표준", "반응형 웹"]
       }
@@ -130,6 +131,18 @@
                 </dl>
                 <dl class="info-list">
                   <div class="info-item">
+                    <dt class="label">이름</dt>
+                    <dd class="txt">구은지</dd>
+                  </div>
+                  <div class="info-item">
+                    <dt class="label">사는 곳</dt>
+                    <dd class="txt">인천 부평구</dd>
+                  </div>
+                  <div class="info-item">
+                    <dt class="label">생년월일</dt>
+                    <dd class="txt"><time datetime="1998-12-08">1998.12.08</time></dd>
+                  </div>
+                  <div class="info-item info-item-full">
                     <dt class="label">주요 기술</dt>
                     <dd class="txt">HTML5 · CSS3 · SCSS · JavaScript · jQuery · GSAP</dd>
                   </div>
@@ -583,6 +596,20 @@
             <div class="profile" data-motion-group="each">
               <p class="lead">안녕하세요. 4년차 프론트엔드 퍼블리셔 구은지입니다. 웹 표준과 접근성을 준수하며, 디자인의 의도를 정확하게 구현하는 것을 목표로 합니다.</p>
               <p class="txt">다양한 규모의 프로젝트에서 반응형 웹사이트, 랜딩 페이지, 관리자 시스템 등을 퍼블리싱해왔으며, 개발팀과의 원활한 협업을 위해 항상 깔끔하고 유지보수하기 좋은 코드를 작성하려 노력합니다.</p>
+              <dl class="profile-info">
+                <div class="info-item">
+                  <dt class="label">이름</dt>
+                  <dd class="txt">구은지</dd>
+                </div>
+                <div class="info-item">
+                  <dt class="label">사는 곳</dt>
+                  <dd class="txt">인천 부평구</dd>
+                </div>
+                <div class="info-item">
+                  <dt class="label">생년월일</dt>
+                  <dd class="txt"><time datetime="1998-12-08">1998.12.08</time></dd>
+                </div>
+              </dl>
               <ul class="link-list">
                 <li>
                   <a href="https://github.com/EunjiKU" target="_blank" rel="noopener" class="out-link">
@@ -721,16 +748,15 @@
 
           <div class="contact-panel" data-motion>
             <div class="info">
-              <ul class="contact-list">
-                <li class="contact-item">
-                  <p class="label">이메일</p>
-                  <a href="mailto:yoo128@naver.com" class="value">yoo128@naver.com</a>
-                </li>
-                <li class="contact-item">
-                  <p class="label">위치</p>
-                  <p class="value">인천광역시 부평구</p>
-                </li>
-              </ul>
+              <div class="contact-item">
+                <p class="label">이메일</p>
+                <a href="mailto:yoo128@naver.com" class="contact-link">yoo128@naver.com</a>
+              </div>
+              <!-- @ 전화번호 예시 — 실제 번호로 바꾼다 (href 의 tel: 도 같이) -->
+              <div class="contact-item">
+                <p class="label">전화</p>
+                <a href="tel:010-0000-0000" class="contact-link">010-0000-0000</a>
+              </div>
             </div>
 
             <!-- @ 보내기는 EmailJS — data-emailjs-* 세 값 · 설정 방법은 README 「연락 폼」 -->
