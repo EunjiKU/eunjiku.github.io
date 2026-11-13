@@ -52,6 +52,7 @@ JSON.stringify({ w: innerWidth, of: document.documentElement.scrollWidth > vw, o
 - 메인에서 「전체 프로젝트 보기」를 눌러 팝업 안(iframe — `html[data-embed]`, 헤더 · 푸터 없음)에서도 같은 배치인지
 - 끝나면 화면 크기 흉내를 해제한다
 - 콘솔의 `ERR_CONNECTION_REFUSED` 는 앞서 끈 미리보기 서버의 흔적일 수 있다 — 페이지를 새로 불러 네트워크 응답(모두 200)으로 확인한 뒤 판단한다
+- 미리보기 창이 가려져 있으면 애니메이션 프레임이 멈춘다 — 헤더 내려오기 같은 GSAP 모션이 시작점에 멈춰 위치가 어긋나 보인다. `gsap.ticker.frame` 이 0.5초 동안 늘지 않으면 측정값이 아니라 환경 탓이다 (코드를 고치지 않는다)
 
 ## 3. 접근성
 

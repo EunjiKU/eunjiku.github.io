@@ -695,18 +695,38 @@
   }
 }
 
-/* 소개로 건너뛰기 — 프로젝트를 보는 동안 화면 아래 가운데에 붙어 있다(sticky — 섹션 끝까지) */
+/* 아래 버튼 줄 — 프로젝트를 보는 동안 화면 아래 가운데에 붙어 있다(sticky — 섹션 끝까지)
+   · 전체 보기(.all-btn — 1024↓ 에서만, 테두리) + 프로젝트 넘기기(.skip-btn — 소개로, 채움) */
 .main-projects {
   .inner {
-    .skip-btn {
+    .skip-bar {
       display: flex;
-      align-items: center;
       gap: 0.5rem;
       position: sticky;
       bottom: 1.5rem;
       z-index: var(--z-base);
       width: fit-content;
       margin: 4rem auto 0;
+    }
+
+    .all-btn {
+      display: none;
+      align-items: center;
+      padding: 0.875rem 1.5rem;
+      font: var(--font-b4-med);
+      letter-spacing: var(--font-b4-med-ls);
+      color: var(--color-text-default-highest);
+      background: var(--color-bg-default);
+      border: 1px solid var(--color-line-strong);
+      transition: opacity 0.3s ease;
+
+      @include hover { opacity: 0.8; }
+    }
+
+    .skip-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       padding: 0.875rem 1.5rem;
       font: var(--font-b4-med);
       letter-spacing: var(--font-b4-med-ls);
@@ -1234,7 +1254,7 @@
 }
 
 
-// 움직이는 장식 — Scroll 아래 선을 따라 진한 토막이 내려가고, 건너뛰기 화살표가 위아래로 까딱이고, 소개 별표가 천천히 돈다 (모션 줄이기는 멈춤)
+// 움직이는 장식 — Scroll 아래 선을 따라 진한 토막이 내려가고, 넘기기 화살표가 위아래로 까딱이고, 소개 별표가 천천히 돈다 (모션 줄이기는 멈춤)
 @include motion {
   .main-hero {
     .pin-spacer {
@@ -1283,6 +1303,13 @@
 
 /* 반응형 */
 @include mo {
+  // 전체 보기 — 왼쪽 칸이 위에 남아 카드를 보는 동안 안 보이므로 아래 버튼 줄에도
+  .main-projects {
+    .inner {
+      .all-btn { display: flex; }
+    }
+  }
+
   // 프로젝트 — 카드가 꽉 차 보이지 않게 좌우 여백을 더 (태블릿 64 + 32)
   .main-projects {
     .inner { padding: 0 calc(var(--side-padding) + 2rem); }
@@ -1449,12 +1476,23 @@
     .inner { padding: 0 calc(var(--side-padding) + 1rem); }
   }
 
-  // 건너뛰기 버튼은 왼쪽에 — 가운데면 좁은 화면에서 오른쪽 아래 맨 위로 버튼과 겹친다
+  // 아래 버튼 줄은 왼쪽에 — 가운데면 좁은 화면에서 오른쪽 아래 맨 위로 · 메뉴 버튼과 겹친다. 버튼은 작게, 넘기기는 「넘기기」만 보인다
   .main-projects {
     .inner {
-      .skip-btn {
+      .skip-bar {
         bottom: 1rem;   // 맨 위로 버튼과 같은 아래 여백 (common/_footer)
         margin-left: -1rem;   // 프로젝트에만 더한 좌우 여백(1rem)을 빼 화면 끝에서 20 — 오른쪽 맨 위로 버튼과 같은 옆 여백
+      }
+
+      .all-btn,
+      .skip-btn { padding: 0.75rem 0.875rem; }
+
+      .skip-btn {
+        gap: 0.25rem;
+
+        .txt {
+          .sub { @include blind; }
+        }
       }
     }
   }

@@ -49,7 +49,7 @@ CLAUDE.md · PROJECT.md · TODO.md   ← 작업 규칙 · 결정 기록 · 할 �
 | --- | --- |
 | 색 · 글자 크기 | `common/scss/common/_tokens.scss` (`:root` · 검정 구획 `[data-tone="dark"]` · 1024/600) |
 | 프로젝트 카드 | `index.html` `#workGrid`(쌓이는 카드) · `projects.html` `#workGrid` · `#personalGrid`(3열 `.project-grid`) 의 `<article class="project-card">` — 「설명 보기」 모달 내용은 카드의 `data-*` (`data-pages` · `data-contrib` 는 `\|` 구분, `data-tags` 는 `,` 구분, `data-url` · `data-video` 는 있을 때만). 공개 주소가 있는 카드만 「사이트 보기」 링크. 사진은 `.thumb .photo`(사진이 없을 때 바탕색 `.project-card-bg1`~`3`) |
-| 전체 프로젝트 · 건너뛰기 | 왼쪽 「프로젝트」 아래 `.more-btn`(서브페이지 `projects.html` — 스크립트가 있으면 `#projectsModal` 화면이 오른쪽에서 밀고 들어온다. 헤더는 위에 남고, 헤더 링크를 누르면 화면을 닫고 그 섹션으로) · `.skip-btn`(소개로). 팝업 안 서브페이지는 `html[data-embed]`(theme.js)로 헤더 · 푸터를 감춘다 |
+| 전체 프로젝트 · 넘기기 | 왼쪽 「프로젝트」 아래 `.more-btn`(1024↓ 은 아래 버튼 줄 `.skip-bar` 의 `.all-btn` 도)(서브페이지 `projects.html` — 스크립트가 있으면 `#projectsModal` 화면이 오른쪽에서 밀고 들어온다. 헤더는 위에 남고, 헤더 링크를 누르면 화면을 닫고 그 섹션으로) · `.skip-btn`(「프로젝트 넘기기」 — 소개로). 팝업 안 서브페이지는 `html[data-embed]`(theme.js)로 헤더 · 푸터를 감춘다 |
 | 지금 보는 카드 | 메인 오른쪽 `.preview`(사진 · 이름 · 순번 · `.now-tag`) — `main.js` 「지금 보는 카드 표시」가 지금 붙어 있는 카드의 `data-period` 연도 · `data-category` 로 바꾼다 |
 | 분류 필터 (전체 프로젝트) | `projects.html` `.filter-btn[data-filter]` 값 = 카드 `data-category` (`build` 구축 · `dispatch` 파견) |
 | 소개 인적 사항 | `.about-grid` 오른쪽 절반에 위에서 아래로 — `.profile-info`(값만 — 이름 · 생년월일 · 사는 곳, 이름표 dt 는 `.blind`, 히어로와 같은 값, JSON-LD `birthDate` · `address` 도 같이) → 큰 숫자 `.stat-grid` → 굵은 선 아래 `.profile`(인사말 · 글 · 링크) |
