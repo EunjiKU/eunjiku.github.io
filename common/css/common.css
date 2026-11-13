@@ -394,9 +394,7 @@ progress, meter {
   --color-media-1: #000000; /* 히어로 가운데 상자 — 사진 밑 · 덧칠 (고정 검정) */
   --color-media-text: #ffffff; /* 〃 위 글자 */
   --color-bg-glass: rgb(239 239 239 / 60%); /* 화면 위에 붙은 헤더 바탕 — 뒤가 흐리게 비친다(backdrop-filter) */
-  --color-line-glass: rgb(0 0 0 / 8%); /* 〃 테두리 — 밝은 바탕에서 판 가장자리 */
   --color-bg-glass-dark: rgb(0 0 0 / 45%); /* 검정 구획 위에 붙은 헤더 바탕 (.gnb.is-dark) */
-  --color-line-glass-dark: rgb(255 255 255 / 12%);
   --color-line-float: rgb(255 255 255 / 30%); /* 떠 있는 검정 버튼(맨 위로 · 600↓ 전체 메뉴) 테두리 — 검정 구획 위에서도 보이게 */
   --color-header-blend: #ffffff; /* 마우스 커서 — 바탕과 반전(difference)되는 흰색 */
   /* ------------------------------------------------------------------
@@ -858,12 +856,11 @@ em {
   inset: 0;
   z-index: var(--z-behind);
   background: var(--color-bg-glass);
-  border: 1px solid var(--color-line-glass);
   border-radius: 0.75rem;
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   backdrop-filter: blur(16px) saturate(140%);
   opacity: 0;
-  transition: opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+  transition: opacity 0.3s ease, background-color 0.3s ease;
   pointer-events: none;
 }
 .gnb.is-stuck .bar::before {
@@ -874,7 +871,6 @@ em {
 }
 .gnb.is-dark .bar::before {
   background: var(--color-bg-glass-dark);
-  border-color: var(--color-line-glass-dark);
 }
 .gnb {
   /* 첫 진입 — PC 만 위에 숨어 있다가 .is-shown 이 붙으면 내려온다 (common.js). 1024↓ · 모션 줄이기는 처음부터 제자리 */
