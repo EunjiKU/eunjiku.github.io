@@ -8,7 +8,7 @@
    2. 웹폰트 ............... common/_fonts            @font-face — Pretendard 400 · 500 · 600 · 700 (common/fonts/)
    3. 문서 기준 ............. common/_base             html(rem 기준) · body · 강조 em(포인트 색) · 앵커 멈춤 위치
    3-1. 레이아웃 컨테이너 .. common/_base             .wrapper · .inner
-   4. 접근성·공통 클래스 .... common/_utilities        .blind · .skip · 포커스 링 · 정렬 · 화면 폭별 노출 · [data-motion]
+   4. 접근성·공통 클래스 .... common/_utilities        .blind · .skip · 포커스 링 · 진입 모션 [data-motion] · 글자 나눠 등장 [data-split]
    7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-scrolled · .is-open · .depth1-link.is-active
    8. 푸터 ................. common/_footer           .footer
    9. 섹션 골격 ............ common/_page             .sec · .sec-head
@@ -392,7 +392,6 @@ progress, meter {
   --color-bg-thumb-1: #d8d8d8; /* 카드 사진 자리 면 */
   --color-bg-thumb-2: #cccccc; /* 〃 */
   --color-bg-thumb-3: #e2e2e2; /* 〃 */
-  --color-thumb-light: rgb(255 255 255 / 60%); /* 카드 사진 자리 빛 번짐 */
   --color-media-1: #000000; /* 히어로 가운데 상자 — 사진 밑 · 덧칠 (고정 검정) */
   --color-media-text: #ffffff; /* 〃 위 글자 */
   --color-header-blend: #ffffff; /* 헤더 글자 — 반전(difference)으로 바탕에 따라 검정 · 흰색이 된다 (모드 무관)  */
@@ -413,8 +412,6 @@ progress, meter {
   /* Display — 히어로 · 큰 숫자 */
   --font-ds1: 700 4rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
   --font-ds1-ls: -0.03em; /* 큰 숫자 — 소개 4+ · 30+ */
-  --font-d1: 700 4.5rem / 1.2 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-  --font-d1-ls: -0.035em;
   /* Title — 섹션 제목 · 통계 숫자 */
   --font-dp: 700 13cqw / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
   --font-dp-ls: -0.02em; /* 히어로 큰 영문 — 무대 폭에 비례(cqw, 화면 양끝까지 채운다 — vw 금지의 예외) */
@@ -475,10 +472,8 @@ progress, meter {
   --z-base: 1; /* 겹치는 장식 */
   --z-sticky: 100; /* 고정 헤더 */
   --z-dropdown: 200; /* 맨 위로 버튼 · 떠 있는 요소 */
-  --z-overlay: 300; /* 딤 */
   --z-modal: 400; /* 모달 */
   --z-page-header: 450; /* 전체 화면 페이지(.modal-page) 위에 남는 헤더 */
-  --z-toast: 500; /* 토스트 · 알림 */
   --z-skip: 1000; /* 스킵 링크 */
   --z-cursor: 2000; /* 마우스 커서 — 맨 위 */
 }
@@ -502,7 +497,6 @@ progress, meter {
   --color-bg-thumb-1: #1f1f1f;
   --color-bg-thumb-2: #2a2a2a;
   --color-bg-thumb-3: #333333;
-  --color-thumb-light: rgb(255 255 255 / 6%);
   --color-line-default: #2e2e2e;
   --color-line-strong: #ffffff;
   --color-border-focused: #ffffff;
@@ -513,7 +507,6 @@ progress, meter {
 @media (max-width: 1024px) {
   :root {
     --font-ds1: 700 3rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-    --font-d1: 700 3.25rem / 1.25 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-hs: 700 2.25rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-hs-txt: 400 1.125rem / 1.6 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-t1: 700 3rem / 1.25 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
@@ -529,7 +522,6 @@ progress, meter {
 @media (max-width: 600px) {
   :root {
     --font-ds1: 700 2.5rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-    --font-d1: 700 2.25rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-hs: 700 1.625rem / 1.35 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-hs-txt: 400 1rem / 1.6 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-t1: 700 2.125rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
@@ -778,79 +770,9 @@ em {
   outline-offset: 2px;
 }
 
-/* 글자 정렬 — 어느 요소에나 더해 쓴다 */
-.txt-left {
-  text-align: left !important;
-}
-
-.txt-center {
-  text-align: center !important;
-}
-
-.txt-right {
-  text-align: right !important;
-}
-
-/* 놓는 자리 — 어느 블록에나 더해 쓴다. 이름은 {속성}-{값} — 부품과 상관없이 뜻이 하나 */
-/* 오른쪽 끝 — 블록을 부모 오른쪽 끝에 붙인다. 폭은 블록이 갖는다 */
-.pos-end {
-  margin-left: auto;
-}
-
-/* 위에 붙기 — 스크롤하면 헤더 아래에, 내려가며 헤더가 숨으면 화면 맨 위에 붙는다 */
-.pos-sticky {
-  position: sticky;
-  top: var(--gnb-height);
-  transition: top 0.3s;
-}
-
-.wrapper:has(.gnb.is-hidden:not(.is-open, :focus-within)) .pos-sticky {
-  top: 0;
-}
-
-/* 가로 배치 — 감싸는 블록에 더한다. 자식을 한 줄로 놓고 가로 자리를 정한다 (세로 정렬은 .align-*) */
-.flex-start { /* 왼쪽부터 */
-  display: flex;
-  justify-content: flex-start;
-}
-
-.flex-center { /* 가운데 */
-  display: flex;
-  justify-content: center;
-}
-
-.flex-end { /* 오른쪽 끝 */
-  display: flex;
-  justify-content: flex-end;
-}
-
-.flex-between { /* 양끝 — 첫 자식 왼쪽 · 마지막 자식 오른쪽 끝 (제목 + 더보기 버튼 등) */
-  display: flex;
-  justify-content: space-between;
-}
-
-/* 세로 정렬 — flex · grid 블록에 더한다 (.flex-between.align-end — 제목 아래 끝에 더보기 버튼) */
-.align-start {
-  align-items: flex-start;
-} /* 위 끝 */
-.align-center {
-  align-items: center;
-} /* 가운데 */
-.align-end {
-  align-items: flex-end;
-} /* 아래 끝 */
-/* 꽉 찬 이미지 — <img> 에 더한다. 부모 폭에 맞춰 원본 비율대로 줄어든다 (width · height 속성은 원본 크기로) */
-.img-full {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-/* 화면 폭별 노출 — 다른 구간에서 숨기기만 한다 (보이는 구간의 display 는 요소 · 부품 값 그대로, hidden 이 있으면 숨김)
-   · .only-pc 1025px 이상 · .only-mob 1024px 이하 — 선언은 파일 끝 「반응형」 */
 /* --------------------------------------------------------------------------
    진입 모션 — 쓰는 법은 UI 가이드 Motion
-   · 블록: data-motion(값 없음 · rise · fade · zoom · custom) · 묶음 부모: data-motion-group(each · row)
+   · 블록: data-motion(값 없음 — 떠오름 · custom — 글자 나눠 등장) · 묶음 부모: data-motion-group(each · row)
    · .is-shown 은 common.js 가 붙인다
    -------------------------------------------------------------------------- */
 /* 수치 — 프로젝트마다 여기만 바꾼다. 블록 하나만 바꾸려면 그 선택자에 같은 변수를 준다 */
@@ -858,10 +780,7 @@ em {
   --motion-duration: 0.7s;
   --motion-ease: ease-out;
   --motion-distance: min(3.75rem, 100%);
-  --motion-pin-distance: 3.75rem;
   --motion-step: 0.2s;
-  --motion-zoom-duration: 1.4s;
-  --motion-zoom-scale: 1.15;
 }
 
 /* 묶음 차례 — 지연 = 순번(--motion-order, common.js 가 자식에 적는다) × 간격. 자식에 --motion-delay 를 직접 주면 그 값이 이긴다 */
@@ -892,114 +811,6 @@ em {
     transform: translateY(0);
   }
 }
-/* 핀을 품은 블록(값 없는 data-motion · 묶음 자식) — 틀은 페이드, .stage 안의 내용만 떠오른다. 값(fade 등)이 있으면 그 변형대로 */
-@media (prefers-reduced-motion: no-preference) {
-  [data-motion=""]:has(.pin-spacer),
-  [data-motion-group] > :where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) {
-    transform: none;
-  }
-  [data-motion=""]:has(.pin-spacer) .stage > *,
-  [data-motion-group] > :where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) .stage > * {
-    transform: translateY(var(--motion-pin-distance));
-  }
-  [data-motion=""]:has(.pin-spacer) .stage > img,
-  [data-motion-group] > :where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) .stage > img {
-    top: calc(var(--motion-pin-distance) * -1);
-    height: calc(100% + var(--motion-pin-distance));
-  }
-  [data-motion=""]:has(.pin-spacer).is-shown,
-  [data-motion-group] > .is-shown:where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) {
-    animation-name: motion-fade;
-  }
-  [data-motion=""]:has(.pin-spacer).is-shown .stage > *,
-  [data-motion-group] > .is-shown:where(:not([data-motion]), [data-motion=""]):has(.pin-spacer) .stage > * {
-    transform: none;
-    animation: motion-rise-inner var(--motion-duration) var(--motion-ease) var(--motion-delay, 0s) 1 normal backwards;
-  }
-}
-@keyframes motion-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-@keyframes motion-rise-inner {
-  from {
-    transform: translateY(var(--motion-pin-distance));
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-/* 변형 — data-motion="rise": 속성이 붙은 요소가 틀(overflow: hidden)이고, 안의 글자(span)가 틀 아래에서 올라온다 */
-[data-motion=rise] {
-  overflow: hidden;
-}
-[data-motion=rise] > * {
-  display: block;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  [data-motion=rise] {
-    opacity: 1;
-    transform: none;
-  }
-  [data-motion=rise] > * {
-    transform: translateY(110%);
-  }
-  [data-motion=rise].is-shown {
-    animation: none;
-  }
-  [data-motion=rise].is-shown > * {
-    transform: none;
-    animation: motion-rise var(--motion-duration) var(--motion-ease) var(--motion-delay, 0s) 1 normal backwards;
-  }
-}
-@keyframes motion-rise {
-  from {
-    transform: translateY(110%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-/* 변형 — data-motion="fade": 떠오르지 않고 제자리에서 나타난다 */
-@media (prefers-reduced-motion: no-preference) {
-  [data-motion=fade] {
-    transform: none;
-  }
-  [data-motion=fade].is-shown {
-    animation-name: motion-fade;
-  }
-}
-/* 변형 — data-motion="zoom": 사진(::before 배경 또는 바로 안의 img)이 커진 상태에서 원래 크기로 줄어든다. 블록 자체는 숨기지 않는다. 블록에 overflow: hidden 필요 */
-@media (prefers-reduced-motion: no-preference) {
-  [data-motion=zoom] {
-    opacity: 1;
-    transform: none;
-  }
-  [data-motion=zoom]::before,
-  [data-motion=zoom] > img {
-    transform: scale(var(--motion-zoom-scale));
-  }
-  [data-motion=zoom].is-shown {
-    animation: none;
-  }
-  [data-motion=zoom].is-shown::before,
-  [data-motion=zoom].is-shown > img {
-    animation: motion-zoom var(--motion-zoom-duration) var(--motion-ease) 1 normal forwards;
-  }
-}
-@keyframes motion-zoom {
-  from {
-    transform: scale(var(--motion-zoom-scale));
-  }
-  to {
-    transform: scale(1);
-  }
-}
 /* 변형 — 글자 나눠 등장 [data-split] + data-motion="custom": common.js 가 글자를 .char 로 나누고, .is-shown 이 붙으면 글자가 차례로 올라온다 */
 :where([data-split]) {
   --split-step: 0.035s;
@@ -1024,17 +835,6 @@ em {
   [data-split]:not(.is-shown) .char {
     opacity: 0;
     transform: translateY(0.6em) rotateX(-15deg) scale(0.8);
-  }
-}
-/* 반응형 — 화면 폭별 노출 (숨김만) */
-@media not all and (max-width: 1024px) {
-  .only-mob {
-    display: none !important;
-  }
-}
-@media (max-width: 1024px) {
-  .only-pc {
-    display: none !important;
   }
 }
 /* ==========================================================================
@@ -1347,7 +1147,7 @@ em {
   }
 }
 /* ==========================================================================
-   9. 섹션 골격 — .sec · 검정 구획 [data-tone="dark"] · 섹션 머리 띠 .sec-band · 큰 문장 .statement · 섹션 제목 .sec-head(서브페이지)
+   9. 섹션 골격 — .sec · 검정 구획 [data-tone="dark"] · 섹션 머리 띠 .sec-band · 큰 문장 .statement · 섹션 제목 .sec-head(메인 프로젝트 왼쪽 칸)
    ========================================================================== */
 /* 본문 섹션 — 위아래 여백 */
 .sec {
@@ -1430,7 +1230,7 @@ em {
     color: var(--color-text-fill-off);
   }
 }
-/* 섹션 제목 — 서브페이지(projects.html)의 제목 */
+/* 섹션 제목 — 메인 프로젝트 왼쪽 칸의 「프로젝트」 */
 .sec-head {
   margin-bottom: 3.5rem;
 }
@@ -1538,7 +1338,7 @@ em {
 }
 /* ==========================================================================
    11. 버튼
-   · .basic-btn — 네이비 채움. 종류 .basic-btn-outline(테두리) · 크기 .basic-btn-small · 폭 .basic-btn-full. <a> · <button> 둘 다
+   · .basic-btn — 검정 채움(검정 구획은 흰색). 종류 .basic-btn-outline(테두리) · 크기 .basic-btn-small · 폭 .basic-btn-full. <a> · <button> 둘 다
    · .btn-group — 버튼 묶음
    ========================================================================== */
 .basic-btn {
@@ -1752,17 +1552,6 @@ em {
 
 .github-icon {
   --icon: url("../images/logo-github.svg");
-  display: inline-block;
-  flex-shrink: 0;
-  width: 1.125rem;
-  height: 1.125rem;
-  background-color: currentColor;
-  -webkit-mask: var(--icon) no-repeat center/contain;
-  mask: var(--icon) no-repeat center/contain;
-}
-
-.notion-icon {
-  --icon: url("../images/logo-notion.svg");
   display: inline-block;
   flex-shrink: 0;
   width: 1.125rem;

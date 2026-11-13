@@ -40,7 +40,7 @@ common/
 ├── fonts/                 ← Pretendard 400 · 500 · 600 · 700 + 라이선스
 └── site.webmanifest       ← 홈 화면 아이콘 (192 · 512)
 CLAUDE.md · PROJECT.md · TODO.md   ← 작업 규칙 · 결정 기록 · 할 일
-.claude/skills/            ← Claude Code 스킬 (publishing — 코딩 컨벤션 · a11y-check — 접근성 점검)
+.claude/                   ← Claude Code — launch.json(미리보기 서버 「preview」) · skills/(publishing — 코딩 컨벤션 · a11y-check — 접근성 점검 · site-check — 배포 전 전체 점검)
 ```
 
 ## 콘텐츠 고치기
@@ -70,6 +70,14 @@ CLAUDE.md · PROJECT.md · TODO.md   ← 작업 규칙 · 결정 기록 · 할 �
 
 - 공개 키라 HTML 에 있어도 된다. 받는 메일 주소는 EmailJS 템플릿 설정에만 둔다 (저장소에 적지 않는다)
 - 「Invalid login」 은 앱 비밀번호가 아닐 때, 메일이 안 오면 IMAP/SMTP 설정을 확인한다
+
+## 배포 전 점검
+
+```bash
+node .claude/skills/publishing/scripts/audit.js
+```
+
+안 쓰는 클래스 · 이미지와 페이지 구조(중복 id · 없는 id 참조 · h1 · alt)를 본다. 반응형(기기 폭 표) · 접근성 · SEO 까지 한 번에 보는 순서는 `.claude/skills/site-check/SKILL.md`. 배포 날짜가 바뀌면 `sitemap.xml` 의 `lastmod` 를 고친다.
 
 ## 상태 클래스
 

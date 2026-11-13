@@ -2,6 +2,7 @@
 /*
  * 산출물 기계 점검 — 의존성 없음 (Node 18+). 산출물 루트에서 실행한다.
  *   node .claude/skills/publishing/scripts/audit.js [산출물 루트=.] [공통 에셋 폴더=common]
+ *   페이지는 html/ 폴더 — 없으면 루트의 *.html 을 읽는다
  *
  * ① 안 쓰는 클래스 — common.css 선택자 중 html · js 어디에도 없는 것 / 가이드(worklist)에만 있는 것
  *    scss/common/_utilities.scss 의 공통 클래스는 안 써도 유지하는 킷 기본 세트라 「공통 유틸」로 따로 보여 준다 (정리 대상 아님)
@@ -17,7 +18,9 @@ const path = require("path");
 
 const root = path.resolve(process.argv[2] || ".");
 const assetDir = path.join(root, process.argv[3] || "common");
+/* 페이지 — html/ 폴더 안 전부. html/ 가 없으면 루트의 *.html (GitHub Pages 처럼 페이지가 루트에 있는 저장소) */
 const htmlDir = path.join(root, "html");
+const rootPages = fs.existsSync(htmlDir) ? [] : fs.readdirSync(root).filter((n) => n.endsWith(".html")).map((n) => path.join(root, n));
 
 function walk(dir, out = []) {
   if (!fs.existsSync(dir)) return out;
@@ -34,7 +37,7 @@ const escapeRe = (s) => s.replace(/[.*+?^${}()|[\]\\-]/g, "\\$&");
 const hasWord = (txt, w) => new RegExp("(^|[^\\w-])" + escapeRe(w) + "([^\\w-]|$)").test(txt);
 const rel = (p) => path.relative(root, p).replace(/\\/g, "/");
 
-const htmlFiles = walk(htmlDir).filter((f) => f.endsWith(".html"));
+const htmlFiles = walk(htmlDir).filter((f) => f.endsWith(".html")).concat(rootPages);
 const jsFiles = walk(path.join(assetDir, "js")).filter((f) => f.endsWith(".js"));
 const scssFiles = walk(path.join(assetDir, "scss")).filter((f) => f.endsWith(".scss"));
 const isGuide = (f) => /[\\/]worklist[\\/]/.test(f);
@@ -84,7 +87,9 @@ function imageSize(file) {
   return null;
 }
 const imgDir = path.join(assetDir, "images");
-const refTxt = prodTxt + "\n" + guideTxt + "\n" + read(scssFiles);
+/* 홈 화면 아이콘 목록(*.webmanifest)이 부르는 이미지도 쓴 것으로 본다 */
+const manifests = walk(assetDir).filter((f) => f.endsWith(".webmanifest"));
+const refTxt = prodTxt + "\n" + guideTxt + "\n" + read(scssFiles) + "\n" + read(manifests);
 const unusedImg = [], heavyImg = [];
 for (const f of walk(imgDir)) {
   const base = path.basename(f);

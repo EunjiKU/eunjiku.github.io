@@ -16,7 +16,7 @@
    2. 웹폰트 ............... common/_fonts            @font-face — Pretendard 400 · 500 · 600 · 700 (common/fonts/)
    3. 문서 기준 ............. common/_base             html(rem 기준) · body · 강조 em(포인트 색) · 앵커 멈춤 위치
    3-1. 레이아웃 컨테이너 .. common/_base             .wrapper · .inner
-   4. 접근성·공통 클래스 .... common/_utilities        .blind · .skip · 포커스 링 · 정렬 · 화면 폭별 노출 · [data-motion]
+   4. 접근성·공통 클래스 .... common/_utilities        .blind · .skip · 포커스 링 · 진입 모션 [data-motion] · 글자 나눠 등장 [data-split]
    7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-scrolled · .is-open · .depth1-link.is-active
    8. 푸터 ................. common/_footer           .footer
    9. 섹션 골격 ............ common/_page             .sec · .sec-head

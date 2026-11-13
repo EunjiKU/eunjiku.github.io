@@ -336,7 +336,7 @@
      진입 모션 — 떠오를 블록에 data-motion, 자식을 차례로 띄우는 묶음은 부모 data-motion-group="row | each". 화면에 들어오면 .is-shown (한 번만)
      · 감지는 GSAP ScrollTrigger — 블록 윗변이 화면의 MOTION_START 선을 지나면 켠다
      · 차례는 자식의 순번 변수 --motion-order(0, 1, 2 …) — CSS 가 순번 × --motion-step 만큼 늦춘다 (간격은 CSS 한 곳)
-     · 순서 묶음(each)은 부모가 시작점 — 자식 순번은 등록 때 마크업 순서대로 적고, 부모 윗변이 선을 지나면 자식 전부에 .is-shown 을 한 번에 붙인다. 자식에 변형(data-motion="rise")이 있어도 자식 기준으로 따로 재지 않는다
+     · 순서 묶음(each)은 부모가 시작점 — 자식 순번은 등록 때 마크업 순서대로 적고, 부모 윗변이 선을 지나면 자식 전부에 .is-shown 을 한 번에 붙인다.
      · 줄 묶음(data-motion-group="row")만 자식이 시작점 — 같은 줄 자식은 함께 선을 지나 한 무리로 묶이고, 무리 안에서 문서 순서대로 순번을 적고 .is-shown (줄 수 · 열 수가 반응형으로 바뀌어도 그대로). 앞 무리 차례가 다 시작되기 전에 들어온 무리(스크롤 복원)는 순번을 이어 매긴다
      · 이미 지나친 블록(스크롤 복원 · 앵커 이동)은 바로 .is-shown. gsap · ScrollTrigger 가 없거나 reduceMotion 이면 전부 바로 .is-shown
      · 트리거 등록은 한 프레임(rAF) 뒤 — 페이지 JS 의 핀이 끼운 여백을 반영한 레이아웃으로 잰다

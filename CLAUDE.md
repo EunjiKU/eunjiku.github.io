@@ -16,7 +16,7 @@
 
 ## 트랙
 
-정적 HTML 한 페이지 + SCSS → `common/css/common.css` 한 파일. 서버 템플릿 없음 · 개발 이관 없음 — **이 저장소가 그대로 배포된다** (GitHub Pages).
+정적 HTML(메인 + 전체 프로젝트 + 백업) + SCSS → `common/css/common.css` 한 파일. 서버 템플릿 없음 · 개발 이관 없음 — **이 저장소가 그대로 배포된다** (GitHub Pages).
 
 ## 프로젝트 설정
 
@@ -24,12 +24,12 @@
 
 `publishing` 스킬 기본값에서 **아래만 다르다.** 여기 없는 항목은 스킬 기본값을 쓴다.
 
-- 산출물 루트 — 이 폴더. **페이지는 루트 `index.html`** (GitHub Pages 진입점이라 `html/` 폴더에 두지 않는다) + 백업 `projects.html`(이전 프로젝트 섹션 — 나중에 서브페이지로, 지금은 noindex). 에셋 경로는 `common/…` (상대경로, `../` 없음)
+- 산출물 루트 — 이 폴더. **페이지는 루트에** (GitHub Pages 진입점이라 `html/` 폴더에 두지 않는다) — `index.html`(메인) · `projects.html`(전체 프로젝트 — 메인 「전체 프로젝트 보기」가 팝업 화면 iframe 으로 연다, noindex) · `index2.html`(백업 — 프로젝트를 제목 줄 + 카드 3열로 바꾼 메인, noindex). 에셋 경로는 `common/…` (상대경로, `../` 없음)
 - 공통 에셋 — `common/` (언어 폴더 없음)
-- 공통 조각(헤더 · 푸터) — **조각 파일 없음.** 한 페이지라 `index.html` 안에 직접 둔다. `common.js` 의 조각 삽입 · `FRAGMENT_DIR` 은 뺐다
+- 공통 조각(헤더 · 푸터) — **조각 파일 없음.** 페이지마다 안에 직접 둔다 (헤더를 고치면 세 페이지 모두). `common.js` 의 조각 삽입 · `FRAGMENT_DIR` 은 뺐다
 - JS 파일 — `common.js`(공통 모듈 중 쓰는 것만 — 유틸 · 앵커 스크롤 · 진입 모션 · 모달 · 공개 API + 이 사이트 헤더) · `main.js`(메인 섹션 동작) · **예외 `theme.js`** — 팝업 안(iframe) 표시(`data-embed`)를 첫 화면 전에 거는 몇 줄, `<head>` 에서 동기 로드
 - 라이브러리 — 로컬 `common/js/lib/` jQuery 3.7.1 · GSAP 3.12.5 + ScrollTrigger · Lenis 1.3.27(부드러운 스크롤 — `common.js` 「부드러운 스크롤」, 라이선스 `LICENSE-lenis.txt`). Swiper 없음. **예외 — EmailJS SDK 는 CDN**(`@emailjs/browser@4`, `defer`) — 연락 폼 전송용. 첫 화면을 막지 않게 보낼 때 준비 여부를 본다
-- **퍼블 JS 범위 예외** — 배포되는 사이트라 개발 몫(조회 · 저장 · 제출)도 직접 한다: 프로젝트 탭 전환 · 분류 필터(백업 페이지) · 모달 내용 채우기 · 연락 폼 EmailJS 전송(`<form>` + `type="submit"`)
+- **퍼블 JS 범위 예외** — 배포되는 사이트라 개발 몫(조회 · 저장 · 제출)도 직접 한다: 프로젝트 탭 전환 · 분류 필터(전체 프로젝트) · 모달 내용 채우기 · 연락 폼 EmailJS 전송(`<form>` + `type="submit"`)
 - 사이트명 — `구은지 웹 퍼블리셔 포트폴리오`. `<title>` 은 `웹 퍼블리셔 포트폴리오: 구은지` (검색어 「퍼블리셔 포트폴리오」 우선). 도메인 `https://eunjiku.github.io/` — canonical · OG · sitemap · JSON-LD 가 이 주소를 쓴다
 - **인라인 스크립트 예외 — JSON-LD** (`<script type="application/ld+json">`, schema.org WebSite · Person). 실행 코드가 아니라 검색엔진용 데이터라 `<head>` 에 둔다
 - 터치 타깃 — 44×44px (작아 보이는 버튼은 `touch-area` · `touch-area-before` 믹스인으로 누르는 영역만 넓힌다)
@@ -53,16 +53,16 @@ Pretendard v1.3.9 공식 KS X 1001 서브셋 · `common/fonts/Pretendard-Regular
 
 ### 워크리스트
 
-없음 — 한 페이지 사이트. 할 일 · 결정 대기는 `TODO.md`.
+없음 — 페이지가 적은 사이트. 할 일 · 결정 대기는 `TODO.md`.
 
 ## 코드를 쓰기 전에
 
 **HTML·CSS·JS 를 한 줄이라도 만들거나 고치기 전에 `publishing` 스킬을 호출한다.** 스킬 값과 위 「프로젝트 설정」이 다르면 **이 문서가 우선한다.**
 
-작업을 마치면 `publishing/references/checklist.md` · `a11y-check` 로 검증한 뒤 보고한다. 완료 보고의 첫 블록은 가정·임의 결정이다. 전체 검수 요청은 `review` 스킬 — 파일을 고치기 전에 보고서부터.
+작업을 마치면 `publishing/references/checklist.md` · `a11y-check` 로 검증한 뒤 보고한다. 완료 보고의 첫 블록은 가정·임의 결정이다. 전체 점검 · 검수 · 반응형 · SEO 확인 요청은 `site-check` 스킬 — 고치라는 말이 없으면 보고서부터.
 
 **디자인 토큰** — `common/scss/common/_tokens.scss` 의 `:root` 가 원본 (`publishing` §0 · §7 · §10).
 
-산출물 점검 — `audit.js` 는 `html/` 폴더를 읽으므로 임시 폴더에 `html/index.html` + `common/` 을 복사해 돌린다. 아이콘(`logo-*` · `icon-*`)은 `_icon.scss` 의 `@each` 로, `favicon-192/512.png` 는 `site.webmanifest` 로 불러 「안 쓰는 이미지」로 나오는 것이 정상.
+산출물 점검 — 저장소 루트에서 `node .claude/skills/publishing/scripts/audit.js` (`html/` 폴더가 없으면 루트 `*.html` 을, 이미지는 `site.webmanifest` 까지 읽는다). 「안 쓰는 클래스」의 `lenis-smooth` · `lenis-stopped` 는 Lenis 가 실행 중에 붙이는 것이라 정상.
 
 환경 — Windows 11 · Node 18.20.5 · Python 없음. 스크립트는 Node 로 쓴다.

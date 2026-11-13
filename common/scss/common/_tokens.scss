@@ -32,7 +32,6 @@
   --color-bg-thumb-1: #d8d8d8;             /* 카드 사진 자리 면 */
   --color-bg-thumb-2: #cccccc;             /* 〃 */
   --color-bg-thumb-3: #e2e2e2;             /* 〃 */
-  --color-thumb-light: rgb(255 255 255 / 60%);   /* 카드 사진 자리 빛 번짐 */
   --color-media-1: #000000;                /* 히어로 가운데 상자 — 사진 밑 · 덧칠 (고정 검정) */
   --color-media-text: #ffffff;             /* 〃 위 글자 */
   --color-header-blend: #ffffff;           /* 헤더 글자 — 반전(difference)으로 바탕에 따라 검정 · 흰색이 된다 (모드 무관)  */
@@ -57,7 +56,6 @@
 
   /* Display — 히어로 · 큰 숫자 */
   --font-ds1: 700 4rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-ds1-ls: -0.03em;   /* 큰 숫자 — 소개 4+ · 30+ */
-  --font-d1: 700 4.5rem / 1.2 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-d1-ls: -0.035em;
   /* Title — 섹션 제목 · 통계 숫자 */
   --font-dp: 700 13cqw / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-dp-ls: -0.02em;   /* 히어로 큰 영문 — 무대 폭에 비례(cqw, 화면 양끝까지 채운다 — vw 금지의 예외) */
   --font-dl: 700 14cqw / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-dl-ls: -0.02em;   /* 히어로 상자 안 큰 글자 */
@@ -100,10 +98,8 @@
   --z-base: 1;          /* 겹치는 장식 */
   --z-sticky: 100;      /* 고정 헤더 */
   --z-dropdown: 200;    /* 맨 위로 버튼 · 떠 있는 요소 */
-  --z-overlay: 300;     /* 딤 */
   --z-modal: 400;       /* 모달 */
   --z-page-header: 450; /* 전체 화면 페이지(.modal-page) 위에 남는 헤더 */
-  --z-toast: 500;       /* 토스트 · 알림 */
   --z-skip: 1000;       /* 스킵 링크 */
   --z-cursor: 2000;     /* 마우스 커서 — 맨 위 */
 }
@@ -127,7 +123,6 @@
   --color-bg-thumb-1: #1f1f1f;
   --color-bg-thumb-2: #2a2a2a;
   --color-bg-thumb-3: #333333;
-  --color-thumb-light: rgb(255 255 255 / 6%);
   --color-line-default: #2e2e2e;
   --color-line-strong: #ffffff;
   --color-border-focused: #ffffff;
@@ -140,7 +135,6 @@
 @include mo {
   :root {
     --font-ds1: 700 3rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-    --font-d1: 700 3.25rem / 1.25 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-hs: 700 2.25rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-hs-txt: 400 1.125rem / 1.6 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-t1: 700 3rem / 1.25 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
@@ -157,7 +151,6 @@
 @include sm {
   :root {
     --font-ds1: 700 2.5rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-    --font-d1: 700 2.25rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-hs: 700 1.625rem / 1.35 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-hs-txt: 400 1rem / 1.6 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-t1: 700 2.125rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
