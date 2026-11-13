@@ -223,7 +223,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     스크롤 진행 막대 — .gnb .progress 의 --progress(0 ~ 1)
+     스크롤 상태 — 헤더가 화면 위끝에 붙어 있으면 .gnb.is-stuck(반투명 흐림 바탕), 진행 막대 .progress 의 --progress(0 ~ 1)
      -------------------------------------------------------------------------- */
   function bindGnbScroll() {
     const $gnb = $(".gnb").first();
@@ -234,6 +234,7 @@
     function update() {
       const y = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
+      $gnb.toggleClass("is-stuck", $gnb[0].getBoundingClientRect().top <= 0);
       if (bar) bar.style.setProperty("--progress", max > 0 ? Math.min(y / max, 1).toFixed(4) : 0);
       ticking = false;
     }

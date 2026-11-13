@@ -9,7 +9,7 @@
    3. 문서 기준 ............. common/_base             html(rem 기준) · body · 강조 em(포인트 색) · 앵커 멈춤 위치
    3-1. 레이아웃 컨테이너 .. common/_base             .wrapper · .inner
    4. 접근성·공통 클래스 .... common/_utilities        .blind · .skip · 포커스 링 · 진입 모션 [data-motion] · 글자 나눠 등장 [data-split]
-   7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-open · .depth1-link.is-active
+   7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-stuck · .is-open · .depth1-link.is-active
    8. 푸터 ................. common/_footer           .footer
    9. 섹션 골격 ............ common/_page             .sec · .sec-head
    10. 폼 .................. components/_form        .form-row · .text-field
@@ -387,14 +387,15 @@ progress, meter {
   --color-bg-point: #000000; /* 상태 점 · 진행 막대 · 타임라인 점 */
   --color-bg-point-soft: #dcdcdc; /* 연한 면 */
   --color-bg-inverse: #000000; /* 검정 면 — 기본 버튼 */
-  --color-bg-header: rgb(239 239 239 / 85%); /* 600↓ 메뉴 펼침 바탕 */
   --color-bg-dim: rgb(0 0 0 / 50%); /* 모달 딤 */
   --color-bg-thumb-1: #d8d8d8; /* 카드 사진 자리 면 */
   --color-bg-thumb-2: #cccccc; /* 〃 */
   --color-bg-thumb-3: #e2e2e2; /* 〃 */
   --color-media-1: #000000; /* 히어로 가운데 상자 — 사진 밑 · 덧칠 (고정 검정) */
   --color-media-text: #ffffff; /* 〃 위 글자 */
-  --color-header-blend: #ffffff; /* 헤더 글자 — 반전(difference)으로 바탕에 따라 검정 · 흰색이 된다 (모드 무관)  */
+  --color-bg-glass: rgb(239 239 239 / 72%); /* 화면 위에 붙은 헤더 바탕 — 뒤가 흐리게 비친다(backdrop-filter) */
+  --color-line-float: rgb(255 255 255 / 30%); /* 떠 있는 검정 버튼(맨 위로 · 600↓ 전체 메뉴) 테두리 — 검정 구획 위에서도 보이게 */
+  --color-header-blend: #ffffff; /* 마우스 커서 — 바탕과 반전(difference)되는 흰색 */
   /* ------------------------------------------------------------------
      Color — Line
      ------------------------------------------------------------------ */
@@ -468,8 +469,8 @@ progress, meter {
      ------------------------------------------------------------------ */
   --z-behind: -1; /* 쌓임 맥락 안에서 콘텐츠 뒤로 */
   --z-base: 1; /* 겹치는 장식 */
-  --z-sticky: 100; /* 고정 헤더 */
-  --z-dropdown: 200; /* 맨 위로 버튼 · 떠 있는 요소 */
+  --z-dropdown: 300; /* 맨 위로 버튼 — 본문 · 화면에 붙는 버튼보다 위 */
+  --z-sticky: 350; /* 고정 헤더 — 600↓ 펼친 메뉴가 맨 위로 버튼을 덮게 그보다 위, 모달보다 아래 */
   --z-modal: 400; /* 모달 */
   --z-page-header: 450; /* 전체 화면 페이지(.modal-page) 위에 남는 헤더 */
   --z-skip: 1000; /* 스킵 링크 */
@@ -490,7 +491,6 @@ progress, meter {
   --color-bg-point: #ffffff;
   --color-bg-point-soft: #262626;
   --color-bg-inverse: #ffffff;
-  --color-bg-header: rgb(0 0 0 / 85%);
   --color-bg-dim: rgb(0 0 0 / 65%);
   --color-bg-thumb-1: #1f1f1f;
   --color-bg-thumb-2: #2a2a2a;
@@ -511,7 +511,7 @@ progress, meter {
     --font-band: 700 5rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-t2: 700 2.125rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-h1: 700 1.5rem / 1.35 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-    --side-padding: 1.5rem;
+    --side-padding: 4rem; /* 태블릿 — 본문이 꽉 차 보이지 않게 좌우 64 */
     --header-padding: 1.5rem;
     --gnb-height: 4rem;
   }
@@ -836,20 +836,36 @@ em {
 }
 /* ==========================================================================
    7. GNB — 고정 헤더 (로고 · 섹션 메뉴 · 테마 · 600↓ 햄버거)
-   · common.js 가 붙이는 상태: .gnb.is-open(600↓ 메뉴 열림)
+   · common.js 가 붙이는 상태: .gnb.is-stuck(화면 위끝에 붙음) · .gnb.is-open(600↓ 메뉴 열림)
    · 현재 섹션 메뉴: .depth1-link.is-active + aria-current="true"
    · 스크롤 진행 막대: .progress 의 --progress(0 ~ 1)
    · 첫 진입: .gnb.is-shown 이 붙으며 위에서 내려온다 (common.js — html 에 직접 쓰지 않는다)
-   · 모양: 상자 없이 글자만 — 바탕과 반전(mix-blend-mode: difference)돼 밝은 곳은 검정 · 검정 구획은 흰색 (600↓ 메뉴를 펼치면 불투명 바탕)
-   · 로고 왼쪽 · 메뉴 오른쪽. PC 메인(히어로가 있는 페이지)은 처음에 가운데 상자 위끝 높이(양옆)에 있다가, 스크롤해서 화면 위끝에 닿으면 거기 붙는다(sticky). 다른 페이지는 처음부터 위에 고정(fixed)
+   · 모양: 검정 글자. 화면 위에 붙어 있는 동안(.is-stuck — common.js)은 뒤가 흐리게 비치는 반투명 바탕, 히어로 안에 있을 때는 투명. 600↓ 메뉴를 펼치면 불투명 바탕 · 전체 메뉴 버튼은 오른쪽 아래, 맨 위로 버튼 위에 떠 있다
+   · 로고 왼쪽 · 메뉴 오른쪽. 메인(히어로가 있는 페이지)은 처음에 큰 영문 아래에 있다가(PC 는 가운데 상자 위끝 높이 — 양옆, 1024↓ 은 큰 영문과 상자 사이), 스크롤해서 화면 위끝에 닿으면 거기 붙는다(sticky). 다른 페이지는 처음부터 위(PC fixed · 1024↓ sticky)
    ========================================================================== */
 .gnb {
   position: sticky;
   top: 0;
   z-index: var(--z-sticky);
   padding: 0.5rem 1.25rem 0;
-  color: var(--color-header-blend);
-  mix-blend-mode: difference;
+  color: var(--color-text-default-highest);
+}
+.gnb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-behind);
+  background: var(--color-bg-glass);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.gnb.is-stuck::before {
+  opacity: 1;
+}
+.gnb {
   /* 첫 진입 — 위에 숨어 있다가 .is-shown 이 붙으면 내려온다 (common.js). 모션 줄이기는 처음부터 제자리 */
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -1017,19 +1033,31 @@ em {
     right: 0;
     left: 0;
   }
-  .wrapper:has(.main-hero) {
-    display: flow-root;
-  }
+}
+/* 메인 — 첫 화면에서는 큰 영문 아래(--gnb-start)에 놓이고, 스크롤해 화면 위끝에 닿으면 붙는다
+   · 자리(흐름 속 높이)는 차지하지 않는다 — 위 여백만큼 내려놓고 같은 만큼 + 헤더 높이를 아래 음수 여백으로 돌려준다
+   · 1024↓ 은 11.33vw(큰 영문 아래끝) — 히어로 상자를 헤더 높이만큼 더 내린다 (components/_main 「히어로」)
+   · 무대 폭이 화면 폭이라 vw 로 cqw 와 같은 값 (vw 금지의 예외) */
+.wrapper:has(.main-hero) {
+  display: flow-root;
+}
+.wrapper:has(.main-hero) .gnb {
+  --gnb-start: 11.33vw;
+  margin-top: var(--gnb-start);
+  margin-bottom: calc((var(--gnb-start) + var(--gnb-height)) * -1);
+}
+
+@media not all and (max-width: 1024px) {
   .wrapper:has(.main-hero) .gnb {
+    --gnb-start: 13.76vw;
     position: sticky;
-    margin-top: 13.76vw;
-    margin-bottom: calc((13.76vw + var(--gnb-height)) * -1);
   }
 }
 /* 반응형 */
 @media (max-width: 1024px) {
   .gnb .bar {
     gap: 1.5rem;
+    padding: 0 calc(var(--side-padding) - 1.25rem);
   }
   .gnb .bar .menu .depth1 {
     gap: 1.5rem;
@@ -1040,17 +1068,19 @@ em {
     padding: 0.5rem 0.75rem 0;
   }
   .gnb .bar {
+    position: relative;
     padding: 0 0.5rem 0 1rem;
-    flex-wrap: wrap;
-    height: auto;
-    min-height: var(--gnb-height);
     gap: 0;
   }
   .gnb .bar .menu {
     display: none;
-    order: 1;
-    flex-basis: 100%;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
     margin-left: 0;
+    padding: 0 0.5rem 0 1rem;
+    background: var(--color-bg-default);
   }
   .gnb .bar .menu .depth1 {
     flex-direction: column;
@@ -1062,18 +1092,29 @@ em {
     align-items: center;
     min-height: 2.75rem;
   }
+  .gnb .bar .menu .depth1 .depth1-item .depth1-link::after {
+    display: none;
+  }
   .gnb .bar .util {
     margin-left: auto;
   }
   .gnb .bar .util .menu-btn {
     display: inline-flex;
+    position: fixed;
+    right: var(--side-padding);
+    bottom: 4.5rem;
+    width: 3rem;
+    height: 3rem;
+    color: var(--color-media-text);
+    background: var(--color-media-1);
+    border: 1px solid var(--color-line-float);
+    opacity: 1;
+  }
+  .gnb .progress {
+    display: none;
   }
   .gnb.is-open {
-    color: var(--color-text-default-highest);
-    mix-blend-mode: normal;
-  }
-  .gnb.is-open .bar {
-    background: var(--color-bg-header);
+    background: var(--color-bg-default);
   }
   .gnb.is-open .bar .menu {
     display: block;
@@ -1111,9 +1152,9 @@ em {
   z-index: var(--z-dropdown);
   width: 3rem;
   height: 3rem;
-  color: var(--color-media-1);
-  background: var(--color-header-blend);
-  mix-blend-mode: difference;
+  color: var(--color-media-text);
+  background: var(--color-media-1);
+  border: 1px solid var(--color-line-float);
   transition: opacity 0.3s ease, translate 0.4s var(--ease-out), visibility 0.3s;
 }
 .top-btn::before {
@@ -1134,7 +1175,7 @@ em {
 /* 반응형 */
 @media (max-width: 600px) {
   .top-btn {
-    right: 1rem;
+    right: var(--side-padding);
     bottom: 1rem;
   }
 }
@@ -2963,6 +3004,7 @@ body:has(.modal-page.is-open) .wrapper .gnb {
 @media (max-width: 1024px) {
   .main-hero .pin-spacer .stage .hero-media {
     width: 70cqw;
+    margin-top: calc(2.43cqw + var(--gnb-height));
   }
   .main-hero .pin-spacer .stage .inner .hero-foot {
     grid-template-columns: 1fr;
@@ -3074,6 +3116,10 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   }
 }
 @media (max-width: 600px) {
+  .main-projects .inner .skip-btn {
+    bottom: 1rem;
+    margin-left: 0;
+  }
   .main-hero .pin-spacer .stage .inner .hero-foot .info-list {
     display: flex;
     flex-wrap: wrap;

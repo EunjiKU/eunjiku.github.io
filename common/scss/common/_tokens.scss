@@ -27,14 +27,15 @@
   --color-bg-point: #000000;               /* 상태 점 · 진행 막대 · 타임라인 점 */
   --color-bg-point-soft: #dcdcdc;          /* 연한 면 */
   --color-bg-inverse: #000000;             /* 검정 면 — 기본 버튼 */
-  --color-bg-header: rgb(239 239 239 / 85%);   /* 600↓ 메뉴 펼침 바탕 */
   --color-bg-dim: rgb(0 0 0 / 50%);        /* 모달 딤 */
   --color-bg-thumb-1: #d8d8d8;             /* 카드 사진 자리 면 */
   --color-bg-thumb-2: #cccccc;             /* 〃 */
   --color-bg-thumb-3: #e2e2e2;             /* 〃 */
   --color-media-1: #000000;                /* 히어로 가운데 상자 — 사진 밑 · 덧칠 (고정 검정) */
   --color-media-text: #ffffff;             /* 〃 위 글자 */
-  --color-header-blend: #ffffff;           /* 헤더 글자 — 반전(difference)으로 바탕에 따라 검정 · 흰색이 된다 (모드 무관)  */
+  --color-bg-glass: rgb(239 239 239 / 72%);     /* 화면 위에 붙은 헤더 바탕 — 뒤가 흐리게 비친다(backdrop-filter) */
+  --color-line-float: rgb(255 255 255 / 30%);  /* 떠 있는 검정 버튼(맨 위로 · 600↓ 전체 메뉴) 테두리 — 검정 구획 위에서도 보이게 */
+  --color-header-blend: #ffffff;           /* 마우스 커서 — 바탕과 반전(difference)되는 흰색 */
 
   /* ------------------------------------------------------------------
      Color — Line
@@ -95,8 +96,8 @@
      ------------------------------------------------------------------ */
   --z-behind: -1;       /* 쌓임 맥락 안에서 콘텐츠 뒤로 */
   --z-base: 1;          /* 겹치는 장식 */
-  --z-sticky: 100;      /* 고정 헤더 */
-  --z-dropdown: 200;    /* 맨 위로 버튼 · 떠 있는 요소 */
+  --z-dropdown: 300;    /* 맨 위로 버튼 — 본문 · 화면에 붙는 버튼보다 위 */
+  --z-sticky: 350;      /* 고정 헤더 — 600↓ 펼친 메뉴가 맨 위로 버튼을 덮게 그보다 위, 모달보다 아래 */
   --z-modal: 400;       /* 모달 */
   --z-page-header: 450; /* 전체 화면 페이지(.modal-page) 위에 남는 헤더 */
   --z-skip: 1000;       /* 스킵 링크 */
@@ -117,7 +118,6 @@
   --color-bg-point: #ffffff;
   --color-bg-point-soft: #262626;
   --color-bg-inverse: #ffffff;
-  --color-bg-header: rgb(0 0 0 / 85%);
   --color-bg-dim: rgb(0 0 0 / 65%);
   --color-bg-thumb-1: #1f1f1f;
   --color-bg-thumb-2: #2a2a2a;
@@ -141,7 +141,7 @@
     --font-t2: 700 2.125rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-h1: 700 1.5rem / 1.35 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
 
-    --side-padding: 1.5rem;
+    --side-padding: 4rem;          /* 태블릿 — 본문이 꽉 차 보이지 않게 좌우 64 */
     --header-padding: 1.5rem;
     --gnb-height: 4rem;
   }

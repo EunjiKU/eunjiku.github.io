@@ -1286,7 +1286,10 @@
   .main-hero {
     .pin-spacer {
       .stage {
-        .hero-media { width: 70cqw; }
+        .hero-media {
+          width: 70cqw;
+          margin-top: calc(2.43cqw + var(--gnb-height));   // 큰 영문과 상자 사이에 헤더 자리 (_header.scss 「메인」)
+        }
 
         .inner {
           .hero-foot {
@@ -1436,6 +1439,16 @@
   }
 }
 @include sm {
+  // 건너뛰기 버튼은 왼쪽에 — 가운데면 좁은 화면에서 오른쪽 아래 맨 위로 버튼과 겹친다
+  .main-projects {
+    .inner {
+      .skip-btn {
+        bottom: 1rem;   // 맨 위로 버튼과 같은 아래 여백 (common/_footer)
+        margin-left: 0;
+      }
+    }
+  }
+
   .main-hero {
     .pin-spacer {
       .stage {

@@ -53,7 +53,7 @@ CLAUDE.md · PROJECT.md · TODO.md   ← 작업 규칙 · 결정 기록 · 할 �
 | 지금 보는 카드 | 메인 오른쪽 `.preview`(사진 · 이름 · 순번 · `.now-tag`) — `main.js` 「지금 보는 카드 표시」가 지금 붙어 있는 카드의 `data-period` 연도 · `data-category` 로 바꾼다 |
 | 분류 필터 (전체 프로젝트) | `projects.html` `.filter-btn[data-filter]` 값 = 카드 `data-category` (`build` 구축 · `dispatch` 파견) |
 | 소개 인적 사항 | `.about-grid` 오른쪽 절반에 위에서 아래로 — `.profile-info`(값만 — 이름 · 생년월일 · 사는 곳, 이름표 dt 는 `.blind`, 히어로와 같은 값, JSON-LD `birthDate` · `address` 도 같이) → 큰 숫자 `.stat-grid` → 굵은 선 아래 `.profile`(인사말 · 글 · 링크) |
-| 헤더 | PC 메인은 첫 화면에서 히어로 가운데 상자 위끝 높이(로고 왼쪽 · 메뉴 오른쪽)에 있다가 스크롤해 화면 위끝에 닿으면 붙는다(sticky — `_header.scss` 「PC」, 위 여백 13.76vw). 다른 페이지 · 1024↓ 은 처음부터 위 |
+| 헤더 | 메인은 첫 화면에서 큰 영문 아래(PC 는 가운데 상자 위끝 높이 13.76vw · 1024↓ 11.33vw)에 있다가 스크롤해 화면 위끝에 닿으면 붙는다(sticky). 붙어 있는 동안 `.is-stuck` — 반투명 흐림 바탕. 다른 페이지는 처음부터 위. 600↓ 전체 메뉴 버튼은 오른쪽 아래, 맨 위로 버튼 위에 떠 있다 |
 | 장식 | 소개 왼쪽 `.about-deco`(점 격자 + 도는 별표) — 모두 aria-hidden, 1024↓ 숨김 |
 | 히어로 | 큰 영문 `.hero-name` · 가운데 상자 글자 `.hero-media .media-item`(한 자씩 — `main.js` 「히어로 글자」) · 슬로건 `.intro .tit` · 아래 줄 `.hero-foot`(세 칸 — 이름 · 생년월일 · 사는 곳 한 줄 + 주요 기술 한 줄 `.info-list`(값만 — 이름표 dt 는 `.blind`, 주요 기술은 `.info-item-full`) | 숫자 `.stat-list` | 흐르는 프로젝트 `.client-list` 두 벌) |
 | 맨 위로 버튼 · 마우스 커서 | `.top-btn`(맨 위가 아니면 보임 — `main.js` 「맨 위로 버튼」) · `.cursor` 점 + 뒤따라오는 `.cursor-ring`(PC 마우스에서만 — 「마우스 커서」) |

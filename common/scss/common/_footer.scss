@@ -32,9 +32,9 @@
   z-index: var(--z-dropdown);
   width: 3rem;
   height: 3rem;
-  color: var(--color-media-1);
-  background: var(--color-header-blend);
-  mix-blend-mode: difference;
+  color: var(--color-media-text);
+  background: var(--color-media-1);
+  border: 1px solid var(--color-line-float);   // 바탕과 섞지 않아 어디서나 같은 모양
   transition: opacity 0.3s ease, translate 0.4s var(--ease-out), visibility 0.3s;
 
   &::before {
@@ -53,7 +53,7 @@
 /* 반응형 */
 @include sm {
   .top-btn {
-    right: 1rem;
+    right: var(--side-padding);   // 본문 좌우 여백 · 아래 1rem — 왼쪽 아래 「프로젝트 건너뛰기」와 같은 여백 (components/_main)
     bottom: 1rem;
   }
 }
