@@ -6,7 +6,7 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   히어로 — 화면 양끝을 채우는 굵은 영문(.hero-name) → 가운데 상자(.hero-media, 사진 위 큰 글자가 한 자씩 바뀜) → 슬로건 · 글 → 아래 줄(숫자 · 주요 기술 · 강점) → 흐르는 고객사(.client)
+   히어로 — 화면 양끝을 채우는 굵은 영문(.hero-name) → 가운데 상자(.hero-media, 사진 위 큰 글자가 한 자씩 바뀜) → 슬로건 · 글 → 아래 줄(숫자 · 주요 기술) → 흐르는 고객사(.client)
    · 큰 영문 · 상자 크기는 무대 폭에 비례한다(container 단위 cqw — 무대가 화면 폭이라 화면 양끝까지 찬다)
    · 처음 들어오면 상자가 가운데 좁은 띠에서 좌우로 펼쳐지고, 이어서 큰 영문이 올라온다 (CSS 애니메이션 — 모션 줄이기는 바로 보임)
    · 상자의 지금 글자 .media-item.is-active (main.js 「히어로 글자」) — 장식 aria-hidden
@@ -100,7 +100,7 @@
           }
         }
 
-        /* 아래 줄 — 숫자 · 주요 기술 · 강점 · 함께한 고객사(칸 안에서 끝없이 흐른다) */
+        /* 아래 줄 — 숫자 · 주요 기술 · 함께한 고객사(칸 안에서 끝없이 흐른다) */
         .hero-foot {
           display: grid;
           grid-template-columns: auto auto 1fr;
@@ -133,9 +133,7 @@
           }
 
           .info-list {
-            display: grid;
-            grid-template-columns: repeat(2, auto);
-            justify-content: start;
+            display: flex;
             gap: 3rem;
             padding-left: 3rem;
             border-left: 1px solid var(--color-line-default);
@@ -1173,7 +1171,7 @@
             }
 
             .info-list {
-              grid-template-columns: 1fr;
+              flex-direction: column;
               gap: 1.25rem;
             }
           }
