@@ -53,7 +53,7 @@
 /* 반응형 */
 @include sm {
   .top-btn {
-    right: var(--side-padding);   // 본문 좌우 여백 · 아래 1rem — 왼쪽 아래 「프로젝트 건너뛰기」와 같은 여백 (components/_main)
+    right: var(--side-padding);   // 본문 좌우 여백 · 아래 1rem — 왼쪽 아래 「프로젝트 넘기기」와 같은 여백 (components/_main)
     bottom: 1rem;
   }
 }
