@@ -1084,37 +1084,72 @@
     }
 
     // 자격증 — 오른쪽에 좁게
-    .cert {
-      width: 40rem;
-      max-width: 100%;
-      margin-left: auto;
+    /* 자격증 줄 — 왼쪽 빈 칸 장식 + 오른쪽 자격증(40rem) */
+    .cert-wrap {
+      display: grid;
+      grid-template-columns: 1fr minmax(0, 40rem);
+      gap: 4rem;
 
-      .cert-list {
-        border-top: 1px solid var(--color-line-strong);
+      // 장식 — 옅은 모눈(가장자리 흐림) 가운데 얇은 네모 하나 (움직임 없음)
+      .cert-deco {
+        position: relative;
+        pointer-events: none;
 
-        .cert-item {
-          display: grid;
-          grid-template-columns: 1fr 1fr auto;
-          align-items: center;
-          gap: 1rem;
-          padding: 1.25rem 0;
-          border-bottom: 1px solid var(--color-line-default);
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image:
+            linear-gradient(var(--color-line-default) 1px, transparent 1px),
+            linear-gradient(90deg, var(--color-line-default) 1px, transparent 1px);
+          background-size: 2.5rem 2.5rem;
+          opacity: 0.6;
+          mask-image: radial-gradient(closest-side, var(--color-media-1), transparent);
+        }
 
-          .tit {
-            font: var(--font-b2-sb);
-            letter-spacing: var(--font-b2-sb-ls);
-          }
+        &::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 7.5rem;
+          aspect-ratio: 1;
+          border: 1px solid var(--color-line-strong);
+          opacity: 0.12;
+          translate: -50% -50%;
+          rotate: 45deg;
+        }
+      }
 
-          .org {
-            font: var(--font-b4-reg);
-            letter-spacing: var(--font-b4-reg-ls);
-            color: var(--color-text-default-low);
-          }
+      .cert {
 
-          .date {
-            font: var(--font-cap);
-            letter-spacing: var(--font-cap-ls);
-            color: var(--color-text-default-medium);
+        .cert-list {
+          border-top: 1px solid var(--color-line-strong);
+
+          .cert-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 0;
+            border-bottom: 1px solid var(--color-line-default);
+
+            .tit {
+              font: var(--font-b2-sb);
+              letter-spacing: var(--font-b2-sb-ls);
+            }
+
+            .org {
+              font: var(--font-b4-reg);
+              letter-spacing: var(--font-b4-reg-ls);
+              color: var(--color-text-default-low);
+            }
+
+            .date {
+              font: var(--font-cap);
+              letter-spacing: var(--font-cap-ls);
+              color: var(--color-text-default-medium);
+            }
           }
         }
       }
@@ -1381,7 +1416,11 @@
 
   .main-experience {
     .inner {
-      .cert { width: 100%; }
+      .cert-wrap {
+        grid-template-columns: 1fr;
+
+        .cert-deco { display: none; }
+      }
 
       .career {
         margin-bottom: 5rem;

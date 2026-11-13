@@ -2793,15 +2793,43 @@ body:has(.modal-page.is-open) .wrapper .gnb {
 .main-experience .inner .career .career-line .career-item.is-active .cont .tit {
   color: var(--color-text-point);
 }
-.main-experience .inner .cert {
-  width: 40rem;
-  max-width: 100%;
-  margin-left: auto;
+.main-experience .inner {
+  /* 자격증 줄 — 왼쪽 빈 칸 장식 + 오른쪽 자격증(40rem) */
 }
-.main-experience .inner .cert .cert-list {
+.main-experience .inner .cert-wrap {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 40rem);
+  gap: 4rem;
+}
+.main-experience .inner .cert-wrap .cert-deco {
+  position: relative;
+  pointer-events: none;
+}
+.main-experience .inner .cert-wrap .cert-deco::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(var(--color-line-default) 1px, transparent 1px), linear-gradient(90deg, var(--color-line-default) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  opacity: 0.6;
+  mask-image: radial-gradient(closest-side, var(--color-media-1), transparent);
+}
+.main-experience .inner .cert-wrap .cert-deco::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7.5rem;
+  aspect-ratio: 1;
+  border: 1px solid var(--color-line-strong);
+  opacity: 0.12;
+  translate: -50% -50%;
+  rotate: 45deg;
+}
+.main-experience .inner .cert-wrap .cert .cert-list {
   border-top: 1px solid var(--color-line-strong);
 }
-.main-experience .inner .cert .cert-list .cert-item {
+.main-experience .inner .cert-wrap .cert .cert-list .cert-item {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
   align-items: center;
@@ -2809,16 +2837,16 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   padding: 1.25rem 0;
   border-bottom: 1px solid var(--color-line-default);
 }
-.main-experience .inner .cert .cert-list .cert-item .tit {
+.main-experience .inner .cert-wrap .cert .cert-list .cert-item .tit {
   font: var(--font-b2-sb);
   letter-spacing: var(--font-b2-sb-ls);
 }
-.main-experience .inner .cert .cert-list .cert-item .org {
+.main-experience .inner .cert-wrap .cert .cert-list .cert-item .org {
   font: var(--font-b4-reg);
   letter-spacing: var(--font-b4-reg-ls);
   color: var(--color-text-default-low);
 }
-.main-experience .inner .cert .cert-list .cert-item .date {
+.main-experience .inner .cert-wrap .cert .cert-list .cert-item .date {
   font: var(--font-cap);
   letter-spacing: var(--font-cap-ls);
   color: var(--color-text-default-medium);
@@ -3025,8 +3053,11 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   .main-about .inner .feature-list {
     grid-template-columns: repeat(2, 1fr);
   }
-  .main-experience .inner .cert {
-    width: 100%;
+  .main-experience .inner .cert-wrap {
+    grid-template-columns: 1fr;
+  }
+  .main-experience .inner .cert-wrap .cert-deco {
+    display: none;
   }
   .main-experience .inner .career {
     margin-bottom: 5rem;
