@@ -384,7 +384,7 @@ progress, meter {
   --color-bg-default: #efefef; /* 페이지 바탕 — 연회색 */
   --color-bg-surface: #ffffff; /* 카드 · 모달 */
   --color-bg-subtle: #e4e4e4; /* 칩 · 태그 · 연한 면 */
-  --color-bg-point: #000000; /* 상태 점 · 진행 막대 · 타임라인 점 */
+  --color-bg-point: #000000; /* 상태 점 · 타임라인 점 */
   --color-bg-point-soft: #dcdcdc; /* 연한 면 */
   --color-bg-inverse: #000000; /* 검정 면 — 기본 버튼 */
   --color-bg-dim: rgb(0 0 0 / 50%); /* 모달 딤 */
@@ -838,7 +838,6 @@ em {
    7. GNB — 고정 헤더 (로고 · 섹션 메뉴 · 테마 · 600↓ 햄버거)
    · common.js 가 붙이는 상태: .gnb.is-stuck(화면 위끝에 붙음) · .gnb.is-open(600↓ 메뉴 열림)
    · 현재 섹션 메뉴: .depth1-link.is-active + aria-current="true"
-   · 스크롤 진행 막대: .progress 의 --progress(0 ~ 1)
    · 첫 진입: .gnb.is-shown 이 붙으며 위에서 내려온다 (common.js — html 에 직접 쓰지 않는다)
    · 모양: 검정 글자. 화면 위에 붙어 있는 동안(.is-stuck — common.js)은 뒤가 흐리게 비치는 반투명 바탕, 히어로 안에 있을 때는 투명. 600↓ 메뉴를 펼치면 불투명 바탕 · 전체 메뉴 버튼은 오른쪽 아래, 맨 위로 버튼 위에 떠 있다
    · 로고 왼쪽 · 메뉴 오른쪽. 메인(히어로가 있는 페이지)은 처음에 큰 영문 아래에 있다가(PC 는 가운데 상자 위끝 높이 — 양옆, 1024↓ 은 큰 영문과 상자 사이), 스크롤해서 화면 위끝에 닿으면 거기 붙는다(sticky). 다른 페이지는 처음부터 위(PC fixed · 1024↓ sticky)
@@ -850,7 +849,7 @@ em {
   padding: 0.5rem 1.25rem 0;
   color: var(--color-text-default-highest);
 }
-.gnb::before {
+.gnb .bar::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -862,7 +861,7 @@ em {
   transition: opacity 0.3s ease;
   pointer-events: none;
 }
-.gnb.is-stuck::before {
+.gnb.is-stuck .bar::before {
   opacity: 1;
 }
 .gnb {
@@ -877,6 +876,7 @@ em {
   display: flex;
   align-items: center;
   gap: 2.5rem;
+  position: relative;
   max-width: calc(var(--content-width) + var(--header-padding) * 2);
   height: calc(var(--gnb-height) - 0.5rem);
   margin: 0 auto;
@@ -1010,21 +1010,6 @@ em {
 .gnb .bar .util .menu-btn[aria-expanded=true] .bar-icon::after {
   transform: rotate(-45deg);
 }
-.gnb {
-  /* 스크롤 진행 막대 — 둥근 바 아래 가장자리 (모서리 곡선 안쪽) */
-}
-.gnb .progress {
-  position: absolute;
-  right: 2.5rem;
-  bottom: 0;
-  left: 2.5rem;
-  max-width: calc(var(--content-width) + var(--header-padding) * 2 - 2.5rem);
-  height: 2px;
-  margin: 0 auto;
-  background: currentColor;
-  transform: scaleX(var(--progress, 0));
-  transform-origin: left center;
-}
 
 /* PC — 화면 위에 떠 있는 고정 헤더 */
 @media not all and (max-width: 1024px) {
@@ -1102,7 +1087,8 @@ em {
     display: inline-flex;
     position: fixed;
     right: var(--side-padding);
-    bottom: 4.5rem;
+    bottom: 1rem;
+    transition: bottom 0.4s var(--ease-out);
     width: 3rem;
     height: 3rem;
     color: var(--color-media-text);
@@ -1110,14 +1096,16 @@ em {
     border: 1px solid var(--color-line-float);
     opacity: 1;
   }
-  .gnb .progress {
-    display: none;
-  }
   .gnb.is-open {
     background: var(--color-bg-default);
   }
   .gnb.is-open .bar .menu {
     display: block;
+  }
+}
+@media (max-width: 600px) {
+  body:has(.top-btn:not(.is-hidden)) .gnb .bar .util .menu-btn {
+    bottom: 4.5rem;
   }
 }
 /* ==========================================================================
@@ -3002,6 +2990,9 @@ body:has(.modal-page.is-open) .wrapper .gnb {
 }
 /* 반응형 */
 @media (max-width: 1024px) {
+  .main-projects .inner {
+    padding: 0 calc(var(--side-padding) + 2rem);
+  }
   .main-hero .pin-spacer .stage .hero-media {
     width: 70cqw;
     margin-top: calc(2.43cqw + var(--gnb-height));
@@ -3116,9 +3107,12 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   }
 }
 @media (max-width: 600px) {
+  .main-projects .inner {
+    padding: 0 calc(var(--side-padding) + 1rem);
+  }
   .main-projects .inner .skip-btn {
     bottom: 1rem;
-    margin-left: 0;
+    margin-left: -1rem;
   }
   .main-hero .pin-spacer .stage .inner .hero-foot .info-list {
     display: flex;

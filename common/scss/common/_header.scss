@@ -4,7 +4,6 @@
    7. GNB — 고정 헤더 (로고 · 섹션 메뉴 · 테마 · 600↓ 햄버거)
    · common.js 가 붙이는 상태: .gnb.is-stuck(화면 위끝에 붙음) · .gnb.is-open(600↓ 메뉴 열림)
    · 현재 섹션 메뉴: .depth1-link.is-active + aria-current="true"
-   · 스크롤 진행 막대: .progress 의 --progress(0 ~ 1)
    · 첫 진입: .gnb.is-shown 이 붙으며 위에서 내려온다 (common.js — html 에 직접 쓰지 않는다)
    · 모양: 검정 글자. 화면 위에 붙어 있는 동안(.is-stuck — common.js)은 뒤가 흐리게 비치는 반투명 바탕, 히어로 안에 있을 때는 투명. 600↓ 메뉴를 펼치면 불투명 바탕 · 전체 메뉴 버튼은 오른쪽 아래, 맨 위로 버튼 위에 떠 있다
    · 로고 왼쪽 · 메뉴 오른쪽. 메인(히어로가 있는 페이지)은 처음에 큰 영문 아래에 있다가(PC 는 가운데 상자 위끝 높이 — 양옆, 1024↓ 은 큰 영문과 상자 사이), 스크롤해서 화면 위끝에 닿으면 거기 붙는다(sticky). 다른 페이지는 처음부터 위(PC fixed · 1024↓ sticky)
@@ -16,9 +15,9 @@
   padding: 0.5rem 1.25rem 0;
   color: var(--color-text-default-highest);
 
-  // 화면 위에 붙은 동안 — 반투명 바탕 + 뒤 흐림 (어디서나 같은 모양으로 읽히게)
-  // 흐림은 헤더 자신이 아니라 뒤 층(::before)에 — 헤더에 backdrop-filter 를 걸면 안의 fixed(600↓ 떠 있는 메뉴 버튼)가 헤더 기준으로 바뀐다
-  &::before {
+  // 화면 위에 붙은 동안 — 로고 ~ 메뉴 영역(.bar)만큼만 반투명 바탕 + 뒤 흐림 (어디서나 같은 모양으로 읽히게)
+  // 흐림은 .bar 자신이 아니라 뒤 층(::before)에 — backdrop-filter 를 건 요소는 안의 fixed(600↓ 떠 있는 메뉴 버튼)의 기준이 된다
+  .bar::before {
     content: "";
     position: absolute;
     inset: 0;
@@ -31,7 +30,9 @@
     pointer-events: none;
   }
 
-  &.is-stuck::before { opacity: 1; }
+  &.is-stuck {
+    .bar::before { opacity: 1; }
+  }
 
   /* 첫 진입 — 위에 숨어 있다가 .is-shown 이 붙으면 내려온다 (common.js). 모션 줄이기는 처음부터 제자리 */
   // 시작값을 CSS 가 갖는다 — JS 가 걸면 제자리에 보였다가 튄다. sticky 헤더라 top 대신 transform 으로 올린다
@@ -43,6 +44,7 @@
     display: flex;
     align-items: center;
     gap: 2.5rem;
+    position: relative;
     max-width: calc(var(--content-width) + var(--header-padding) * 2);
     height: calc(var(--gnb-height) - 0.5rem);
     margin: 0 auto;
@@ -161,19 +163,6 @@
     }
   }
 
-  /* 스크롤 진행 막대 — 둥근 바 아래 가장자리 (모서리 곡선 안쪽) */
-  .progress {
-    position: absolute;
-    right: 2.5rem;
-    bottom: 0;
-    left: 2.5rem;
-    max-width: calc(var(--content-width) + var(--header-padding) * 2 - 2.5rem);
-    height: 2px;
-    margin: 0 auto;
-    background: currentColor;
-    transform: scaleX(var(--progress, 0));
-    transform-origin: left center;
-  }
 }
 
 /* PC — 화면 위에 떠 있는 고정 헤더 */
@@ -261,12 +250,13 @@
       .util {
         margin-left: auto;
 
-        // 전체 메뉴 버튼 — 오른쪽 아래, 맨 위로 버튼(3rem · 아래 1rem) 바로 위에 떠 있다 (같은 모양 — 검정 면 · 바탕과 반전)
+        // 전체 메뉴 버튼 — 오른쪽 아래에 떠 있다 (맨 위로 버튼과 같은 모양). 맨 위로 버튼이 나타나면(.top-btn 에 .is-hidden 이 없으면) 그 위로 밀려 올라간다
         .menu-btn {
           display: inline-flex;
           position: fixed;
           right: var(--side-padding);
-          bottom: calc(1rem + 3rem + 0.5rem);
+          bottom: 1rem;
+          transition: bottom 0.4s var(--ease-out);
           width: 3rem;
           height: 3rem;
           color: var(--color-media-text);
@@ -277,8 +267,6 @@
       }
     }
 
-    // 스크롤 진행 막대 — 좁은 화면에서는 정신없어 숨긴다
-    .progress { display: none; }
 
     // 메뉴를 펼치면 반전을 풀고 불투명 바탕 — 글자가 아래 내용과 겹쳐 읽히지 않게
     &.is-open {
@@ -286,6 +274,18 @@
 
       .bar {
         .menu { display: block; }
+      }
+    }
+  }
+}
+@include sm {
+  // 맨 위로 버튼(3rem · 아래 1rem)이 보이는 동안 — 그 위 0.5rem 간격으로
+  body:has(.top-btn:not(.is-hidden)) {
+    .gnb {
+      .bar {
+        .util {
+          .menu-btn { bottom: calc(1rem + 3rem + 0.5rem); }
+        }
       }
     }
   }

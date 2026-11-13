@@ -33,7 +33,7 @@ common/
 ├── css/                   ← 컴파일 산출물 (직접 고치지 않는다)
 ├── js/
 │   ├── theme.js           ← <head> — 팝업 안(iframe)이면 data-embed (헤더 · 푸터 감춤)
-│   ├── common.js          ← 공통 UI — 헤더(600↓ 메뉴 · 첫 진입 · 진행 막대 · 현재 섹션) · 부드러운 스크롤 · 앵커 스크롤 · 진입 모션 · 모달 · 공개 API window.UI
+│   ├── common.js          ← 공통 UI — 헤더(600↓ 메뉴 · 첫 진입 · 위에 붙음 · 현재 섹션) · 부드러운 스크롤 · 앵커 스크롤 · 진입 모션 · 모달 · 공개 API window.UI
 │   ├── main.js            ← 메인 섹션 — 히어로 덮기 · 히어로 단어 · 숫자 세기 · 경력 타임라인 · 프로젝트 탭 · 필터(전체 프로젝트) · 지금 보는 카드 · 쌓이는 카드 · 설명 모달 · 연락 폼(EmailJS) · 맨 위로 버튼 · 마우스 커서
 │   └── lib/               ← jQuery 3.7.1 · GSAP 3.12.5 + ScrollTrigger · Lenis 1.3.27 (로컬)
 ├── images/                ← icon-* · logo-* (SVG) · @img-sample-* (더미 사진 — 히어로 · 프로젝트 카드) · favicon* · og-default.png

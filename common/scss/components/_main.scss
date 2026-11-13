@@ -1283,6 +1283,11 @@
 
 /* 반응형 */
 @include mo {
+  // 프로젝트 — 카드가 꽉 차 보이지 않게 좌우 여백을 더 (태블릿 64 + 32)
+  .main-projects {
+    .inner { padding: 0 calc(var(--side-padding) + 2rem); }
+  }
+
   .main-hero {
     .pin-spacer {
       .stage {
@@ -1439,12 +1444,17 @@
   }
 }
 @include sm {
+  // 프로젝트 — 휴대폰은 20 + 16
+  .main-projects {
+    .inner { padding: 0 calc(var(--side-padding) + 1rem); }
+  }
+
   // 건너뛰기 버튼은 왼쪽에 — 가운데면 좁은 화면에서 오른쪽 아래 맨 위로 버튼과 겹친다
   .main-projects {
     .inner {
       .skip-btn {
         bottom: 1rem;   // 맨 위로 버튼과 같은 아래 여백 (common/_footer)
-        margin-left: 0;
+        margin-left: -1rem;   // 프로젝트에만 더한 좌우 여백(1rem)을 빼 화면 끝에서 20 — 오른쪽 맨 위로 버튼과 같은 옆 여백
       }
     }
   }

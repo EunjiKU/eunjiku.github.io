@@ -36,7 +36,7 @@
  * 구성
  *   0. 설정 ........... 프로젝트 값
  *   1. 유틸 ........... matchMedia · rem → px · 범위 찾기 · 처음 보는 요소 · 이벤트 보내기 · 전환 감지 · 바깥 잠금(inert) · GSAP 준비 · 전환 끝 대기 · 현재 항목
- *   2. GNB ............ 600↓ 메뉴 · 첫 진입 내려오기 · 스크롤 상태(진행 막대 · 아래 선) · 현재 섹션 메뉴
+ *   2. GNB ............ 600↓ 메뉴 · 첫 진입 내려오기 · 스크롤 상태(위에 붙음) · 현재 섹션 메뉴
  *   4. 콘텐츠 ......... 부드러운 스크롤(Lenis) · 앵커 스크롤 · 진입 모션 · 글자 나눠 등장
  *   5. 오버레이 ....... 모달(.modal)
  *   6. 공개 API ....... window.UI
@@ -223,19 +223,15 @@
   }
 
   /* --------------------------------------------------------------------------
-     스크롤 상태 — 헤더가 화면 위끝에 붙어 있으면 .gnb.is-stuck(반투명 흐림 바탕), 진행 막대 .progress 의 --progress(0 ~ 1)
+     스크롤 상태 — 헤더가 화면 위끝에 붙어 있으면 .gnb.is-stuck(반투명 흐림 바탕)
      -------------------------------------------------------------------------- */
   function bindGnbScroll() {
     const $gnb = $(".gnb").first();
     if (!$gnb.length) return;
-    const bar = $gnb.find(".progress")[0];
     let ticking = false;
 
     function update() {
-      const y = window.scrollY;
-      const max = document.documentElement.scrollHeight - window.innerHeight;
       $gnb.toggleClass("is-stuck", $gnb[0].getBoundingClientRect().top <= 0);
-      if (bar) bar.style.setProperty("--progress", max > 0 ? Math.min(y / max, 1).toFixed(4) : 0);
       ticking = false;
     }
     function onScroll() {
