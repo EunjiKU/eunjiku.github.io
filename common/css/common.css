@@ -9,7 +9,7 @@
    3. 문서 기준 ............. common/_base             html(rem 기준) · body · 강조 em(포인트 색) · 앵커 멈춤 위치
    3-1. 레이아웃 컨테이너 .. common/_base             .wrapper · .inner
    4. 접근성·공통 클래스 .... common/_utilities        .blind · .skip · 포커스 링 · 진입 모션 [data-motion] · 글자 나눠 등장 [data-split]
-   7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-scrolled · .is-open · .depth1-link.is-active
+   7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-open · .depth1-link.is-active
    8. 푸터 ................. common/_footer           .footer
    9. 섹션 골격 ............ common/_page             .sec · .sec-head
    10. 폼 .................. components/_form        .form-row · .text-field
@@ -435,8 +435,6 @@ progress, meter {
   --font-h3: 600 1.1875rem / 1.4 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
   --font-h3-ls: -0.015em;
   /* Body */
-  --font-b1-reg: 400 1.125rem / 1.75 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-  --font-b1-reg-ls: -0.01em;
   --font-b2-reg: 400 1rem / 1.75 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
   --font-b2-reg-ls: -0.005em;
   --font-b2-sb: 600 1rem / 1.4 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
@@ -513,7 +511,6 @@ progress, meter {
     --font-band: 700 5rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-t2: 700 2.125rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-h1: 700 1.5rem / 1.35 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-    --font-b1-reg: 400 1rem / 1.75 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --side-padding: 1.5rem;
     --header-padding: 1.5rem;
     --gnb-height: 4rem;
@@ -839,12 +836,12 @@ em {
 }
 /* ==========================================================================
    7. GNB — 고정 헤더 (로고 · 섹션 메뉴 · 테마 · 600↓ 햄버거)
-   · common.js 가 붙이는 상태: .gnb.is-scrolled(맨 위가 아님) · .gnb.is-open(600↓ 메뉴 열림)
+   · common.js 가 붙이는 상태: .gnb.is-open(600↓ 메뉴 열림)
    · 현재 섹션 메뉴: .depth1-link.is-active + aria-current="true"
    · 스크롤 진행 막대: .progress 의 --progress(0 ~ 1)
    · 첫 진입: .gnb.is-shown 이 붙으며 위에서 내려온다 (common.js — html 에 직접 쓰지 않는다)
    · 모양: 상자 없이 글자만 — 바탕과 반전(mix-blend-mode: difference)돼 밝은 곳은 검정 · 검정 구획은 흰색 (600↓ 메뉴를 펼치면 불투명 바탕)
-   · PC 는 fixed — 맨 위(첫 화면)에서는 화면 아래, 스크롤하면 위로
+   · 로고 왼쪽 · 메뉴 오른쪽. PC 메인(히어로가 있는 페이지)은 처음에 가운데 상자 위끝 높이(양옆)에 있다가, 스크롤해서 화면 위끝에 닿으면 거기 붙는다(sticky). 다른 페이지는 처음부터 위에 고정(fixed)
    ========================================================================== */
 .gnb {
   position: sticky;
@@ -883,7 +880,7 @@ em {
   font-weight: 400;
 }
 .gnb .bar .menu {
-  margin: 0 auto;
+  margin-left: auto;
 }
 .gnb .bar .menu .depth1 {
   display: flex;
@@ -1013,25 +1010,20 @@ em {
   transform-origin: left center;
 }
 
-/* PC — 화면 위에 떠 있는 고정 헤더. 첫 화면(맨 위)에서는 화면 아래에 있다가 스크롤하면 위로 올라간다 (히어로 큰 영문이 화면 위끝부터 차게) */
+/* PC — 화면 위에 떠 있는 고정 헤더 */
 @media not all and (max-width: 1024px) {
   .gnb {
     position: fixed;
     right: 0;
     left: 0;
   }
-  .gnb:not(.is-scrolled) {
-    top: calc(100svh - var(--gnb-height) - 0.75rem);
+  .wrapper:has(.main-hero) {
+    display: flow-root;
   }
-}
-@media (prefers-reduced-motion: no-preference) {
-  @media not all and (max-width: 1024px) {
-    .gnb {
-      transition: top 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-    }
-    .gnb:not(.is-shown) {
-      transform: translateY(100%);
-    }
+  .wrapper:has(.main-hero) .gnb {
+    position: sticky;
+    margin-top: 13.76vw;
+    margin-bottom: calc((13.76vw + var(--gnb-height)) * -1);
   }
 }
 /* 반응형 */
@@ -1793,6 +1785,7 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   right: 0;
   left: 0;
   z-index: var(--z-page-header);
+  margin: 0;
 }
 
 @media (max-width: 1024px) {
@@ -1824,11 +1817,11 @@ body:has(.modal-page.is-open) .wrapper .gnb {
    히어로 → 프로젝트 → 소개 → 경력 및 자격 → 연락
    ========================================================================== */
 /* --------------------------------------------------------------------------
-   히어로 — 화면 양끝을 채우는 굵은 영문(.hero-name) → 가운데 상자(.hero-media, 사진 위 큰 글자가 한 자씩 바뀜) → 슬로건 · 글 → 아래 줄(숫자 · 주요 기술) → 흐르는 고객사(.client)
+   히어로 — 화면 양끝을 채우는 굵은 영문(.hero-name) → 가운데 상자(.hero-media, 사진 위 큰 글자가 한 자씩 바뀜) → 슬로건 · 글 → 아래 줄(인적 사항 · 주요 기술 | 숫자 | 흐르는 프로젝트 .client)
    · 큰 영문 · 상자 크기는 무대 폭에 비례한다(container 단위 cqw — 무대가 화면 폭이라 화면 양끝까지 찬다)
    · 처음 들어오면 상자가 가운데 좁은 띠에서 좌우로 펼쳐지고, 이어서 큰 영문이 올라온다 (CSS 애니메이션 — 모션 줄이기는 바로 보임)
    · 상자의 지금 글자 .media-item.is-active (main.js 「히어로 글자」) — 장식 aria-hidden
-   · PC 첫 화면은 헤더가 화면 아래에 있다 (_header.scss) — 큰 영문이 화면 위끝부터 찬다
+   · PC 첫 화면은 헤더가 가운데 상자 양옆에 있다가 스크롤하면 위에 붙는다 (_header.scss) — 큰 영문이 화면 위끝부터 찬다
    -------------------------------------------------------------------------- */
 .main-hero {
   /* 핀 자리 지킴 래퍼 — 지우지 않는다 */
@@ -1933,7 +1926,7 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   grid-template-columns: auto minmax(0, auto) 1fr;
   align-items: stretch;
   gap: 3rem;
-  margin-top: 5rem;
+  margin-top: 3.5rem;
   padding-top: 1.75rem;
   border-top: 1px solid var(--color-line-strong);
 }
@@ -2045,6 +2038,11 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   }
 }
 
+@media not all and (max-width: 1024px) {
+  .main-hero .pin-spacer .stage .hero-media {
+    width: clamp(20cqw, (100svh - 13.76cqw - 22.75rem) * 675 / 378, 46.94cqw);
+  }
+}
 @media (prefers-reduced-motion: no-preference) {
   .main-hero .pin-spacer .stage .hero-name .word {
     animation: hero-name-in 1s var(--ease-out) 1s both;
@@ -2288,9 +2286,9 @@ body:has(.modal-page.is-open) .wrapper .gnb {
 }
 
 /* --------------------------------------------------------------------------
-   프로젝트 쌓이는 카드 (메인) — .project-layout-stack: 왼쪽 고정 칸(제목 · 탭 · 필터) · 가운데 쌓이는 카드 · 오른쪽 지금 보는 카드
+   프로젝트 쌓이는 카드 (메인) — .project-layout-stack: 왼쪽 고정 칸(제목 · 전체 보기) · 가운데 쌓이는 카드 · 오른쪽 지금 보는 카드
    · 카드는 화면 위에 붙고(sticky) 다음 카드가 그 위를 덮는다. 덮이는 동안 작아지며 위로 밀린다 — --stack 0 → 1 (main.js 「쌓이는 카드」)
-   · 오른쪽 .preview 의 면색 · 이름 · 순번 · 연도 · 구분은 main.js 가 지금 붙어 있는 카드로 바꾼다 (장식 — aria-hidden)
+   · 오른쪽 .preview 의 사진 · 이름 · 순번 · 연도 · 구분은 main.js 가 지금 붙어 있는 카드로 바꾼다 (장식 — aria-hidden)
    · 사진 자리: 사진(.photo) 위에 또렷한 작은 액자(.frame)
    -------------------------------------------------------------------------- */
 .main-projects .inner .project-layout-stack {
@@ -2513,6 +2511,40 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: 2.5rem 1.5rem;
+  /* 장식 — 왼쪽 빈 칸: 옅은 점 격자(가장자리는 흐려짐) + 큰 별표(연락 띠와 같은 모양) */
+}
+.main-about .inner .about-grid .about-deco {
+  position: relative;
+  grid-column: 1/6;
+  grid-row: 1/span 3;
+  min-height: 22rem;
+  pointer-events: none;
+}
+.main-about .inner .about-grid .about-deco::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1.5px);
+  background-size: 1.5rem 1.5rem;
+  opacity: 0.12;
+  mask-image: radial-gradient(closest-side, var(--color-media-1), transparent);
+}
+.main-about .inner .about-grid .about-deco::after {
+  content: "";
+  display: block;
+  background-color: currentColor;
+  -webkit-mask: url("../images/icon-asterisk.svg") no-repeat center/contain;
+  mask: url("../images/icon-asterisk.svg") no-repeat center/contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(18rem, 70%);
+  aspect-ratio: 1;
+  color: var(--color-text-default-highest);
+  opacity: 0.06;
+  translate: -50% -50%;
+}
+.main-about .inner .about-grid {
   /* 인적 사항 — 값만 한 줄 (이름표 dt 는 .blind) */
 }
 .main-about .inner .about-grid .profile-info {
@@ -2857,6 +2889,7 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   position: relative;
   width: fit-content;
   max-width: 100%;
+  min-height: 2.75rem;
   padding-bottom: 0.5rem;
   font: var(--font-h1);
   letter-spacing: var(--font-h1-ls);
@@ -2893,11 +2926,41 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   margin-top: 0.5rem;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .main-hero .pin-spacer .stage .scroll-link::after {
+    background: linear-gradient(var(--color-text-default-highest), var(--color-text-default-highest)) 0 -1.5rem/100% 1.5rem no-repeat, var(--color-line-default);
+    animation: scroll-line 1.8s ease-in-out infinite;
+  }
+  .main-projects .inner .skip-btn::after {
+    animation: skip-bob 1.2s ease-in-out infinite;
+  }
+  .main-about .inner .about-grid .about-deco::after {
+    animation: deco-spin 60s linear infinite;
+  }
+}
+@keyframes scroll-line {
+  from {
+    background-position: 0 -1.5rem, 0 0;
+  }
+  to {
+    background-position: 0 3rem, 0 0;
+  }
+}
+@keyframes skip-bob {
+  0%, 100% {
+    translate: 0 -0.125rem;
+  }
+  50% {
+    translate: 0 0.25rem;
+  }
+}
+@keyframes deco-spin {
+  to {
+    rotate: 360deg;
+  }
+}
 /* 반응형 */
 @media (max-width: 1024px) {
-  .main-hero .pin-spacer .stage .hero-name {
-    margin-top: 0;
-  }
   .main-hero .pin-spacer .stage .hero-media {
     width: 70cqw;
   }
@@ -2944,6 +3007,9 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   .main-about .inner .about-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+  .main-about .inner .about-grid .about-deco {
+    display: none;
   }
   .main-about .inner .about-grid .profile-info,
   .main-about .inner .about-grid .stat-grid {

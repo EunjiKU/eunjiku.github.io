@@ -6,11 +6,11 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   히어로 — 화면 양끝을 채우는 굵은 영문(.hero-name) → 가운데 상자(.hero-media, 사진 위 큰 글자가 한 자씩 바뀜) → 슬로건 · 글 → 아래 줄(숫자 · 주요 기술) → 흐르는 고객사(.client)
+   히어로 — 화면 양끝을 채우는 굵은 영문(.hero-name) → 가운데 상자(.hero-media, 사진 위 큰 글자가 한 자씩 바뀜) → 슬로건 · 글 → 아래 줄(인적 사항 · 주요 기술 | 숫자 | 흐르는 프로젝트 .client)
    · 큰 영문 · 상자 크기는 무대 폭에 비례한다(container 단위 cqw — 무대가 화면 폭이라 화면 양끝까지 찬다)
    · 처음 들어오면 상자가 가운데 좁은 띠에서 좌우로 펼쳐지고, 이어서 큰 영문이 올라온다 (CSS 애니메이션 — 모션 줄이기는 바로 보임)
    · 상자의 지금 글자 .media-item.is-active (main.js 「히어로 글자」) — 장식 aria-hidden
-   · PC 첫 화면은 헤더가 화면 아래에 있다 (_header.scss) — 큰 영문이 화면 위끝부터 찬다
+   · PC 첫 화면은 헤더가 가운데 상자 양옆에 있다가 스크롤하면 위에 붙는다 (_header.scss) — 큰 영문이 화면 위끝부터 찬다
    -------------------------------------------------------------------------- */
 .main-hero {
   /* 핀 자리 지킴 래퍼 — 지우지 않는다 */
@@ -107,7 +107,7 @@
           grid-template-columns: auto minmax(0, auto) 1fr;
           align-items: stretch;
           gap: 3rem;
-          margin-top: 5rem;
+          margin-top: 3.5rem;
           padding-top: 1.75rem;
           border-top: 1px solid var(--color-line-strong);
 
@@ -162,7 +162,7 @@
             }
           }
 
-          // 함께한 고객사 — 같은 목록 두 벌이 칸 안에서 왼쪽으로 흐른다, 오른쪽 끝은 흐리게 (모션 줄이기는 멈춤)
+          // 프로젝트 — 같은 목록 두 벌이 칸 안에서 왼쪽으로 흐른다, 오른쪽 끝은 흐리게 (모션 줄이기는 멈춤)
           .client {
             display: flex;
             flex-direction: column;
@@ -224,6 +224,18 @@
 
         @include touch-area-before;   // 누르는 영역 44 × 44 (::after 는 세로 선)
         @include hover { color: var(--color-text-point); }
+      }
+    }
+  }
+}
+// PC — 가운데 상자는 화면 높이 비율로 — 첫 화면(100svh) 안에 아래 줄(.hero-foot)까지 들어오게 남는 높이로 폭을 정한다
+//   남는 높이 = 화면 높이 − 큰 영문 · 상자 위 여백(13.76cqw) − 슬로건 · 글 · 아래 줄 · 바닥 여유(22.75rem — 실측)
+//   폭 = 남는 높이 × 상자 비율(675 / 378). 20cqw ~ 46.94cqw — 아주 낮은 화면(1366 × 768 등)은 최소 폭이 먼저라 아래 줄 끝이 조금 넘칠 수 있다
+@media not all and (max-width: 1024px) {
+  .main-hero {
+    .pin-spacer {
+      .stage {
+        .hero-media { width: clamp(20cqw, (100svh - 13.76cqw - 22.75rem) * 675 / 378, 46.94cqw); }
       }
     }
   }
@@ -484,9 +496,9 @@
 }
 
 /* --------------------------------------------------------------------------
-   프로젝트 쌓이는 카드 (메인) — .project-layout-stack: 왼쪽 고정 칸(제목 · 탭 · 필터) · 가운데 쌓이는 카드 · 오른쪽 지금 보는 카드
+   프로젝트 쌓이는 카드 (메인) — .project-layout-stack: 왼쪽 고정 칸(제목 · 전체 보기) · 가운데 쌓이는 카드 · 오른쪽 지금 보는 카드
    · 카드는 화면 위에 붙고(sticky) 다음 카드가 그 위를 덮는다. 덮이는 동안 작아지며 위로 밀린다 — --stack 0 → 1 (main.js 「쌓이는 카드」)
-   · 오른쪽 .preview 의 면색 · 이름 · 순번 · 연도 · 구분은 main.js 가 지금 붙어 있는 카드로 바꾼다 (장식 — aria-hidden)
+   · 오른쪽 .preview 의 사진 · 이름 · 순번 · 연도 · 구분은 main.js 가 지금 붙어 있는 카드로 바꾼다 (장식 — aria-hidden)
    · 사진 자리: 사진(.photo) 위에 또렷한 작은 액자(.frame)
    -------------------------------------------------------------------------- */
 .main-projects {
@@ -742,6 +754,37 @@
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 2.5rem 1.5rem;
+
+      /* 장식 — 왼쪽 빈 칸: 옅은 점 격자(가장자리는 흐려짐) + 큰 별표(연락 띠와 같은 모양) */
+      .about-deco {
+        position: relative;
+        grid-column: 1 / 6;
+        grid-row: 1 / span 3;
+        min-height: 22rem;
+        pointer-events: none;
+
+        &::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1.5px);
+          background-size: 1.5rem 1.5rem;
+          opacity: 0.12;
+          mask-image: radial-gradient(closest-side, var(--color-media-1), transparent);
+        }
+
+        &::after {
+          @include icon-mask("icon-asterisk");
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: min(18rem, 70%);
+          aspect-ratio: 1;
+          color: var(--color-text-default-highest);
+          opacity: 0.06;
+          translate: -50% -50%;
+        }
+      }
 
       /* 인적 사항 — 값만 한 줄 (이름표 dt 는 .blind) */
       .profile-info {
@@ -1154,6 +1197,7 @@
           position: relative;
           width: fit-content;
           max-width: 100%;
+          min-height: 2.75rem;   // 터치 타깃 44
           padding-bottom: 0.5rem;
           font: var(--font-h1);
           letter-spacing: var(--font-h1-ls);
@@ -1190,13 +1234,58 @@
 }
 
 
+// 움직이는 장식 — Scroll 아래 선을 따라 진한 토막이 내려가고, 건너뛰기 화살표가 위아래로 까딱이고, 소개 별표가 천천히 돈다 (모션 줄이기는 멈춤)
+@include motion {
+  .main-hero {
+    .pin-spacer {
+      .stage {
+        .scroll-link {
+          &::after {
+            background:
+              linear-gradient(var(--color-text-default-highest), var(--color-text-default-highest)) 0 -1.5rem / 100% 1.5rem no-repeat,
+              var(--color-line-default);
+            animation: scroll-line 1.8s ease-in-out infinite;
+          }
+        }
+      }
+    }
+  }
+
+  .main-projects {
+    .inner {
+      .skip-btn {
+        &::after { animation: skip-bob 1.2s ease-in-out infinite; }
+      }
+    }
+  }
+
+  .main-about {
+    .inner {
+      .about-grid {
+        .about-deco {
+          &::after { animation: deco-spin 60s linear infinite; }
+        }
+      }
+    }
+  }
+}
+@keyframes scroll-line {
+  from { background-position: 0 -1.5rem, 0 0; }
+  to   { background-position: 0 3rem, 0 0; }
+}
+@keyframes skip-bob {
+  0%, 100% { translate: 0 -0.125rem; }
+  50%      { translate: 0 0.25rem; }
+}
+@keyframes deco-spin {
+  to { rotate: 360deg; }
+}
+
 /* 반응형 */
 @include mo {
   .main-hero {
     .pin-spacer {
       .stage {
-        .hero-name { margin-top: 0; }
-
         .hero-media { width: 70cqw; }
 
         .inner {
@@ -1272,6 +1361,8 @@
       .about-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
+
+        .about-deco { display: none; }
 
         .profile-info,
         .stat-grid { grid-column: 1 / -1; }

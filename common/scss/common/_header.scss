@@ -2,12 +2,12 @@
 
 /* ==========================================================================
    7. GNB — 고정 헤더 (로고 · 섹션 메뉴 · 테마 · 600↓ 햄버거)
-   · common.js 가 붙이는 상태: .gnb.is-scrolled(맨 위가 아님) · .gnb.is-open(600↓ 메뉴 열림)
+   · common.js 가 붙이는 상태: .gnb.is-open(600↓ 메뉴 열림)
    · 현재 섹션 메뉴: .depth1-link.is-active + aria-current="true"
    · 스크롤 진행 막대: .progress 의 --progress(0 ~ 1)
    · 첫 진입: .gnb.is-shown 이 붙으며 위에서 내려온다 (common.js — html 에 직접 쓰지 않는다)
    · 모양: 상자 없이 글자만 — 바탕과 반전(mix-blend-mode: difference)돼 밝은 곳은 검정 · 검정 구획은 흰색 (600↓ 메뉴를 펼치면 불투명 바탕)
-   · PC 는 fixed — 맨 위(첫 화면)에서는 화면 아래, 스크롤하면 위로
+   · 로고 왼쪽 · 메뉴 오른쪽. PC 메인(히어로가 있는 페이지)은 처음에 가운데 상자 위끝 높이(양옆)에 있다가, 스크롤해서 화면 위끝에 닿으면 거기 붙는다(sticky). 다른 페이지는 처음부터 위에 고정(fixed)
    ========================================================================== */
 .gnb {
   position: sticky;
@@ -47,7 +47,7 @@
     }
 
     .menu {
-      margin: 0 auto;
+      margin-left: auto;
 
       .depth1 {
         display: flex;
@@ -160,23 +160,24 @@
   }
 }
 
-/* PC — 화면 위에 떠 있는 고정 헤더. 첫 화면(맨 위)에서는 화면 아래에 있다가 스크롤하면 위로 올라간다 (히어로 큰 영문이 화면 위끝부터 차게) */
+/* PC — 화면 위에 떠 있는 고정 헤더 */
 @media not all and (max-width: 1024px) {
   .gnb {
     position: fixed;
     right: 0;
     left: 0;
-
-    &:not(.is-scrolled) { top: calc(100svh - var(--gnb-height) - 0.75rem); }
   }
-}
-@include motion {
-  @media not all and (max-width: 1024px) {
-    .gnb {
-      transition: top 0.6s var(--ease-out), transform 0.6s var(--ease-out);
 
-      // 첫 진입 — 화면 아래에서 올라온다
-      &:not(.is-shown) { transform: translateY(100%); }
+  // 메인 — 첫 화면에서는 히어로 가운데 상자 위끝 높이(양옆)에 놓이고, 스크롤해 화면 위끝에 닿으면 붙는다
+  //   자리(흐름 속 높이)는 차지하지 않는다 — 위 여백만큼 내려놓고 같은 만큼 + 헤더 높이를 아래 음수 여백으로 돌려준다
+  //   높이 13.76vw = 히어로 큰 영문(13cqw − 위 1.67cqw 잘림) + 상자 위 여백 2.43cqw — 무대 폭이 화면 폭이라 vw 로 같은 값 (vw 금지의 예외 · components/_main 「히어로」)
+  .wrapper:has(.main-hero) {
+    display: flow-root;   // 헤더 위 여백이 wrapper · body 밖으로 번지지 않게 (번지면 body 기준 스킵 링크가 내려와 보인다)
+
+    .gnb {
+      position: sticky;
+      margin-top: 13.76vw;
+      margin-bottom: calc((13.76vw + var(--gnb-height)) * -1);
     }
   }
 }

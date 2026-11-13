@@ -52,7 +52,6 @@
   const MQ_SMALL = "(max-width: 600px)";     // 햄버거 메뉴 구간 — CSS 와 같은 값
   const MOTION_START = "top 90%";            // 진입 모션 시작선 — 블록 윗변이 화면 위에서 90% 지점에 닿을 때
   const GNB_DROP = 1.2;                      // 페이지 첫 진입 — 헤더가 위에서 내려오는 초
-  const GNB_SCROLLED_AT = 8;                 // px — 헤더 아래 선(.is-scrolled)이 생기는 스크롤 위치
   const SMOOTH_SCROLL = { lerp: 0.1 };      // 부드러운 스크롤 — 한 프레임에 남은 거리를 따라가는 비율 (작을수록 더 미끄러진다)
   const SMOOTH_SCROLL_SKIP = "textarea, select, [data-lenis-prevent]";   // 부드러운 스크롤을 건너뛰는 곳 — 그 안의 휠은 기본 스크롤
   const API_NAME = "UI";                     // 공개 API 전역 이름
@@ -224,7 +223,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     스크롤 상태 — 맨 위가 아니면 .gnb.is-scrolled, 진행 막대 .progress 의 --progress(0 ~ 1)
+     스크롤 진행 막대 — .gnb .progress 의 --progress(0 ~ 1)
      -------------------------------------------------------------------------- */
   function bindGnbScroll() {
     const $gnb = $(".gnb").first();
@@ -235,7 +234,6 @@
     function update() {
       const y = window.scrollY;
       const max = document.documentElement.scrollHeight - window.innerHeight;
-      $gnb.toggleClass("is-scrolled", y > GNB_SCROLLED_AT);
       if (bar) bar.style.setProperty("--progress", max > 0 ? Math.min(y / max, 1).toFixed(4) : 0);
       ticking = false;
     }

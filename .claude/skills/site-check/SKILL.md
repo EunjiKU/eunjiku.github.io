@@ -51,6 +51,7 @@ JSON.stringify({ w: innerWidth, of: document.documentElement.scrollWidth > vw, o
 - 전체 프로젝트 — 카드 열 수(`.project-grid .project-card` 의 서로 다른 left 개수) 3 / 2 / 1, 600↓ 에서 탭이 필터 위
 - 메인에서 「전체 프로젝트 보기」를 눌러 팝업 안(iframe — `html[data-embed]`, 헤더 · 푸터 없음)에서도 같은 배치인지
 - 끝나면 화면 크기 흉내를 해제한다
+- 콘솔의 `ERR_CONNECTION_REFUSED` 는 앞서 끈 미리보기 서버의 흔적일 수 있다 — 페이지를 새로 불러 네트워크 응답(모두 200)으로 확인한 뒤 판단한다
 
 ## 3. 접근성
 

@@ -31,6 +31,7 @@
   <link rel="apple-touch-icon" href="common/images/favicon-180.png">
   <link rel="manifest" href="common/site.webmanifest">
 
+  <!-- 참고레퍼런스 사이트 https://www.ipartners.co.kr/ -->
   <!-- 검색 결과에 이름 · 직무를 알리는 구조화 데이터 (schema.org) -->
   <script type="application/ld+json">
   {
@@ -113,18 +114,14 @@
             </div>
 
             <div class="inner">
-              <div class="intro" data-motion-group="each">
+              <div class="intro">
                 <h1 class="tit">좋아하니까, <em>코드</em>로 말하는 퍼블리셔</h1>
                 <p class="txt">시맨틱한 마크업과 섬세한 인터랙션으로 디자인의 의도를 정확하게 구현합니다.</p>
               </div>
 
-              <div class="hero-foot" data-motion>
+              <div class="hero-foot">
                 <!-- 인적 사항 · 주요 기술 — 이름표는 화면에 숨기고 값만 (스크린리더는 이름표까지 읽는다) -->
                 <dl class="info-list">
-                  <div class="info-item">
-                    <dt class="blind">이름</dt>
-                    <dd class="txt">구은지</dd>
-                  </div>
                   <div class="info-item">
                     <dt class="blind">생년월일</dt>
                     <dd class="txt"><time datetime="1998-12-08">1998.12.08</time></dd>
@@ -187,11 +184,11 @@
           <div class="project-layout project-layout-stack">
             <div class="side">
               <div class="side-sticky">
-                <div class="sec-head" data-motion-group="each">
+                <div class="sec-head">
                   <h2 class="tit" data-motion="custom" data-split>프로젝트</h2>
                 </div>
                 <!-- @ 「전체 프로젝트 보기」: 서브페이지(projects.html) — 스크립트가 있으면 이동 대신 화면(#projectsModal)으로 밀고 들어온다 -->
-                <div class="more" data-motion>
+                <div class="more">
                   <a href="projects.html" class="basic-btn basic-btn-outline more-btn" aria-haspopup="dialog" aria-controls="projectsModal">전체 프로젝트 보기</a>
                 </div>
               </div>
@@ -200,7 +197,7 @@
             <div class="list">
               <!-- @ 카드 data-* 가 「설명 보기」 모달 내용 — data-pages · data-contrib 는 「|」 구분, data-tags 는 「,」 구분, data-url(사이트) · data-video(영상)는 있을 때만
                    「사이트 보기」 링크는 공개 주소가 있는 카드에만 둔다 (href + target="_blank" rel="noopener" + 새 창 안내) -->
-              <div class="stack-list" id="workGrid" data-motion-group="row">
+              <div class="stack-list" id="workGrid">
                 <article class="project-card project-card-bg3"
                   data-category="build"
                   data-period="2026.10 - 진행중"
@@ -572,9 +569,9 @@
               </div>
             </div>
 
-            <!-- @ 지금 보고 있는 카드 — 사진 자리 면색 · 이름 · 순번 · 연도 · 구분 (main.js 가 바꾼다) -->
+            <!-- @ 지금 보고 있는 카드 — 사진 · 이름 · 순번 · 연도 · 구분 (main.js 가 바꾼다) -->
             <div class="preview" aria-hidden="true">
-              <div class="preview-sticky" data-motion>
+              <div class="preview-sticky">
                 <div class="mini project-card-bg3"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="genre">KTR</span></div>
                 <p class="count"><span class="num">01</span> / <span class="total">17</span></p>
                 <p class="now-tag"><span class="year">#2026</span> <span class="type">#구축</span></p>
@@ -594,8 +591,10 @@
           <h2 class="statement statement-left" data-fill>사용자 경험을 코드로 완성하는 퍼블리셔</h2>
 
           <div class="about-grid">
+            <!-- 장식 — 왼쪽 빈 칸의 옅은 점 격자 + 천천히 도는 큰 별표 -->
+            <div class="about-deco" aria-hidden="true"></div>
             <!-- 인적 사항 — 이름표는 화면에 숨기고 값만 -->
-            <dl class="profile-info" data-motion>
+            <dl class="profile-info">
               <div class="info-item">
                 <dt class="blind">이름</dt>
                 <dd class="txt">구은지</dd>
@@ -609,7 +608,7 @@
                 <dd class="txt">인천 부평구</dd>
               </div>
             </dl>
-            <dl class="stat-grid" data-motion-group="row">
+            <dl class="stat-grid">
               <div class="stat-card">
                 <dt class="label">년 차 경력</dt>
                 <dd class="num"><span data-count="4">4</span>+</dd>
@@ -619,7 +618,7 @@
                 <dd class="num"><span data-count="30">30</span>+</dd>
               </div>
             </dl>
-            <div class="profile" data-motion-group="each">
+            <div class="profile">
               <p class="lead">안녕하세요. 4년차 프론트엔드 퍼블리셔 구은지입니다. 웹 표준과 접근성을 준수하며, 디자인의 의도를 정확하게 구현하는 것을 목표로 합니다.</p>
               <p class="txt">다양한 규모의 프로젝트에서 반응형 웹사이트, 랜딩 페이지, 관리자 시스템 등을 퍼블리싱해왔으며, 개발팀과의 원활한 협업을 위해 항상 깔끔하고 유지보수하기 좋은 코드를 작성하려 노력합니다.</p>
               <ul class="link-list">
@@ -632,7 +631,7 @@
             </div>
           </div>
 
-          <div class="skill-box" data-motion>
+          <div class="skill-box">
             <ul class="chip-list">
               <li class="skill-chip"><span class="logo html5-icon" aria-hidden="true"></span>HTML5</li>
               <li class="skill-chip"><span class="logo css3-icon" aria-hidden="true"></span>CSS3</li>
@@ -644,7 +643,7 @@
             </ul>
           </div>
 
-          <ul class="feature-list" data-motion-group="row">
+          <ul class="feature-list">
             <li class="feature-item">
               <span class="icon device-icon" aria-hidden="true"></span>
               <div class="cont">
@@ -715,7 +714,7 @@
             </ol>
           </div>
 
-          <div class="cert" data-motion>
+          <div class="cert">
             <h2 class="block-tit">자격증</h2>
             <ul class="cert-list">
               <li class="cert-item">
@@ -741,14 +740,14 @@
       <!-- 연락 -->
       <section class="main-contact sec" id="contact" data-tone="dark">
         <!-- 섹션 머리 — 옆으로 흐르는 큰 제목 띠 (제목은 h2, 반복은 장식) -->
-        <div class="sec-band" data-motion>
+        <div class="sec-band">
           <h2 class="band-tit" lang="en"><span class="blind">Contact</span><span class="track" aria-hidden="true"><span class="set"><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span></span><span class="set"><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span></span></span></h2>
         </div>
 
         <div class="inner">
           <p class="statement statement-left" data-fill>함께 일하고 싶으시다면</p>
 
-          <div class="contact-panel" data-motion>
+          <div class="contact-panel">
             <div class="info">
               <div class="contact-item">
                 <p class="label">이메일</p>

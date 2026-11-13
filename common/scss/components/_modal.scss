@@ -197,6 +197,7 @@ body:has(.modal-page.is-open) {
       right: 0;
       left: 0;
       z-index: var(--z-page-header);
+      margin: 0;   // 메인 PC 의 「상자 옆에서 시작」 여백을 푼다 — 화면 위에
     }
   }
 }
