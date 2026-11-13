@@ -1303,6 +1303,18 @@
 
 /* 반응형 */
 @include mo {
+  // 소개 큰 문장 — 태블릿에서 한 줄로 길게 늘어지지 않게 두 줄로 (「사용자 경험을 코드로 / 완성하는 퍼블리셔」)
+  .main-about {
+    .inner {
+      position: relative;   // 장식(.about-deco)을 큰 문장 오른쪽에 띄우는 기준
+
+      .statement {
+        max-width: 10.5em;
+        margin-bottom: 7rem;
+      }
+    }
+  }
+
   // 전체 보기 — 왼쪽 칸이 위에 남아 카드를 보는 동안 안 보이므로 아래 버튼 줄에도
   .main-projects {
     .inner {
@@ -1370,12 +1382,8 @@
           .stack-list {
             gap: 4rem;
 
-            // 쌓이지 않고 그냥 흘러간다 — 화면에 붙지(sticky) 않고, 덮일 때 작아지며 밀리는 모션도 없다 (작은 화면에서는 정신없어서)
             .project-card {
-              position: relative;
-              top: auto;
-              translate: none;
-              scale: none;
+              top: calc(var(--gnb-height) + 1.5rem);
 
               .info {
                 grid-template-areas:
@@ -1401,7 +1409,15 @@
         grid-template-columns: 1fr;
         gap: 2rem;
 
-        .about-deco { display: none; }
+        // 장식 — 두 줄 큰 문장 오른쪽 빈 칸에 (PC 는 왼쪽 빈 칸)
+        .about-deco {
+          position: absolute;
+          top: -2rem;
+          right: var(--side-padding);
+          width: min(18rem, 45%);
+          min-height: 0;
+          height: 15rem;
+        }
 
         .profile-info,
         .stat-grid { grid-column: 1 / -1; }
@@ -1414,13 +1430,20 @@
 
       .skill-box { margin-top: 2.5rem; }
 
-      .feature-list { grid-template-columns: repeat(2, 1fr); }
+      // 태블릿도 PC 처럼 4칸 — 칸이 좁아 안쪽 여백 · 높이만 줄인다
+      .feature-list {
+        .feature-item {
+          gap: 2rem;
+          min-height: 0;
+          padding: 1.5rem 1.25rem;
+        }
+      }
     }
   }
 
   .main-experience {
     .inner {
-      .cert { width: 100%; }
+      .cert { width: min(30rem, 100%); }   // 태블릿 — 오른쪽에 좁게 (휴대폰은 전체 폭)
 
       .career {
         margin-bottom: 5rem;
@@ -1475,6 +1498,39 @@
   }
 }
 @include sm {
+  // 휴대폰 — 소개 장식은 숨긴다 (큰 문장이 폭을 다 쓴다)
+  .main-about {
+    .inner {
+      .about-grid {
+        .about-deco { display: none; }
+      }
+    }
+  }
+
+  .main-experience {
+    .inner {
+      .cert { width: 100%; }
+    }
+  }
+
+  // 휴대폰 — 프로젝트 카드가 쌓이지 않고 그냥 흘러간다 (화면에 붙지 않고, 덮일 때 작아지며 밀리는 모션도 없다 — 작은 화면에서는 정신없어서). PC · 태블릿은 쌓인다
+  .main-projects {
+    .inner {
+      .project-layout-stack {
+        .list {
+          .stack-list {
+            .project-card {
+              position: relative;
+              top: auto;
+              translate: none;
+              scale: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
   // 프로젝트 — 휴대폰은 20 + 16
   .main-projects {
     .inner { padding: 0 calc(var(--side-padding) + 1rem); }
@@ -1505,15 +1561,51 @@
     .pin-spacer {
       .stage {
         .inner {
+          // 아래 줄 — 휴대폰은 칸 사이 · 글자를 줄여 한 화면에 덜 차지하게
           .hero-foot {
+            gap: 1rem;
+            margin-top: 2.25rem;
+            padding-top: 1.25rem;
+
             .info-list {
               display: flex;
               flex-wrap: wrap;
+              gap: 0.375rem 1.25rem;
 
               .info-item {
-                &.info-item-full { flex-basis: 100%; }
+                .txt {
+                  font: var(--font-b2-sb);
+                  letter-spacing: var(--font-b2-sb-ls);
+                }
+
+                &.info-item-full {
+                  flex-basis: 100%;
+
+                  .txt {
+                    font: var(--font-b5-med);
+                    letter-spacing: var(--font-b5-med-ls);
+                  }
+                }
               }
             }
+
+            .stat-list { padding-top: 1rem; }
+
+            .stat-list {
+              gap: 2rem;
+
+              .stat-item {
+                gap: 0.25rem;
+
+                .num {
+                  font: var(--font-h1);
+                  letter-spacing: var(--font-h1-ls);
+                }
+              }
+            }
+
+            // 흐르는 프로젝트 — 휴대폰은 첫 화면이 좁아 뺀다
+            .client { display: none; }
           }
         }
       }
