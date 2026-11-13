@@ -32,7 +32,6 @@
     padding: 3rem;
     overflow-y: auto;
     background: var(--color-bg-surface);
-    border-radius: 1.25rem;
     box-shadow: 0 24px 60px var(--color-shadow);
     transform: translateY(1rem);
     transition: transform 0.4s var(--ease-out);
@@ -46,7 +45,6 @@
       width: 2.5rem;
       height: 2.5rem;
       background: var(--color-bg-subtle);
-      border-radius: 50%;
       transition: background-color 0.3s ease;
       @include touch-area;
 
@@ -62,7 +60,6 @@
     .modal-video {
       margin-bottom: 2rem;
       overflow: hidden;
-      border-radius: 1rem;
 
       video {
         display: block;
@@ -91,7 +88,6 @@
           letter-spacing: var(--font-b5-med-ls);
           color: var(--color-text-point);
           background: var(--color-bg-point-soft);
-          border-radius: 99rem;
         }
       }
     }
@@ -192,18 +188,21 @@
     }
   }
 }
-// 헤더 — 전체 화면 페이지 위에 남는다
+// 헤더 — 전체 화면 페이지 위에 남는다 (1024↓ 는 sticky 헤더라 자리를 wrapper 위 여백으로 지킨다 — PC 는 원래 fixed)
 // 스크롤 잠금(body overflow: hidden)이면 sticky 가 풀려 페이지 맨 위에 남는다 — 그동안 fixed 로 띄우고 자리는 wrapper 위 여백으로 지킨다 (본문이 튀지 않게)
 body:has(.modal-page.is-open) {
   .wrapper {
-    padding-top: var(--gnb-height);
-
     .gnb {
       position: fixed;
       right: 0;
       left: 0;
       z-index: var(--z-page-header);
     }
+  }
+}
+@include mo {
+  body:has(.modal-page.is-open) {
+    .wrapper { padding-top: var(--gnb-height); }
   }
 }
 
@@ -214,7 +213,6 @@ body:has(.modal-page.is-open) {
 
     .modal-box {
       padding: 1.75rem 1.25rem;
-      border-radius: 1.25rem;
 
       .modal-video { margin-bottom: 1.5rem; }
     }

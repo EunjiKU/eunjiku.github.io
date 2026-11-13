@@ -12,7 +12,7 @@
 
    목차
    0. 리셋 ................. common/_reset            브라우저 기본값 초기화
-   1. 디자인 토큰 ........... common/_tokens           :root (색 · 텍스트 스타일 --font-{style} · 레이아웃 · z-index) + 다크 모드 + 1024/600 재선언
+   1. 디자인 토큰 ........... common/_tokens           :root (색 · 텍스트 스타일 --font-{style} · 레이아웃 · z-index) + 검정 구획 [data-tone="dark"] + 1024/600 재선언
    2. 웹폰트 ............... common/_fonts            @font-face — Pretendard 400 · 500 · 600 · 700 (common/fonts/)
    3. 문서 기준 ............. common/_base             html(rem 기준) · body · 강조 em(포인트 색) · 앵커 멈춤 위치
    3-1. 레이아웃 컨테이너 .. common/_base             .wrapper · .inner
@@ -22,11 +22,11 @@
    9. 섹션 골격 ............ common/_page             .sec · .sec-head
    10. 폼 .................. components/_form        .form-row · .text-field
    11. 버튼 ................ components/_button      .basic-btn(-outline · -small · -full) · .btn-group
-   12. 라벨 ................ components/_label       .status-badge · .chip-list · .skill-chip · .tag-list
+   12. 라벨 ................ components/_label       .chip-list · .skill-chip · .tag-list
    13-3. 리스트 ............ components/_list        .slash-list
-   15-3. 아이콘 ............ components/_icon        {이름}-icon(로고 · 선 아이콘) · 원 안 아이콘 .feature-icon
+   15-3. 아이콘 ............ components/_icon        {이름}-icon(로고 · 선 아이콘)
    18. 오버레이 ............ components/_modal       .modal · .modal-box (.modal-video · .modal-head · .modal-body · .modal-foot)
-   19. 메인 ................ components/_main        main- (히어로 · 프로젝트 · 소개 · 경력 및 자격 · 연락 · 캐릭터)
+   19. 메인 ................ components/_main        main- (히어로 · 프로젝트 · 소개 · 경력 및 자격 · 연락)
    ========================================================================== */
 @use "common/reset";
 @use "common/tokens";

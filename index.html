@@ -9,7 +9,7 @@
   <meta name="author" content="구은지">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://eunjiku.github.io/">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#efefef">
 
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="구은지 웹 퍼블리셔 포트폴리오">
@@ -31,6 +31,7 @@
   <link rel="apple-touch-icon" href="common/images/favicon-180.png">
   <link rel="manifest" href="common/site.webmanifest">
 
+  <!-- 참고레퍼런스 사이트 https://www.ipartners.co.kr/ -->
   <!-- 검색 결과에 이름 · 직무를 알리는 구조화 데이터 (schema.org) -->
   <script type="application/ld+json">
   {
@@ -69,7 +70,7 @@
     <!-- 헤더 -->
     <header class="gnb">
       <div class="bar">
-        <a href="#content" class="logo">KEJ<span class="dot">.</span><span class="blind"> 맨 위로</span></a>
+        <a href="#content" class="logo"><span class="role">퍼블리셔</span> 구은지<span class="blind"> — 맨 위로</span></a>
         <nav class="menu" id="gnbMenu" aria-label="섹션 메뉴">
           <ul class="depth1">
             <li class="depth1-item"><a href="#projects" class="depth1-link">프로젝트</a></li>
@@ -79,10 +80,6 @@
           </ul>
         </nav>
         <div class="util">
-          <button type="button" class="theme-btn" aria-pressed="false">
-            <span class="icon" aria-hidden="true"></span>
-            <span class="blind">다크 모드</span>
-          </button>
           <button type="button" class="menu-btn" aria-expanded="false" aria-controls="gnbMenu">
             <span class="bar-icon" aria-hidden="true"></span>
             <span class="blind">메뉴</span>
@@ -98,38 +95,26 @@
         <!-- 핀 자리 지킴 래퍼 — 지우지 않는다. 무대(.stage)가 화면에 멈추고 다음 섹션이 덮으며 올라온다 -->
         <div class="pin-spacer">
           <div class="stage">
-            <div class="inner">
-              <div class="hero-grid">
-                <div class="intro" data-motion-group="each">
-                  <p class="status-badge"><span class="dot" aria-hidden="true"></span>새 프로젝트 함께할 수 있어요</p>
-                  <p class="eyebrow">구은지 · 웹 퍼블리셔 · 서울</p>
-                  <h1 class="tit">좋아하니까, <br><em>코드</em>로 말하는 <br>퍼블리셔</h1>
-                  <p class="txt">시맨틱한 마크업과 섬세한 인터랙션으로 <br>디자인의 의도를 정확하게 구현합니다.</p>
-                  <div class="btn-group">
-                    <a href="#projects" class="basic-btn">프로젝트 보기</a>
-                    <a href="#contact" class="basic-btn basic-btn-outline">연락하기</a>
-                  </div>
-                </div>
+            <!-- 화면 폭을 채우는 큰 글자 — 두 단어를 화면 양끝에 -->
+            <p class="hero-name" lang="en"><span class="word">WEB</span> <span class="word">PUBLISHER</span></p>
 
-                <div class="visual" aria-hidden="true" data-motion="fade">
-                  <div class="code-card">
-                    <div class="bar"><span class="dots"></span><span class="file">index.html</span></div>
-<pre class="code"><code><span class="dim">&lt;</span><span class="tag-name">section</span> <span class="attr">class</span>=<span class="val">"publisher"</span><span class="dim">&gt;</span>
-  <span class="dim">&lt;</span><span class="tag-name">h1</span><span class="dim">&gt;</span>구은지<span class="dim">&lt;/</span><span class="tag-name">h1</span><span class="dim">&gt;</span>
-  <span class="dim">&lt;</span><span class="tag-name">ul</span> <span class="attr">class</span>=<span class="val">"skills"</span><span class="dim">&gt;</span>
-    <span class="dim">&lt;</span><span class="tag-name">li</span><span class="dim">&gt;</span>시맨틱 마크업<span class="dim">&lt;/</span><span class="tag-name">li</span><span class="dim">&gt;</span>
-    <span class="dim">&lt;</span><span class="tag-name">li</span><span class="dim">&gt;</span>SCSS · 디자인 토큰<span class="dim">&lt;/</span><span class="tag-name">li</span><span class="dim">&gt;</span>
-    <span class="dim">&lt;</span><span class="tag-name">li</span><span class="dim">&gt;</span>웹 접근성<span class="dim">&lt;/</span><span class="tag-name">li</span><span class="dim">&gt;</span>
-  <span class="dim">&lt;/</span><span class="tag-name">ul</span><span class="dim">&gt;</span>
-<span class="dim">&lt;/</span><span class="tag-name">section</span><span class="dim">&gt;</span><span class="cursor"></span></code></pre>
-                  </div>
-                  <p class="float-chip">시맨틱 · 접근성 · 반응형</p>
-                  <!-- @ 지금 진행 중인 프로젝트 이름 -->
-                  <p class="now-card">
-                    <span class="label">지금 작업 중</span>
-                    <span class="tit">KTR 화재특화 재난안전산업 진흥시설</span>
-                  </p>
-                </div>
+            <!-- @ 가운데 상자 — 사진 위 큰 글자가 한 자씩 바뀐다 (main.js 「히어로 글자」, 지금 장면 .is-active). 사진은 더미(@img-sample-*) — 실제 이미지로 바꾼다. 장식 -->
+            <div class="hero-media" aria-hidden="true">
+              <span class="media-item is-active"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="letter">P</span></span>
+              <span class="media-item"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="letter">U</span></span>
+              <span class="media-item"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="letter">B</span></span>
+              <span class="media-item"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="letter">L</span></span>
+              <span class="media-item"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="letter">I</span></span>
+              <span class="media-item"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="letter">S</span></span>
+              <span class="media-item"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="letter">H</span></span>
+              <span class="media-item"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="letter">E</span></span>
+              <span class="media-item"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="letter">R</span></span>
+            </div>
+
+            <div class="inner">
+              <div class="intro" data-motion-group="each">
+                <h1 class="tit">좋아하니까, <em>코드</em>로 말하는 퍼블리셔</h1>
+                <p class="txt">시맨틱한 마크업과 섬세한 인터랙션으로 디자인의 의도를 정확하게 구현합니다.</p>
               </div>
 
               <div class="hero-foot" data-motion>
@@ -143,28 +128,51 @@
                     <dd class="num"><span data-count="30">30</span>+</dd>
                   </div>
                 </dl>
+                <dl class="info-list">
+                  <div class="info-item">
+                    <dt class="label">주요 기술</dt>
+                    <dd class="txt">HTML5 · CSS3 · SCSS · JavaScript · jQuery · GSAP</dd>
+                  </div>
+                  <div class="info-item">
+                    <dt class="label">강점</dt>
+                    <dd class="txt">웹 표준 · 웹 접근성 · 반응형 웹</dd>
+                  </div>
+                </dl>
+                <!-- 함께한 고객사 — 칸 안에서 끝없이 왼쪽으로 흐른다 (같은 목록 두 벌, 두 번째는 장식) -->
                 <div class="client">
                   <p class="label">함께한 고객사</p>
-                  <ul class="client-list">
-                    <li class="client-item">삼성화재</li>
-                    <li class="client-item">현대로템</li>
-                    <li class="client-item">HD하이드로젠</li>
-                    <li class="client-item">HD한국조선해양</li>
-                    <li class="client-item">현대글로비스</li>
-                    <li class="client-item">힐스테이트</li>
-                    <li class="client-item">대동 KIOTI</li>
-                    <li class="client-item">KTR</li>
-                  </ul>
+                  <div class="client-flow">
+                    <ul class="client-list">
+                      <li class="client-item">삼성화재</li>
+                      <li class="client-item">현대로템</li>
+                      <li class="client-item">HD하이드로젠</li>
+                      <li class="client-item">HD한국조선해양</li>
+                      <li class="client-item">현대글로비스</li>
+                      <li class="client-item">힐스테이트</li>
+                      <li class="client-item">대동 KIOTI</li>
+                      <li class="client-item">KTR</li>
+                    </ul>
+                    <ul class="client-list" aria-hidden="true">
+                      <li class="client-item">삼성화재</li>
+                      <li class="client-item">현대로템</li>
+                      <li class="client-item">HD하이드로젠</li>
+                      <li class="client-item">HD한국조선해양</li>
+                      <li class="client-item">현대글로비스</li>
+                      <li class="client-item">힐스테이트</li>
+                      <li class="client-item">대동 KIOTI</li>
+                      <li class="client-item">KTR</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
-            <a href="#projects" class="scroll-link"><span>스크롤</span><span class="blind"> — 프로젝트로 이동</span></a>
+            <a href="#projects" class="scroll-link"><span lang="en">Scroll</span><span class="blind"> — 프로젝트로 이동</span></a>
           </div>
         </div>
       </section>
 
       <!-- 프로젝트 -->
-      <section class="main-projects sec" id="projects">
+      <section class="main-projects sec" id="projects" data-tone="dark">
         <div class="inner">
           <div class="project-layout project-layout-stack">
             <div class="side">
@@ -172,10 +180,9 @@
                 <div class="sec-head" data-motion-group="each">
                   <h2 class="tit" data-motion="custom" data-split>프로젝트</h2>
                 </div>
-                <!-- @ 「전체 프로젝트 보기」: 서브페이지(projects.html) — 스크립트가 있으면 이동 대신 화면(#projectsModal)으로 밀고 들어온다 · 「건너뛰기」: 소개로 -->
+                <!-- @ 「전체 프로젝트 보기」: 서브페이지(projects.html) — 스크립트가 있으면 이동 대신 화면(#projectsModal)으로 밀고 들어온다 -->
                 <div class="more" data-motion>
                   <a href="projects.html" class="basic-btn basic-btn-outline more-btn" aria-haspopup="dialog" aria-controls="projectsModal">전체 프로젝트 보기</a>
-                  <a href="#about" class="skip-btn">프로젝트 건너뛰기</a>
                 </div>
               </div>
             </div>
@@ -191,7 +198,7 @@
                   data-client="KTR 한국화학융합시험연구원"
                   data-detail="KTR 화재특화 재난안전산업 진흥시설 웹사이트 구축 — SCSS 디자인 토큰 · 공통 컴포넌트 · UI 가이드 기반 퍼블리싱."
                   data-tags="구축,기관 사이트">
-                  <div class="thumb" aria-hidden="true"><span class="genre">KTR</span><span class="frame"><span class="genre">KTR</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">KTR</span></span></div>
                   <div class="info">
                     <p class="period">2026.10 - 진행중</p>
                     <h3 class="tit">KTR 화재특화 재난안전산업 진흥시설</h3>
@@ -212,7 +219,7 @@
                   data-client="서한그룹"
                   data-detail="서한그룹 인재채용 웹사이트를 새로 구축하는 프로젝트입니다."
                   data-tags="구축,채용 사이트">
-                  <div class="thumb" aria-hidden="true"><span class="genre">서한그룹 채용</span><span class="frame"><span class="genre">서한그룹 채용</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">서한그룹 채용</span></span></div>
                   <div class="info">
                     <p class="period">2026.10 - 진행중</p>
                     <h3 class="tit">서한그룹 인재채용 웹사이트 구축</h3>
@@ -233,7 +240,7 @@
                   data-client="H-Biz"
                   data-detail="H-Biz 항공 서비스 화면 퍼블리싱 — 파견 근무."
                   data-tags="파견,항공">
-                  <div class="thumb" aria-hidden="true"><span class="genre">H-Biz</span><span class="frame"><span class="genre">H-Biz</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">H-Biz</span></span></div>
                   <div class="info">
                     <p class="period">2026.09 - 2026.10</p>
                     <h3 class="tit">H-Biz 항공</h3>
@@ -255,7 +262,7 @@
                   data-detail="삼성화재 다이렉트 장기 · 일반보험 화면 리뉴얼 퍼블리싱 — 파견 근무."
                   data-tags="파견,리뉴얼,PC/MO"
                   data-url="https://direct.samsungfire.com/">
-                  <div class="thumb" aria-hidden="true"><span class="genre">삼성화재 다이렉트</span><span class="frame"><span class="genre">삼성화재 다이렉트</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 다이렉트</span></span></div>
                   <div class="info">
                     <p class="period">2026.05 - 2026.08</p>
                     <h3 class="tit">삼성화재 다이렉트 장기/일반 리뉴얼</h3>
@@ -278,7 +285,7 @@
                   data-detail="삼성화재 고객케어서비스 앱과 세일즈웹 PC · 모바일 화면 퍼블리싱 — 파견 근무."
                   data-tags="파견,App,PC/MO"
                   data-url="https://direct.samsungfire.com/">
-                  <div class="thumb" aria-hidden="true"><span class="genre">삼성화재 앱</span><span class="frame"><span class="genre">삼성화재 앱</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 앱</span></span></div>
                   <div class="info">
                     <p class="period">2025.06 - 2026.03</p>
                     <h3 class="tit">삼성화재 고객케어서비스 App &amp; 세일즈웹</h3>
@@ -300,7 +307,7 @@
                   data-client="현대글로비스"
                   data-detail="현대글로비스 임직원 복리후생 안내 플랫폼 퍼블리싱."
                   data-tags="구축,복리후생 플랫폼">
-                  <div class="thumb" aria-hidden="true"><span class="genre">현대글로비스</span><span class="frame"><span class="genre">현대글로비스</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">현대글로비스</span></span></div>
                   <div class="info">
                     <p class="period">2025.06 - 2026.06</p>
                     <h3 class="tit">현대글로비스 복리후생</h3>
@@ -321,7 +328,7 @@
                   data-client="HD한국조선해양"
                   data-detail="HD한국조선해양 기업 웹사이트 퍼블리싱."
                   data-tags="구축,기업 사이트">
-                  <div class="thumb" aria-hidden="true"><span class="genre">HD한국조선해양</span><span class="frame"><span class="genre">HD한국조선해양</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">HD한국조선해양</span></span></div>
                   <div class="info">
                     <p class="period">2025.03 - 2025.06</p>
                     <h3 class="tit">HD한국조선해양</h3>
@@ -343,7 +350,7 @@
                   data-detail="HD하이드로젠 기업 웹사이트 구축 퍼블리싱."
                   data-tags="구축,기업 사이트"
                   data-url="https://hdhydrogen.com/kr/main">
-                  <div class="thumb" aria-hidden="true"><span class="genre">HD하이드로젠</span><span class="frame"><span class="genre">HD하이드로젠</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">HD하이드로젠</span></span></div>
                   <div class="info">
                     <p class="period">2025.01 - 2025.03</p>
                     <h3 class="tit">HD하이드로젠</h3>
@@ -366,7 +373,7 @@
                   data-detail="현대드림투어 호텔 HUB API 통합시스템 화면 퍼블리싱 — 파견 근무."
                   data-tags="파견,통합시스템"
                   data-url="https://www.therailntel.com/hotel/main">
-                  <div class="thumb" aria-hidden="true"><span class="genre">현대드림투어</span><span class="frame"><span class="genre">현대드림투어</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">현대드림투어</span></span></div>
                   <div class="info">
                     <p class="period">2024.09 - 2024.12</p>
                     <h3 class="tit">현대드림투어 호텔 HUB API 통합시스템</h3>
@@ -388,7 +395,7 @@
                   data-client="대동"
                   data-detail="대동 KIOTI 브랜드 웹사이트 퍼블리싱."
                   data-tags="구축,브랜드 사이트">
-                  <div class="thumb" aria-hidden="true"><span class="genre">대동 KIOTI</span><span class="frame"><span class="genre">대동 KIOTI</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">대동 KIOTI</span></span></div>
                   <div class="info">
                     <p class="period">2024.02 - 2024.06</p>
                     <h3 class="tit">대동 KIOTI</h3>
@@ -409,7 +416,7 @@
                   data-client="현대로템"
                   data-detail="현대로템 제품 디지털 카탈로그 퍼블리싱."
                   data-tags="구축,디지털 카탈로그">
-                  <div class="thumb" aria-hidden="true"><span class="genre">현대로템 카탈로그</span><span class="frame"><span class="genre">현대로템 카탈로그</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">현대로템 카탈로그</span></span></div>
                   <div class="info">
                     <p class="period">2024.01 - 2024.04</p>
                     <h3 class="tit">현대로템 디지털 카탈로그</h3>
@@ -430,7 +437,7 @@
                   data-client="자동차부품산업진흥재단"
                   data-detail="자동차부품산업진흥재단(KAP) 웹사이트 퍼블리싱."
                   data-tags="구축,기관 사이트">
-                  <div class="thumb" aria-hidden="true"><span class="genre">KAP</span><span class="frame"><span class="genre">KAP</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">KAP</span></span></div>
                   <div class="info">
                     <p class="period">2023.10 - 2024.03</p>
                     <h3 class="tit">KAP 자동차부품산업진흥재단</h3>
@@ -451,7 +458,7 @@
                   data-client="삼성화재"
                   data-detail="삼성화재 UI 팩토리 프로젝트 화면 퍼블리싱."
                   data-tags="UI,삼성화재">
-                  <div class="thumb" aria-hidden="true"><span class="genre">삼성화재 UI 팩토리</span><span class="frame"><span class="genre">삼성화재 UI 팩토리</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 UI 팩토리</span></span></div>
                   <div class="info">
                     <p class="period">2023.06 - 2023.08</p>
                     <h3 class="tit">삼성화재 UI 팩토리</h3>
@@ -472,7 +479,7 @@
                   data-client="KG그룹"
                   data-detail="KG그룹 웹사이트 퍼블리싱."
                   data-tags="구축,그룹 사이트">
-                  <div class="thumb" aria-hidden="true"><span class="genre">KG그룹</span><span class="frame"><span class="genre">KG그룹</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">KG그룹</span></span></div>
                   <div class="info">
                     <p class="period">2023.04 - 2023.05</p>
                     <h3 class="tit">KG그룹</h3>
@@ -494,7 +501,7 @@
                   data-detail="레일솔루션 · 디펜스솔루션 · 에코플랜트 등 기업 정보를 안내하는 현대로템 공식 홈페이지 — 프로젝트 중간 투입."
                   data-tags="구축,기업 사이트"
                   data-url="https://www.hyundai-rotem.co.kr/ko/main/index.do">
-                  <div class="thumb" aria-hidden="true"><span class="genre">현대로템</span><span class="frame"><span class="genre">현대로템</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">현대로템</span></span></div>
                   <div class="info">
                     <p class="period">2023.02 - 2023.05</p>
                     <h3 class="tit">현대로템</h3>
@@ -516,7 +523,7 @@
                   data-client="미래에셋자산운용"
                   data-detail="미래에셋자산운용 월간 리포트 페이지 작업."
                   data-tags="운영,리포트">
-                  <div class="thumb" aria-hidden="true"><span class="genre">미래에셋</span><span class="frame"><span class="genre">미래에셋</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">미래에셋</span></span></div>
                   <div class="info">
                     <p class="period">2023.02 - 2023.03</p>
                     <h3 class="tit">미래에셋자산운용 월간 리포트</h3>
@@ -538,7 +545,7 @@
                   data-detail="현대건설 · 현대엔지니어링 아파트 브랜드 사이트 — 분양 · 공사 · 입주 단지 정보 제공."
                   data-tags="구축,브랜드 사이트"
                   data-url="https://www.hillstate.co.kr/gate/index">
-                  <div class="thumb" aria-hidden="true"><span class="genre">힐스테이트</span><span class="frame"><span class="genre">힐스테이트</span></span></div>
+                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">힐스테이트</span></span></div>
                   <div class="info">
                     <p class="period">2022.09 - 2023.04</p>
                     <h3 class="tit">힐스테이트</h3>
@@ -558,21 +565,23 @@
             <!-- @ 지금 보고 있는 카드 — 사진 자리 면색 · 이름 · 순번 · 연도 · 구분 (main.js 가 바꾼다) -->
             <div class="preview" aria-hidden="true">
               <div class="preview-sticky" data-motion>
-                <div class="mini project-card-bg3"><span class="genre">KTR</span></div>
+                <div class="mini project-card-bg3"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="genre">KTR</span></div>
                 <p class="count"><span class="num">01</span> / <span class="total">17</span></p>
                 <p class="now-tag"><span class="year">#2026</span> <span class="type">#구축</span></p>
               </div>
             </div>
           </div>
+
+          <!-- 소개로 건너뛰기 — 프로젝트를 보는 동안 화면 아래 가운데에 붙어 있다 -->
+          <a href="#about" class="skip-btn">프로젝트 건너뛰기</a>
         </div>
       </section>
 
       <!-- 소개 -->
       <section class="main-about sec" id="about">
         <div class="inner">
-          <div class="sec-head" data-motion-group="each">
-            <h2 class="tit" data-motion="custom" data-split>사용자 경험을 코드로 완성하는 퍼블리셔</h2>
-          </div>
+          <!-- @ 스크롤하면 단어가 하나씩 진해진다 (main.js 「문장 채우기」) -->
+          <h2 class="statement" data-fill>사용자 경험을 코드로 완성하는 퍼블리셔</h2>
 
           <div class="about-grid">
             <div class="profile" data-motion-group="each">
@@ -610,7 +619,6 @@
               <li class="skill-chip"><span class="logo javascript-icon" aria-hidden="true"></span>JavaScript</li>
               <li class="skill-chip"><span class="logo jquery-icon" aria-hidden="true"></span>jQuery</li>
               <li class="skill-chip"><span class="logo sass-icon" aria-hidden="true"></span>SCSS</li>
-              <li class="skill-chip"><span class="logo tailwind-icon" aria-hidden="true"></span>Tailwind</li>
               <li class="skill-chip"><span class="logo git-icon" aria-hidden="true"></span>Git</li>
               <li class="skill-chip"><span class="logo figma-icon" aria-hidden="true"></span>Figma</li>
             </ul>
@@ -652,19 +660,16 @@
       <!-- 경력 및 자격 -->
       <section class="main-experience sec" id="experience">
         <div class="inner">
-          <div class="sec-head" data-motion-group="each">
-            <h2 class="tit" data-motion="custom" data-split>경력 및 자격</h2>
-          </div>
 
           <div class="career">
-            <h3 class="block-tit">경력 · 학력</h3>
+            <h2 class="block-tit">경력 · 학력</h2>
             <!-- @ 지금 다니는 곳: .career-item.is-active -->
             <ol class="career-line">
               <li class="career-item">
                 <p class="date"><time datetime="2015-03">2015.03</time></p>
                 <div class="cont">
                   <p class="kind">학력 —</p>
-                  <h4 class="tit">컴퓨터공학과 졸업</h4>
+                  <h3 class="tit">컴퓨터공학과 졸업</h3>
                   <p class="org">한국대학교 · ~ <time datetime="2019-02">2019.02</time></p>
                   <p class="txt">웹 프로그래밍, UI/UX 디자인 관련 교과 이수. 졸업 프로젝트로 반응형 포트폴리오 사이트 개발.</p>
                 </div>
@@ -673,7 +678,7 @@
                 <p class="date"><time datetime="2018-07">2018.07</time></p>
                 <div class="cont">
                   <p class="kind">학력 —</p>
-                  <h4 class="tit">프론트엔드 웹 퍼블리싱 과정 수료</h4>
+                  <h3 class="tit">프론트엔드 웹 퍼블리싱 과정 수료</h3>
                   <p class="org">그린컴퓨터아카데미 (국비지원) · ~ <time datetime="2018-12">2018.12</time></p>
                   <p class="txt">HTML/CSS/JavaScript 기초부터 실무 프로젝트까지. 반응형 웹, 웹 접근성, jQuery 플러그인 활용.</p>
                 </div>
@@ -682,7 +687,7 @@
                 <p class="date"><time datetime="2022-08-22">2022.08</time></p>
                 <div class="cont">
                   <p class="kind">재직 중 —</p>
-                  <h4 class="tit">시니어 퍼블리셔</h4>
+                  <h3 class="tit">이지미디어</h3>
                   <p class="org">(주) 디지털 크리에이티브 · 현재</p>
                   <p class="txt">대규모 기업 사이트 및 서비스 플랫폼 퍼블리싱. 퍼블리싱 가이드 작성 및 주니어 멘토링.</p>
                 </div>
@@ -691,7 +696,7 @@
           </div>
 
           <div class="cert" data-motion>
-            <h3 class="block-tit">자격증</h3>
+            <h2 class="block-tit">자격증</h2>
             <ul class="cert-list">
               <li class="cert-item">
                 <p class="tit">정보처리기사</p>
@@ -714,29 +719,29 @@
       </section>
 
       <!-- 연락 -->
-      <section class="main-contact sec" id="contact">
+      <section class="main-contact sec" id="contact" data-tone="dark">
+        <!-- 섹션 머리 — 옆으로 흐르는 큰 제목 띠 (제목은 h2, 반복은 장식) -->
+        <div class="sec-band" data-motion>
+          <h2 class="band-tit" lang="en"><span class="blind">Contact</span><span class="track" aria-hidden="true"><span class="set"><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span></span><span class="set"><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span><span class="word">CONTACT</span><span class="star"></span></span></span></h2>
+        </div>
+
         <div class="inner">
-          <div class="sec-head" data-motion-group="each">
-            <h2 class="tit" data-motion="custom" data-split>함께 일하고 싶으시다면</h2>
-          </div>
+          <p class="statement statement-left" data-fill>함께 일하고 싶으시다면</p>
 
           <div class="contact-panel" data-motion>
             <div class="info">
               <ul class="contact-list">
                 <li class="contact-item">
-                  <span class="feature-icon mail-icon" aria-hidden="true"></span>
                   <p class="label">이메일</p>
-                  <a href="mailto:hello@kejportfolio.com" class="value">hello@kejportfolio.com</a>
+                  <a href="mailto:yoo128@naver.com" class="value">yoo128@naver.com</a>
                 </li>
                 <li class="contact-item">
-                  <span class="feature-icon phone-icon" aria-hidden="true"></span>
                   <p class="label">전화</p>
-                  <a href="tel:010-1234-5678" class="value">010-1234-5678</a>
+                  <a href="tel:010-7759-8151" class="value">010-7759-8151</a>
                 </li>
                 <li class="contact-item">
-                  <span class="feature-icon pin-icon" aria-hidden="true"></span>
                   <p class="label">위치</p>
-                  <p class="value">서울특별시</p>
+                  <p class="value">인천광역시 부평구</p>
                 </li>
               </ul>
             </div>
@@ -777,7 +782,6 @@
     <footer class="footer">
       <div class="inner">
         <p class="copy">© 2026 구은지 · 웹 퍼블리셔</p>
-        <a href="#content" class="top-link">맨 위로</a>
       </div>
     </footer>
   </div>
@@ -823,11 +827,13 @@
     </div>
   </div>
 
-  <!-- 떠 있는 캐릭터 — 장식 -->
-  <div class="main-float is-hidden" aria-hidden="true">
-    <div class="face"><img src="common/images/img-character.svg" alt="" width="60" height="60"></div>
-    <p class="bubble">봐주셔서 감사합니다!</p>
-  </div>
+
+  <!-- 맨 위로 — 오른쪽 아래에 떠 있다, 맨 위에서는 숨는다 (main.js 「맨 위로 버튼」) -->
+  <a href="#content" class="top-btn is-hidden"><span class="blind">맨 위로</span></a>
+
+  <!-- 마우스 커서 — 점 + 뒤따라오는 얇은 링, 장식 (main.js 「마우스 커서」, PC 마우스에서만) -->
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
 
   <script src="common/js/lib/jquery.min.js"></script>
   <script src="common/js/lib/gsap.min.js"></script>

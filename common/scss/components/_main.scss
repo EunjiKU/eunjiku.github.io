@@ -2,223 +2,111 @@
 
 /* ==========================================================================
    19. 메인 — 프리픽스 main-
-   히어로 → 프로젝트 → 소개 → 경력 및 자격 → 연락 → 떠 있는 캐릭터
+   히어로 → 프로젝트 → 소개 → 경력 및 자격 → 연락
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   히어로 — 소개 글 + 코드 창 비주얼(장식), 아래에 숫자 · 함께한 고객사
-   · 코드 창 · 떠 있는 카드는 aria-hidden (장식). 「Now building」 문구만 바꿔 쓴다
+   히어로 — 화면 양끝을 채우는 굵은 영문(.hero-name) → 가운데 상자(.hero-media, 사진 위 큰 글자가 한 자씩 바뀜) → 슬로건 · 글 → 아래 줄(숫자 · 주요 기술 · 강점) → 흐르는 고객사(.client)
+   · 큰 영문 · 상자 크기는 무대 폭에 비례한다(container 단위 cqw — 무대가 화면 폭이라 화면 양끝까지 찬다)
+   · 처음 들어오면 상자가 가운데 좁은 띠에서 좌우로 펼쳐지고, 이어서 큰 영문이 올라온다 (CSS 애니메이션 — 모션 줄이기는 바로 보임)
+   · 상자의 지금 글자 .media-item.is-active (main.js 「히어로 글자」) — 장식 aria-hidden
+   · PC 첫 화면은 헤더가 화면 아래에 있다 (_header.scss) — 큰 영문이 화면 위끝부터 찬다
    -------------------------------------------------------------------------- */
 .main-hero {
   /* 핀 자리 지킴 래퍼 — 지우지 않는다 */
   .pin-spacer {
     .stage {
       position: relative;
-      padding-top: 6.5rem;
+      padding-bottom: 3rem;
       overflow: clip;
       background: var(--color-bg-default);
+      container-type: inline-size;
       isolation: isolate;
 
-      // 배경의 큰 원 두 개 — 헤어라인 장식 (::after 는 덮일 때 어두워지는 딤)
-      &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: var(--z-behind);
-        background:
-          radial-gradient(circle at 82% 8%, transparent 30.95rem, var(--color-line-orbit) 31rem, transparent 31.07rem),
-          radial-gradient(circle at 74% 46%, transparent 19.95rem, var(--color-line-orbit) 20rem, transparent 20.07rem);
-        pointer-events: none;
+      @include cover-dim(var(--color-media-1));   // 덮이는 동안 완전 검정까지
+
+      /* 큰 영문 — 두 단어를 화면 양끝에, 위끝은 살짝 잘린다 */
+      .hero-name {
+        display: flex;
+        justify-content: space-between;
+        margin-top: -1.67cqw;
+        padding: 0 0.625cqw;
+        font: var(--font-dp);
+        letter-spacing: var(--font-dp-ls);
+        white-space: nowrap;
+
+        .word { display: block; }
       }
 
-      @include cover-dim;
+      /* 가운데 상자 — 장면(사진 + 큰 글자)이 겹쳐 있고 지금 것만 보인다 */
+      .hero-media {
+        position: relative;
+        width: 46.94cqw;
+        aspect-ratio: 675 / 378;
+        margin: 2.43cqw auto 0;
+        overflow: hidden;
+        background: var(--color-media-1);
 
-      .inner {
-        .hero-grid {
-          display: grid;
-          grid-template-columns: 1fr 32rem;
-          align-items: center;
-          gap: 4rem;
+        .media-item {
+          @include flex-center;
+          position: absolute;
+          inset: 0;
+          isolation: isolate;
+          visibility: hidden;
 
-          .intro {
-            .eyebrow {
-              margin-top: 1.75rem;
-              font: var(--font-cap);
-              letter-spacing: var(--font-cap-ls);
-              color: var(--color-text-default-low);
-            }
-
-            .tit {
-              margin-top: 1rem;
-              font: var(--font-d1);
-              letter-spacing: var(--font-d1-ls);
-            }
-
-            .txt {
-              margin-top: 1.75rem;
-              font: var(--font-b1-reg);
-              letter-spacing: var(--font-b1-reg-ls);
-              color: var(--color-text-default-medium);
-            }
-
-            .btn-group {
-              gap: 0.75rem;
-              margin-top: 2.5rem;
-            }
+          // 사진 위를 살짝 어둡게 — 흰 글자가 읽히게 (사진보다 뒤 순서라 사진 위 · 글자 아래)
+          &::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: var(--z-behind);
+            background: color-mix(in srgb, var(--color-media-1) 25%, transparent);
           }
 
-          /* 코드 창 + 떠 있는 카드 */
-          .visual {
-            position: relative;
-            padding: 2.5rem 0 3.5rem 1.5rem;
-            isolation: isolate;
+          .photo {
+            position: absolute;
+            inset: 0;
+            z-index: var(--z-behind);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
 
-            // 코드 창 뒤의 흐린 그라데이션 덩어리
-            &::before {
-              content: "";
-              position: absolute;
-              top: -3rem;
-              right: -4rem;
-              z-index: var(--z-behind);
-              width: 28rem;
-              height: 28rem;
-              background: linear-gradient(135deg, var(--color-grad-1) 10%, var(--color-grad-2) 50%, var(--color-grad-3) 90%);
-              border-radius: 46% 54% 52% 48% / 50% 44% 56% 50%;
-              filter: blur(48px);
-              opacity: 0.8;
-            }
+          .letter {
+            font: var(--font-dl);
+            letter-spacing: var(--font-dl-ls);
+            color: var(--color-media-text);
+          }
 
-            // 그라데이션 위 작은 점
-            &::after {
-              content: "";
-              position: absolute;
-              top: 0.5rem;
-              left: 0.25rem;
-              z-index: var(--z-base);
-              width: 1rem;
-              height: 1rem;
-              background: var(--color-dot);
-              border-radius: 50%;
-            }
+          &.is-active { visibility: visible; }
+        }
+      }
 
-            .code-card {
-              overflow: hidden;
-              background: var(--color-bg-code);
-              border-radius: 1.25rem;
-              box-shadow: 0 30px 60px -20px var(--color-shadow-strong);
-              transform: rotate(1.5deg);
+      .inner {
+        /* 슬로건 · 글 — 가운데 */
+        .intro {
+          margin-top: 1rem;
+          text-align: center;
 
-              .bar {
-                display: flex;
-                align-items: center;
-                gap: 0.75rem;
-                padding: 1rem 1.25rem;
-                border-bottom: 1px solid var(--color-code-line);
+          .tit {
+            font: var(--font-hs);
+            letter-spacing: var(--font-hs-ls);
+          }
 
-                // 창 버튼 점 세 개
-                .dots {
-                  width: 0.625rem;
-                  height: 0.625rem;
-                  margin-right: 2rem;
-                  background: var(--color-code-dot-1);
-                  border-radius: 50%;
-                  box-shadow: 1rem 0 0 var(--color-code-dot-2), 2rem 0 0 var(--color-code-dot-3);
-                }
-
-                .file {
-                  font: var(--font-code);
-                  letter-spacing: var(--font-code-ls);
-                  color: var(--color-code-dim);
-                }
-              }
-
-              .code {
-                margin: 0;
-                padding: 1.5rem 1.5rem 1.75rem;
-                overflow: hidden;
-                font: var(--font-code);
-                letter-spacing: var(--font-code-ls);
-                color: var(--color-code-text);
-                white-space: pre;
-
-                .tag-name { color: var(--color-code-tag); }
-                .attr { color: var(--color-code-attr); }
-                .val { color: var(--color-code-val); }
-                .dim { color: var(--color-code-dim); }
-
-                // 깜빡이는 입력 커서
-                .cursor {
-                  display: inline-block;
-                  width: 0.5rem;
-                  height: 1.1em;
-                  margin-left: 0.125rem;
-                  vertical-align: text-bottom;
-                  background: var(--color-code-tag);
-                }
-              }
-            }
-
-            /* 지금 하는 일 — 코드 창 왼쪽 아래에 걸친 카드 */
-            .now-card {
-              display: flex;
-              flex-direction: column;
-              gap: 0.25rem;
-              position: absolute;
-              bottom: 0;
-              left: -1rem;
-              max-width: 17.5rem;
-              padding: 1rem 1.25rem;
-              background: var(--color-bg-surface);
-              border: 1px solid var(--color-line-default);
-              border-radius: 1rem;
-              box-shadow: 0 16px 40px var(--color-shadow);
-
-              .label {
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-                font: var(--font-cap);
-                letter-spacing: var(--font-cap-ls);
-                color: var(--color-text-point);
-
-                &::before {
-                  @include pseudo;
-                  width: 0.4375rem;
-                  height: 0.4375rem;
-                  background: var(--color-bg-point);
-                  border-radius: 50%;
-                }
-              }
-
-              .tit {
-                font: var(--font-b3-sb);
-                letter-spacing: var(--font-b3-sb-ls);
-              }
-            }
-
-            /* 키워드 알약 — 코드 창 오른쪽 위에 걸침 */
-            .float-chip {
-              position: absolute;
-              top: 0.75rem;
-              right: -0.75rem;
-              padding: 0.5rem 1rem;
-              font: var(--font-b4-med);
-              letter-spacing: var(--font-b4-med-ls);
-              background: var(--color-bg-surface);
-              border: 1px solid var(--color-line-default);
-              border-radius: 99rem;
-              box-shadow: 0 10px 24px var(--color-shadow);
-            }
+          .txt {
+            margin-top: 1.25rem;
+            font: var(--font-hs-txt);
+            letter-spacing: var(--font-hs-txt-ls);
           }
         }
 
-        /* 아래 줄 — 숫자 · 함께한 고객사 */
+        /* 아래 줄 — 숫자 · 주요 기술 · 강점 · 함께한 고객사(칸 안에서 끝없이 흐른다) */
         .hero-foot {
           display: grid;
-          grid-template-columns: auto 1fr;
+          grid-template-columns: auto auto 1fr;
           align-items: center;
-          gap: 4rem;
-          margin-top: 4.5rem;
+          gap: 3rem;
+          margin-top: 5rem;
           padding-top: 2rem;
           border-top: 1px solid var(--color-line-default);
 
@@ -234,7 +122,6 @@
               .num {
                 font: var(--font-t2);
                 letter-spacing: var(--font-t2-ls);
-                color: var(--color-text-point);
               }
 
               .label {
@@ -245,29 +132,65 @@
             }
           }
 
-          .client {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding-left: 4rem;
+          .info-list {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            justify-content: start;
+            gap: 3rem;
+            padding-left: 3rem;
             border-left: 1px solid var(--color-line-default);
 
+            .info-item {
+              display: flex;
+              flex-direction: column;
+              gap: 0.375rem;
+
+              .label {
+                font: var(--font-cap);
+                letter-spacing: var(--font-cap-ls);
+                color: var(--color-text-default-low);
+              }
+
+              .txt {
+                font: var(--font-b2-sb);
+                letter-spacing: var(--font-b2-sb-ls);
+              }
+            }
+          }
+
+          // 함께한 고객사 — 같은 목록 두 벌이 칸 안에서 왼쪽으로 흐른다, 오른쪽 끝은 흐리게 (모션 줄이기는 멈춤)
+          .client {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            min-width: 0;
+            padding-left: 3rem;
+            overflow: hidden;
+            border-left: 1px solid var(--color-line-default);
+            mask-image: linear-gradient(90deg, var(--color-media-1) calc(100% - 4rem), transparent);
+
             .label {
-              flex-shrink: 0;
               font: var(--font-cap);
               letter-spacing: var(--font-cap-ls);
               color: var(--color-text-default-low);
             }
 
-            .client-list {
+            .client-flow {
               display: flex;
-              flex-wrap: wrap;
-              gap: 0.5rem 1.5rem;
+              width: max-content;
 
-              .client-item {
-                font: var(--font-b2-sb);
-                letter-spacing: var(--font-b2-sb-ls);
-                color: var(--color-text-default-medium);
+              .client-list {
+                display: flex;
+                flex-shrink: 0;
+                gap: 1.5rem;
+                padding-right: 1.5rem;
+
+                .client-item {
+                  font: var(--font-b3-sb);
+                  letter-spacing: var(--font-b3-sb-ls);
+                  color: var(--color-text-default-medium);
+                  white-space: nowrap;
+                }
               }
             }
           }
@@ -280,8 +203,9 @@
         flex-direction: column;
         align-items: center;
         gap: 0.75rem;
+        position: relative;
         width: fit-content;
-        margin: 4rem auto 0;
+        margin: 3rem auto 0;
         font: var(--font-cap);
         letter-spacing: var(--font-cap-ls);
         color: var(--color-text-default-low);
@@ -294,23 +218,37 @@
           background: linear-gradient(var(--color-text-default-low), transparent);
         }
 
+        @include touch-area-before;   // 누르는 영역 44 × 44 (::after 는 세로 선)
         @include hover { color: var(--color-text-point); }
       }
     }
   }
 }
+// 첫 진입 — 상자가 가운데 좁은 띠에서 펼쳐지고(0.2s~) → 큰 영문이 올라오고(1s~) → 슬로건 · 아래 줄이 차례로 (진입 모션 지연을 상자 뒤로 민다)
 @include motion {
   .main-hero {
     .pin-spacer {
       .stage {
+        .hero-name {
+          .word { animation: hero-name-in 1s var(--ease-out) 1s both; }
+          .word ~ .word { animation-delay: 1.1s; }
+        }
+
+        .hero-media { animation: hero-media-open 1.1s var(--ease-out) 0.2s both; }
+
         .inner {
-          .hero-grid {
-            .visual {
-              .code-card {
-                .code {
-                  .cursor { animation: hero-cursor 1.1s steps(1) infinite; }
-                }
-              }
+          .intro {
+            .tit,
+            .txt { --motion-delay: calc(1.3s + var(--motion-order, 0) * 0.12s); }
+          }
+
+          .hero-foot { --motion-delay: 1.7s; }
+        }
+
+        .inner {
+          .hero-foot {
+            .client {
+              .client-flow { animation: band-flow 30s linear infinite; }
             }
           }
         }
@@ -318,12 +256,21 @@
     }
   }
 
-  /* 히어로를 덮으며 올라오는 다음 섹션 — 불투명 바탕 · 위 그림자 (모션 줄이기는 핀이 없어 그대로) */
+  /* 히어로를 덮으며 올라오는 다음 섹션 — 불투명 바탕 (모션 줄이기는 핀이 없어 그대로) */
   .main-projects {
     position: relative;
     z-index: var(--z-base);
     background: var(--color-bg-default);
-    box-shadow: 0 -24px 48px var(--color-shadow);
+  }
+}
+@keyframes hero-media-open {
+  from { clip-path: inset(0 48.5% 0 48.5%); }
+  to { clip-path: inset(0); }
+}
+@keyframes hero-name-in {
+  from {
+    opacity: 0;
+    transform: translateY(40%);
   }
 }
 @keyframes link-line {
@@ -331,9 +278,6 @@
   50% { transform: scaleX(0); transform-origin: right center; }
   51% { transform: scaleX(0); transform-origin: left center; }
   100% { transform: scaleX(1); transform-origin: left center; }
-}
-@keyframes hero-cursor {
-  50% { opacity: 0; }
 }
 
 /* --------------------------------------------------------------------------
@@ -395,7 +339,6 @@
               width: 100%;
               padding: 0.25rem;
               background: var(--color-bg-subtle);
-              border-radius: 99rem;
 
               .tab-btn {
                 flex: 1;
@@ -406,7 +349,6 @@
                 font: var(--font-b3-sb);
                 letter-spacing: var(--font-b3-sb-ls);
                 color: var(--color-text-default-medium);
-                border-radius: 99rem;
                 transition: color 0.3s ease;
 
                 &.is-active { color: var(--color-text-default-highest); }
@@ -419,7 +361,6 @@
                 left: 0;
                 width: var(--indicator-w, 0);
                 background: var(--color-bg-surface);
-                border-radius: 99rem;
                 box-shadow: 0 2px 8px var(--color-shadow);
                 transform: translateX(var(--indicator-x, 0));
                 transition: transform 0.4s var(--ease-out), width 0.4s var(--ease-out);
@@ -438,7 +379,6 @@
                 letter-spacing: var(--font-b4-med-ls);
                 color: var(--color-text-default-medium);
                 border: 1px solid var(--color-line-default);
-                border-radius: 99rem;
                 transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 
                 &[aria-pressed="true"] {
@@ -473,7 +413,6 @@
               aspect-ratio: 4 / 5;
               overflow: hidden;
               background: var(--color-bg-subtle);
-              border-radius: 1.25rem;
               isolation: isolate;
 
               // 바탕 면은 따로 깔아 hover 때 글자는 그대로 두고 면만 커지게
@@ -553,7 +492,7 @@
    프로젝트 쌓이는 카드 (메인) — .project-layout-stack: 왼쪽 고정 칸(제목 · 탭 · 필터) · 가운데 쌓이는 카드 · 오른쪽 지금 보는 카드
    · 카드는 화면 위에 붙고(sticky) 다음 카드가 그 위를 덮는다. 덮이는 동안 작아지며 위로 밀린다 — --stack 0 → 1 (main.js 「쌓이는 카드」)
    · 오른쪽 .preview 의 면색 · 이름 · 순번 · 연도 · 구분은 main.js 가 지금 붙어 있는 카드로 바꾼다 (장식 — aria-hidden)
-   · 사진 자리: 흐린 큰 글자 위에 또렷한 작은 액자(.frame)
+   · 사진 자리: 사진(.photo) 위에 또렷한 작은 액자(.frame)
    · 이전 디자인(2열 엇갈림)은 위 .project-layout — 백업 페이지 projects.html 이 쓴다
    -------------------------------------------------------------------------- */
 .main-projects {
@@ -562,37 +501,11 @@
       grid-template-columns: 18rem 1fr 13rem;
       gap: 3rem;
 
-      /* 왼쪽 — 전체 보기 · 건너뛰기 */
+      /* 왼쪽 — 전체 보기 (화면에 붙어 있다) */
       .side {
         .side-sticky {
-          .more {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1.25rem;
-
-            // 소개로 건너뛰기 — 글자 링크 + 아래 화살표
-            .skip-btn {
-              display: inline-flex;
-              align-items: center;
-              gap: 0.375rem;
-              position: relative;
-              font: var(--font-b4-med);
-              letter-spacing: var(--font-b4-med-ls);
-              color: var(--color-text-default-medium);
-              transition: color 0.3s ease;
-
-              &::after {
-                @include icon-mask("icon-arrow-up-16");
-                width: 1rem;
-                height: 1rem;
-                transform: rotate(180deg);
-              }
-
-              @include touch-area-before;
-              @include hover { color: var(--color-text-default-highest); }
-            }
-          }
+          position: sticky;
+          top: calc(var(--gnb-height) + 2.5rem);
         }
       }
 
@@ -612,18 +525,17 @@
               @include flex-center;
               position: relative;
               aspect-ratio: 16 / 10;
+              max-height: max(10rem, calc(100svh - var(--gnb-height) - 14rem));   // 화면이 낮아도(태블릿 가로 · 폴드 펼침 가로) 붙어 있는 카드가 화면 안에 다 들어오게 — 높이만 줄고 폭은 그대로
               overflow: hidden;
               background: var(--color-bg-subtle);
-              border-radius: 1rem;
 
-              // 뒤 — 흐린 큰 글자
-              .genre {
-                font: var(--font-d1);
-                letter-spacing: var(--font-d1-ls);
-                text-align: center;
-                color: var(--color-text-default-medium);
-                opacity: 0.35;
-                filter: blur(6px);
+              // 뒤 — 사진 (틀을 채운다)
+              .photo {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
               }
 
               // 앞 — 또렷한 액자
@@ -637,7 +549,6 @@
                 padding: 0 1rem;
                 background: color-mix(in srgb, var(--color-bg-default) 55%, transparent);
                 border: 1px solid var(--color-line-default);
-                border-radius: 0.5rem;
                 box-shadow: 0 1.5rem 3rem var(--color-shadow);
                 transform: translate(-50%, -50%);
                 transition: transform 0.6s var(--ease-out);
@@ -645,9 +556,8 @@
                 .genre {
                   font: var(--font-h1);
                   letter-spacing: var(--font-h1-ls);
+                  text-align: center;
                   color: var(--color-text-default-highest);
-                  opacity: 1;
-                  filter: none;
                 }
               }
             }
@@ -723,17 +633,36 @@
 
           .mini {
             @include flex-center;
+            position: relative;
             aspect-ratio: 4 / 3;
             padding: 0 0.75rem;
+            overflow: hidden;
             background: var(--color-bg-subtle);
-            border-radius: 0.75rem;
             transition: background-color 0.4s ease;
 
+            // 사진 위를 살짝 어둡게 — 흰 글자가 읽히게
+            &::after {
+              content: "";
+              position: absolute;
+              inset: 0;
+              background: color-mix(in srgb, var(--color-media-1) 35%, transparent);
+            }
+
+            .photo {
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
             .genre {
+              position: relative;
+              z-index: var(--z-base);
               font: var(--font-b3-sb);
               letter-spacing: var(--font-b3-sb-ls);
               text-align: center;
-              color: var(--color-text-default-medium);
+              color: var(--color-media-text);
             }
 
             &.project-card-bg1 { background: var(--color-bg-thumb-1); }
@@ -760,38 +689,42 @@
   }
 }
 
-// 제목 등장(가운데 크게 → 왼쪽 제자리, --intro 1 → 0) · 덮이는 카드(작아지며 위로) — translate · scale 은 진입 모션의 transform 과 따로 움직인다 (main.js 「프로젝트 제목 등장」 · 「쌓이는 카드」)
+/* 소개로 건너뛰기 — 프로젝트를 보는 동안 화면 아래 가운데에 붙어 있다(sticky — 섹션 끝까지) */
+.main-projects {
+  .inner {
+    .skip-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: sticky;
+      bottom: 1.5rem;
+      z-index: var(--z-base);
+      width: fit-content;
+      margin: 4rem auto 0;
+      padding: 0.875rem 1.5rem;
+      font: var(--font-b4-med);
+      letter-spacing: var(--font-b4-med-ls);
+      color: var(--color-text-default-inverse);
+      background: var(--color-bg-inverse);
+      transition: opacity 0.3s ease;
+
+      &::after {
+        @include icon-mask("icon-arrow-up-16");
+        width: 1rem;
+        height: 1rem;
+        transform: rotate(180deg);
+      }
+
+      @include hover { opacity: 0.8; }
+    }
+  }
+}
+
+// 덮이는 카드 — 작아지며 위로 (translate · scale 은 진입 모션의 transform 과 따로 움직인다 · main.js 「쌓이는 카드」)
 @include motion {
   .main-projects {
     .inner {
       .project-layout-stack {
-        .side {
-          .side-sticky {
-            .sec-head {
-              .tit {
-                width: fit-content;
-                translate: calc(var(--intro-x, 0px) * var(--intro, 0)) calc(var(--intro-y, 0px) * var(--intro, 0));
-                scale: calc(1 + (var(--intro-s, 1) - 1) * var(--intro, 0));
-              }
-            }
-
-            .more {
-              .more-btn,
-              .skip-btn { opacity: var(--intro-rest, 1); }
-            }
-          }
-        }
-
-        .list { padding-top: var(--intro-space, 0px); }
-
-        .preview {
-          .preview-sticky {
-            .mini,
-            .count,
-            .now-tag { opacity: var(--intro-rest, 1); }
-          }
-        }
-
         .list {
           .stack-list {
             .project-card {
@@ -1097,7 +1030,12 @@
       }
     }
 
+    // 자격증 — 오른쪽에 좁게
     .cert {
+      width: 40rem;
+      max-width: 100%;
+      margin-left: auto;
+
       .cert-list {
         border-top: 1px solid var(--color-line-strong);
 
@@ -1166,7 +1104,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   연락 — 제목 아래 헤어라인으로 나눈 2칸: 연락처 + 메시지 폼
+   연락 — 제목 아래 2칸: 연락처 + 메시지 폼(밑줄 입력칸)
    -------------------------------------------------------------------------- */
 .main-contact {
   padding-bottom: 8.75rem;
@@ -1176,8 +1114,6 @@
       display: grid;
       grid-template-columns: 1fr 1.15fr;
       gap: 4rem;
-      padding-top: 3.5rem;
-      border-top: 1px solid var(--color-line-strong);
 
       .info {
         .contact-list {
@@ -1186,12 +1122,9 @@
           gap: 1.25rem;
 
           .contact-item {
-            display: grid;
-            grid-template-columns: 3rem 1fr;
-            align-items: center;
-            column-gap: 1rem;
-
-            .feature-icon { grid-row: 1 / 3; }
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
 
             .label {
               font: var(--font-cap);
@@ -1219,104 +1152,42 @@
       .contact-form {
         display: flex;
         flex-direction: column;
-        gap: 1.125rem;
+        gap: 2rem;
 
-        .basic-btn { margin-top: 0.375rem; }
+        .basic-btn { margin-top: 0.5rem; }
       }
     }
   }
 }
 
-/* --------------------------------------------------------------------------
-   떠 있는 캐릭터 — 맨 위에서는 숨고(.is-hidden) 내려가면 오른쪽 아래에 나타난다. 말풍선 문구는 main.js 가 돌린다
-   -------------------------------------------------------------------------- */
-.main-float {
-  position: fixed;
-  right: 1.75rem;
-  bottom: 1.75rem;
-  z-index: var(--z-dropdown);
-  transition: opacity 0.5s ease, transform 0.5s var(--ease-out);
-
-  .face {
-    width: 3.75rem;
-    height: 3.75rem;
-    overflow: hidden;
-    border: 3px solid var(--color-bg-surface);
-    border-radius: 50%;
-    box-shadow: 0 8px 24px var(--color-shadow);
-
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .bubble {
-    position: absolute;
-    right: 0;
-    bottom: calc(100% + 0.625rem);
-    padding: 0.5625rem 0.875rem;
-    font: var(--font-b4-med);
-    letter-spacing: var(--font-b4-med-ls);
-    white-space: nowrap;
-    background: var(--color-bg-surface);
-    border: 1px solid var(--color-line-default);
-    border-radius: 0.875rem 0.875rem 0.25rem 0.875rem;
-    box-shadow: 0 8px 24px var(--color-shadow);
-    transition: opacity 0.3s ease 0.4s, transform 0.3s ease 0.4s;
-
-    /* 문구를 바꾸는 동안 */
-    &.is-hidden {
-      opacity: 0;
-      transform: translateY(0.375rem);
-      transition-delay: 0s;
-    }
-  }
-
-  &.is-hidden {
-    opacity: 0;
-    transform: translateY(2rem) scale(0.85);
-    pointer-events: none;
-
-    .bubble {
-      opacity: 0;
-      transition-delay: 0s;
-    }
-  }
-}
 
 /* 반응형 */
 @include mo {
   .main-hero {
     .pin-spacer {
       .stage {
-        padding-top: 4rem;
+        .hero-name { margin-top: 0; }
+
+        .hero-media { width: 70cqw; }
 
         .inner {
-          .hero-grid {
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-
-            .visual {
-              max-width: 32rem;
-              padding-left: 1rem;
-            }
-          }
-
           .hero-foot {
             grid-template-columns: 1fr;
             gap: 1.75rem;
             margin-top: 3.5rem;
 
+            .info-list,
             .client {
               padding-left: 0;
               border-left: 0;
             }
+
+            .info-list {
+              grid-template-columns: 1fr;
+              gap: 1.25rem;
+            }
           }
         }
-
-        .scroll-link { margin-top: 3rem; }
       }
     }
   }
@@ -1403,6 +1274,8 @@
 
   .main-experience {
     .inner {
+      .cert { width: 100%; }
+
       .career {
         margin-bottom: 5rem;
 
@@ -1449,7 +1322,6 @@
       .contact-panel {
         grid-template-columns: 1fr;
         gap: 3rem;
-        padding-top: 2.5rem;
       }
     }
   }
@@ -1458,40 +1330,7 @@
   .main-hero {
     .pin-spacer {
       .stage {
-        padding-top: 2.5rem;
-
-        .inner {
-          .hero-grid {
-            .intro {
-              .btn-group {
-                .basic-btn { flex: 1; }
-              }
-            }
-
-            .visual {
-              padding: 2.25rem 0 3rem;
-
-              .code-card {
-                .code { padding: 1.25rem 1rem 1.5rem; }
-              }
-
-              .now-card { left: 0.5rem; }
-
-              .float-chip {
-                top: 0;
-                right: 0.5rem;
-              }
-            }
-          }
-
-          .hero-foot {
-            .client {
-              flex-direction: column;
-              align-items: flex-start;
-              gap: 0.75rem;
-            }
-          }
-        }
+        .hero-media { width: calc(100% - var(--side-padding) * 2); }
       }
     }
   }
@@ -1576,21 +1415,7 @@
     }
   }
 
-  .main-contact {
-    padding-bottom: 5rem;
+  .main-contact { padding-bottom: 5rem; }
 
-    .inner {
-      .contact-panel { padding-top: 2rem; }
-    }
-  }
 
-  .main-float {
-    right: 1rem;
-    bottom: 1rem;
-
-    .face {
-      width: 3.25rem;
-      height: 3.25rem;
-    }
-  }
 }

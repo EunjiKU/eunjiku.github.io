@@ -5,7 +5,7 @@
  * - 프로젝트마다 다른 값은 「0. 설정」만 고친다
  * - 모듈은 서로 독립이다. 마크업이 없으면 조용히 건너뛴다
  * - 모듈 머리 주석에 마크업 · 상태 클래스 · CSS 와 맞출 값 · 보내는 이벤트를 적는다
- * - 메인 섹션 전용 동작(숫자 세기 · 프로젝트 탭 · 모달 내용 · 메시지 보내기 · 캐릭터)은 main.js
+ * - 메인 섹션 전용 동작(히어로 · 쌓이는 카드 · 문장 채우기 · 모달 내용 · 메시지 보내기 · 맨 위로 · 마우스 커서)은 main.js
  *
  * 공개 API — window.UI (이름은 「0. 설정」 API_NAME). HTML 의 onclick 으로 부르지 않는다
  *   UI.init(root) ................... root 안의 새 마크업 초기화 — 열린 모달 · 진입 모션. root 는 선택자 · 요소 · jQuery (없으면 문서 전체)
@@ -19,7 +19,6 @@
  *
  * 보내는 이벤트 — 네이티브 CustomEvent(bubbles). 이름은 ui:모듈-동작
  *   ui:modal-open · ui:modal-close ........... .modal 에서
- *   ui:theme-change .......................... html 에서 (테마를 바꿨을 때)
  *
  * 의존
  * - jQuery — 필수
@@ -37,7 +36,7 @@
  * 구성
  *   0. 설정 ........... 프로젝트 값
  *   1. 유틸 ........... matchMedia · rem → px · 범위 찾기 · 처음 보는 요소 · 이벤트 보내기 · 전환 감지 · 바깥 잠금(inert) · GSAP 준비 · 전환 끝 대기 · 현재 항목
- *   2. GNB ............ 테마 전환 · 600↓ 메뉴 · 첫 진입 내려오기 · 스크롤 상태(진행 막대 · 아래 선) · 현재 섹션 메뉴
+ *   2. GNB ............ 600↓ 메뉴 · 첫 진입 내려오기 · 스크롤 상태(진행 막대 · 아래 선) · 현재 섹션 메뉴
  *   4. 콘텐츠 ......... 부드러운 스크롤(Lenis) · 앵커 스크롤 · 진입 모션 · 글자 나눠 등장
  *   5. 오버레이 ....... 모달(.modal)
  *   6. 공개 API ....... window.UI
@@ -52,10 +51,10 @@
   const MQ_MOBILE = "(max-width: 1024px)";   // 모바일 분기 — CSS 브레이크포인트와 같은 값
   const MQ_SMALL = "(max-width: 600px)";     // 햄버거 메뉴 구간 — CSS 와 같은 값
   const MOTION_START = "top 90%";            // 진입 모션 시작선 — 블록 윗변이 화면 위에서 90% 지점에 닿을 때
-  const GNB_DROP = 1.2;                      // 페이지 첫 진입 — 헤더가 위에서 내려오는 초 (ktr 와 같은 값)
+  const GNB_DROP = 1.2;                      // 페이지 첫 진입 — 헤더가 위에서 내려오는 초
   const GNB_SCROLLED_AT = 8;                 // px — 헤더 아래 선(.is-scrolled)이 생기는 스크롤 위치
   const SMOOTH_SCROLL = { lerp: 0.1 };      // 부드러운 스크롤 — 한 프레임에 남은 거리를 따라가는 비율 (작을수록 더 미끄러진다)
-  const THEME_KEY = "kej-theme";             // 테마를 저장하는 localStorage 키 — theme.js 와 같은 값 (이전 버전의 "theme" 값은 무시 — 기본은 밝은 테마)
+  const SMOOTH_SCROLL_SKIP = "textarea, select, [data-lenis-prevent]";   // 부드러운 스크롤을 건너뛰는 곳 — 그 안의 휠은 기본 스크롤
   const API_NAME = "UI";                     // 공개 API 전역 이름
 
   /* ==========================================================================
@@ -180,29 +179,6 @@
      ========================================================================== */
 
   /* --------------------------------------------------------------------------
-     테마 전환 — 헤더 .theme-btn
-     · 다크: html[data-theme="dark"] + 버튼 aria-pressed="true". 고른 값은 localStorage(THEME_KEY) — 다음 방문 때 theme.js 가 첫 화면 전에 건다
-     · 이벤트 — html 에서 ui:theme-change
-     -------------------------------------------------------------------------- */
-  function setTheme(dark) {
-    $("html").attr("data-theme", dark ? "dark" : null);
-    $(".gnb .theme-btn").attr("aria-pressed", String(dark));
-    try {
-      localStorage.setItem(THEME_KEY, dark ? "dark" : "light");
-    } catch (e) {
-      /* 저장소를 쓸 수 없는 환경 — 이번 방문에만 적용 */
-    }
-    emit(document.documentElement, "ui:theme-change");
-  }
-
-  function bindTheme() {
-    const $btn = $(".gnb .theme-btn");
-    if (!$btn.length) return;
-    $btn.attr("aria-pressed", String($("html").attr("data-theme") === "dark"));
-    $btn.on("click", () => setTheme($("html").attr("data-theme") !== "dark"));
-  }
-
-  /* --------------------------------------------------------------------------
      600↓ 메뉴 — 햄버거 .menu-btn(aria-controls="gnbMenu")가 .gnb.is-open + aria-expanded 를 바꾼다
      · 메뉴 링크를 누르거나 Esc · 600 초과로 넓어지면 닫는다
      -------------------------------------------------------------------------- */
@@ -304,13 +280,17 @@
      · GSAP 이 있으면 gsap.ticker 로 돌리고 스크롤마다 ScrollTrigger.update — 핀 · 진입 모션이 어긋나지 않게
      · 터치는 기기 기본 스크롤 그대로(Lenis 기본값), 모션 줄이기 · Lenis 없음은 아무것도 하지 않는다
      · 모달이 열려 있는 동안은 멈춘다(lockOutside) — 모달 안 스크롤은 기본 스크롤 ([data-lenis-prevent])
+     · 텍스트 영역 · 셀렉트 안에서는 휠이 그 칸을 스크롤한다 (SMOOTH_SCROLL_SKIP — 긴 메시지를 쓰면 칸 안이 내려간다)
      · 앵커 스크롤도 이 인스턴스로 이동한다
      -------------------------------------------------------------------------- */
   let lenis = null;
 
   function setupSmoothScroll() {
     if (lenis || !window.Lenis || reduceMotion.matches) return;
-    lenis = new window.Lenis({ lerp: SMOOTH_SCROLL.lerp });
+    lenis = new window.Lenis({
+      lerp: SMOOTH_SCROLL.lerp,
+      prevent: (node) => !!(node.closest && node.closest(SMOOTH_SCROLL_SKIP))   // 이 안에서는 휠이 그 칸을 스크롤한다
+    });
     if (ensureGsap()) {
       lenis.on("scroll", ScrollTrigger.update);
       gsap.ticker.add((time) => lenis.raf(time * 1000));
@@ -696,7 +676,6 @@
   introGnb();
   bindModal();
   bindGnb();
-  bindTheme();
   bindAnchorScroll();
   /* ↑ Esc 를 받는 모듈(bindGnb)은 bindModal 다음에 — 모달이 받은 Esc(preventDefault)를 지나치게. 순서를 바꾸지 않는다 */
   bindGnbScroll();

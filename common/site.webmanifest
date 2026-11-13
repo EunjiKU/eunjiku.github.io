@@ -1,6 +1,6 @@
 {
   "name": "구은지 웹 퍼블리셔 포트폴리오",
-  "short_name": "KEJ",
+  "short_name": "구은지",
   "icons": [
     {
       "src": "images/favicon-192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#efefef",
+  "background_color": "#efefef",
   "display": "browser"
 }

@@ -1,6 +1,6 @@
 /**
  * main.js — 메인 섹션 동작
- * 히어로 덮기 · 숫자 세기 · 경력 타임라인 · 프로젝트 탭(실무 · 개인) · 분류 필터 · 지금 보는 카드 표시 · 쌓이는 카드 · 프로젝트 제목 등장 · 전체 프로젝트 화면(헤더 · Esc) · 프로젝트 설명 모달 채우기 · 메시지 보내기(EmailJS) · 떠 있는 캐릭터
+ * 히어로 덮기 · 히어로 글자 · 숫자 세기 · 경력 타임라인 · 프로젝트 탭(실무 · 개인) · 분류 필터 · 지금 보는 카드 표시 · 쌓이는 카드 · 문장 채우기 · 전체 프로젝트 화면(헤더 · Esc) · 프로젝트 설명 모달 채우기 · 메시지 보내기(EmailJS) · 맨 위로 버튼 · 마우스 커서
  * common.js 다음에 로드한다 — UI.util · UI.refresh 를 쓴다
  */
 (function ($) {
@@ -12,10 +12,10 @@
   /* --------------------------------------------------------------------------
      히어로 덮기 — 히어로 무대(.main-hero .stage)가 화면에 멈추고 다음 섹션(프로젝트)이 그 위로 올라와 덮는다
      · 무대 아래끝이 화면 아래에 닿을 때 멈춘다(화면보다 짧으면 위끝이 닿을 때) — 화면 높이만큼 멈춰 있는다(pinSpacing 없음)
-     · 덮이는 동안 무대가 조금 어두워진다 — 진행도(0 → 1)를 --cover-dim 으로 (모양은 SCSS cover-dim)
+     · 덮이는 동안 무대가 점점 검정이 된다 — 다 덮이기 직전(HERO_COVER.full)에 완전 검정, 진행도를 --cover-dim 으로 (모양은 SCSS cover-dim)
      · 모션 줄이기 · GSAP 없음은 핀 없이 그냥 스크롤
      -------------------------------------------------------------------------- */
-  const HERO_COVER = { dim: 0.6 };   // 다 덮였을 때의 딤 세기 (0 ~ 1)
+  const HERO_COVER = { full: 0.85 };   // 덮이는 진행도가 이만큼일 때 완전 검정 (0 ~ 1 — 다 덮이기 직전)
 
   function setupHeroCover() {
     const stage = $(".main-hero .stage")[0];
@@ -28,8 +28,26 @@
       pinSpacing: false,
       pinSpacer: window.UI.pinSpacer(stage),
       invalidateOnRefresh: true,
-      onUpdate: (self) => stage.style.setProperty("--cover-dim", (self.progress * HERO_COVER.dim).toFixed(3))
+      onUpdate: (self) => stage.style.setProperty("--cover-dim", Math.min(1, self.progress / HERO_COVER.full).toFixed(3))
     });
+  }
+
+  /* --------------------------------------------------------------------------
+     히어로 글자 — 가운데 상자(.hero-media)의 글자 면(.media-item)이 한 자씩 .is-active (모양은 SCSS)
+     · HERO_LETTER.interval 초마다 다음 글자
+     · 모션 줄이기 · GSAP 없음은 첫 글자 그대로
+     -------------------------------------------------------------------------- */
+  const HERO_LETTER = { interval: 0.9 };
+
+  function setupHeroLetters() {
+    const $items = $(".main-hero .hero-media .media-item");
+    if ($items.length < 2 || util.reduceMotion.matches || !util.ensureGsap()) return;
+    let index = $items.index($items.filter(".is-active"));
+    function next() {
+      index = (index + 1) % $items.length;
+      $items.each(function (i) { $(this).toggleClass("is-active", i === index); });
+    }
+    gsap.timeline({ repeat: -1 }).call(next, null, HERO_LETTER.interval);
   }
 
   /* --------------------------------------------------------------------------
@@ -213,8 +231,9 @@
     $preview.find(".num").text(pad($visible.index(card) + 1));
     $preview.find(".total").text(pad($visible.length));
     const bg = (card.className.match(/project-card-bg\d/) || [""])[0];
-    $preview.find(".mini").removeClass(BG_CLASSES).addClass(bg)
-      .find(".genre").text($card.find(".thumb > .genre").text());
+    const $mini = $preview.find(".mini").removeClass(BG_CLASSES).addClass(bg);
+    $mini.find(".genre").text($card.find(".thumb .genre").text());
+    $mini.find(".photo").attr("src", $card.find(".thumb .photo").attr("src"));
   }
 
   /** 2열 카드 — 화면 가운데를 지나는 카드 */
@@ -287,56 +306,36 @@
   }
 
   /* --------------------------------------------------------------------------
-     프로젝트 제목 등장 — 「프로젝트」 제목이 화면 가운데에 크게 있다가, 스크롤하면 작아지며 왼쪽 고정 칸 자리로 간 뒤 쌓이는 카드가 올라온다 (PC)
-     · 제목은 가로는 페이지 가운데, 세로는 헤더 아래 보이는 영역의 가운데 — 위치 · 크기는 --intro(1 가운데 → 0 제자리) × --intro-x · --intro-y · --intro-s, 나머지(버튼 · 오른쪽 표시)는 --intro-rest 로 나타난다 (모양은 SCSS)
-     · 카드 목록 앞에 제목이 움직일 스크롤 거리(--intro-space = 화면 높이 × INTRO.space)를 둔다
-     · 1024↓ · 모션 줄이기 · GSAP 없음은 제자리 그대로
+     문장 채우기 — .statement[data-fill] 의 단어를 나눠(.word) 스크롤하는 만큼 앞에서부터 .is-filled (색은 SCSS)
+     · 문장 윗변이 화면 FILL.start 에 오면 시작, 아랫변이 FILL.end 에 오면 다 채움
+     · 모션 줄이기 · GSAP 없음은 처음부터 다 채움
      -------------------------------------------------------------------------- */
-  const INTRO = { space: 0.8, scale: 3, fill: 0.7, move: 0.85, restFrom: 0.7 };   // 거리(화면 높이 배) · 최대 배율 · 가운데 칸 폭 대비 제목 폭 · 제목이 움직이는 구간 · 나머지가 나타나기 시작하는 진행도
+  const FILL = { start: "top 80%", end: "bottom 45%" };
 
-  function setupProjectsIntro() {
-    const layout = $(".main-projects .project-layout-stack")[0];
-    if (!layout || util.reduceMotion.matches || !util.ensureGsap()) return;
-    const side = $(layout).find(".side")[0];
-    const sticky = $(side).find(".side-sticky")[0];
-    const title = $(sticky).find(".sec-head .tit")[0];
-    if (!title) return;
-    const clamp = (v) => Math.min(1, Math.max(0, v));
-    const active = () => !util.mqMobile.matches;
-
-    /* 거리 · 가운데 자리 — 위치 계산 전에 */
-    function measure() {
-      if (!active()) {
-        layout.style.setProperty("--intro-space", "0px");
+  function setupFill() {
+    $(".statement[data-fill]").each(function () {
+      const el = this;
+      const words = el.textContent.trim().split(/\s+/);
+      el.textContent = "";
+      words.forEach((word, i) => {
+        if (i) el.appendChild(document.createTextNode(" "));
+        $("<span>", { "class": "word", text: word }).appendTo(el);
+      });
+      const $words = $(el).find(".word");
+      if (util.reduceMotion.matches || !util.ensureGsap()) {
+        $words.addClass("is-filled");
         return;
       }
-      layout.style.setProperty("--intro-space", Math.round(window.innerHeight * INTRO.space) + "px");
-      const stickyTop = parseFloat(getComputedStyle(sticky).top) || 0;
-      const box = layout.getBoundingClientRect();
-      const fromX = sticky.getBoundingClientRect().left + title.offsetLeft + title.offsetWidth / 2;
-      const fromY = stickyTop + title.offsetTop + title.offsetHeight / 2;
-      const scale = Math.min(INTRO.scale, (box.width * INTRO.fill) / title.offsetWidth);
-      layout.style.setProperty("--intro-x", (box.left + box.width / 2 - fromX).toFixed(1) + "px");
-      const gnb = $(".gnb")[0];
-      const top = gnb ? gnb.offsetHeight : 0;   // 헤더 아래 보이는 영역의 가운데
-      layout.style.setProperty("--intro-y", ((top + window.innerHeight) / 2 - fromY).toFixed(1) + "px");
-      layout.style.setProperty("--intro-s", scale.toFixed(3));
-    }
-    function draw(progress) {
-      const on = active();
-      layout.style.setProperty("--intro", on ? (1 - clamp(progress / INTRO.move)).toFixed(3) : 0);
-      layout.style.setProperty("--intro-rest", on ? clamp((progress - INTRO.restFrom) / (1 - INTRO.restFrom)).toFixed(3) : 1);
-    }
-
-    ScrollTrigger.addEventListener("refreshInit", measure);
-    measure();
-    ScrollTrigger.create({
-      trigger: side,
-      start: () => "top " + (parseFloat(getComputedStyle(sticky).top) || 0) + "px",
-      end: () => "+=" + Math.max(1, Math.round(window.innerHeight * INTRO.space)),
-      invalidateOnRefresh: true,
-      onRefresh: (self) => draw(self.progress),
-      onUpdate: (self) => draw(self.progress)
+      ScrollTrigger.create({
+        trigger: el,
+        start: FILL.start,
+        end: FILL.end,
+        scrub: true,
+        onUpdate: (self) => {
+          const count = Math.round(self.progress * $words.length);
+          $words.each(function (i) { $(this).toggleClass("is-filled", i < count); });
+        }
+      });
     });
   }
 
@@ -344,7 +343,6 @@
      전체 프로젝트 화면 — #projectsModal(.modal-page)이 열려 있어도 헤더는 위에 남아 누를 수 있다
      · 모달은 바깥을 모두 inert 로 막는다 — 열리면 헤더만 풀고 본문 · 푸터는 막아 둔다
      · 헤더 링크(로고 · 메뉴)를 누르면 화면이 원래대로 밀려 돌아간 뒤(transform 전환 끝) 그 섹션으로 스크롤 (앵커 스크롤은 common.js)
-     · 헤더에서 테마를 바꾸면 화면 안 서브페이지(iframe)도 같이 바꾼다
      -------------------------------------------------------------------------- */
   function bindPageScreen() {
     const $screen = $("#projectsModal");
@@ -370,15 +368,6 @@
         link.click();
       });
     });
-    /* 테마 — html[data-theme] 가 바뀌면 iframe 문서에도 */
-    new MutationObserver(() => {
-      const frame = $screen.find(".page-frame")[0];   // 닫을 때 새 노드로 바뀐다 (common.js 모달)
-      const doc = frame && frame.contentDocument;
-      if (!doc) return;
-      const theme = document.documentElement.getAttribute("data-theme");
-      if (theme) doc.documentElement.setAttribute("data-theme", theme);
-      else doc.documentElement.removeAttribute("data-theme");
-    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
   }
 
   /* --------------------------------------------------------------------------
@@ -487,22 +476,69 @@
   }
 
   /* --------------------------------------------------------------------------
-     떠 있는 캐릭터 — 맨 위(FLOAT.showAt 이하)에서는 .main-float.is-hidden
-     · 말풍선 .bubble 문구를 FLOAT.interval 초마다 바꾼다 — 바꾸는 동안 .bubble.is-hidden (모션 줄이기는 바로 바꾼다)
+     마우스 커서 — .cursor 점이 마우스를 따라온다 (PC 마우스에서만 — html.has-cursor 로 기본 커서를 숨긴다)
+     · 링크 · 버튼 위 .is-hover(크게), 입력칸 위 .is-text(숨김 — 기본 글자 커서), 창 밖 · iframe 위로 나가면 숨김
+     · 점은 마우스 자리에 바로, 링(.cursor-ring)은 매 프레임 남은 거리의 CURSOR.ringLag 만큼 뒤따라온다 (모션 줄이기는 링도 바로)
      -------------------------------------------------------------------------- */
-  const FLOAT = {
-    showAt: 200,
-    interval: 5,
-    fade: 0.3,
-    messages: ["봐주셔서 감사합니다!", "같이 일하면 후회 안 하실걸요?", "코드로 증명하는 퍼블리셔입니다!", "웹 퍼블리셔 · 서울"]
-  };
+  const CURSOR = { ringLag: 0.18, hover: "a, button, label, summary, [role='button'], [role='tab']", text: "input, textarea, select" };
 
-  function bindFloat() {
-    const $float = $(".main-float");
-    if (!$float.length) return;
+  function setupCursor() {
+    const dot = $(".cursor")[0];
+    const ring = $(".cursor-ring")[0];
+    if (!dot || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    document.documentElement.classList.add("has-cursor");
+    const parts = [dot, ring].filter(Boolean);
+    const setState = (name, on) => parts.forEach((el) => el.classList.toggle(name, on));
+    const place = (el, x, y) => { el.style.translate = x + "px " + y + "px"; };   // transform 이 아니라 translate — 크게(scale)가 이동 거리까지 키우지 않게
+    const lag = util.reduceMotion.matches ? 1 : CURSOR.ringLag;
+
+    /* 점은 마우스 자리에 바로, 링은 매 프레임 남은 거리의 lag 만큼 따라간다 */
+    let x = 0;
+    let y = 0;
+    let rx = 0;
+    let ry = 0;
+    let running = false;
+    function frame() {
+      place(dot, x, y);
+      if (ring) {
+        rx += (x - rx) * lag;
+        ry += (y - ry) * lag;
+        place(ring, rx, ry);
+      }
+      running = ring ? Math.abs(x - rx) > 0.1 || Math.abs(y - ry) > 0.1 : false;
+      if (running) requestAnimationFrame(frame);
+    }
+    document.addEventListener("mousemove", (e) => {
+      x = e.clientX;
+      y = e.clientY;
+      setState("is-visible", true);
+      if (running) return;
+      running = true;
+      requestAnimationFrame(frame);
+    }, { passive: true });
+    document.addEventListener("mouseover", (e) => {
+      /* iframe(전체 프로젝트 화면) 위 — 그 안의 서브페이지가 자기 커서를 그린다. 여기 것은 숨겨 두 개가 되지 않게 */
+      if (e.target.tagName === "IFRAME") {
+        setState("is-visible", false);
+        return;
+      }
+      setState("is-hover", !!e.target.closest(CURSOR.hover));
+      setState("is-text", !!e.target.closest(CURSOR.text));
+    });
+    document.documentElement.addEventListener("mouseleave", () => setState("is-visible", false));
+  }
+
+  /* --------------------------------------------------------------------------
+     맨 위로 버튼 — 맨 위(TOP_BTN.showAt 이하)에서는 .top-btn.is-hidden, 내려가면 오른쪽 아래에 나타난다 (이동은 common.js 앵커 스크롤)
+     -------------------------------------------------------------------------- */
+  const TOP_BTN = { showAt: 400 };
+
+  function bindTopBtn() {
+    const $btn = $(".top-btn");
+    if (!$btn.length) return;
     let ticking = false;
     function update() {
-      $float.toggleClass("is-hidden", window.scrollY <= FLOAT.showAt);
+      $btn.toggleClass("is-hidden", window.scrollY <= TOP_BTN.showAt);
       ticking = false;
     }
     window.addEventListener("scroll", () => {
@@ -511,33 +547,21 @@
       requestAnimationFrame(update);
     }, { passive: true });
     update();
-
-    const $bubble = $float.find(".bubble");
-    if (!$bubble.length || !util.ensureGsap()) return;
-    let index = 0;
-    function next() {
-      index = (index + 1) % FLOAT.messages.length;
-      if (util.reduceMotion.matches) {
-        $bubble.text(FLOAT.messages[index]);
-        return;
-      }
-      $bubble.addClass("is-hidden");
-      gsap.delayedCall(FLOAT.fade, () => $bubble.text(FLOAT.messages[index]).removeClass("is-hidden"));
-    }
-    gsap.timeline({ repeat: -1 }).call(next, null, FLOAT.interval);
   }
 
   setupHeroCover();
+  setupHeroLetters();
   setupCount();
   setupCareerLine();
   bindTabs();
   bindFilter();
   setupNowTag();
   setupStack();
-  setupProjectsIntro();
+  setupFill();
   bindPageScreen();
   bindEmbedEscape();
   bindProjectModal();
   bindContact();
-  bindFloat();
+  bindTopBtn();
+  setupCursor();
 })(jQuery);

@@ -60,3 +60,81 @@ em { color: var(--color-text-point); }
   padding: 0 var(--side-padding);
 }
 
+/* 스크롤바 — 페이지 · 모달 · 텍스트 영역 · 전체 프로젝트 화면 등 스크롤이 생기는 곳 모두. 얇은 각진 막대, 올리면 검정 */
+// 크롬 · 엣지 · 사파리는 ::-webkit-scrollbar(모양까지), 파이어폭스는 scrollbar-color(색만)
+// 크롬 121+ 은 scrollbar-color 가 있으면 ::-webkit-scrollbar 를 무시해서 파이어폭스에만 건다
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb {
+  min-height: 40px;
+  background: var(--color-text-default-low);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+}
+::-webkit-scrollbar-thumb:hover { background-color: var(--color-text-default-highest); }
+// 텍스트 영역 오른쪽 아래 크기 조절 손잡이 — 기본 회색 손잡이 대신 사선 두 줄
+::-webkit-resizer {
+  background:
+    linear-gradient(135deg, transparent 45%, var(--color-text-default-low) 45% 52%, transparent 52% 70%, var(--color-text-default-low) 70% 77%, transparent 77%);
+}
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-text-default-low) transparent;
+  }
+}
+
+/* 마우스 커서 — 마우스 자리에 바로 붙는 점(.cursor) + 조금 늦게 뒤따라오는 얇은 링(.cursor-ring). 바탕과 반전(difference)돼 밝은 곳은 검정 · 검정 구획은 흰색
+   · 링크 · 버튼 위에서는 크게(.is-hover), 입력칸 위에서는 숨고 기본 글자 커서(.is-text) — main.js 「마우스 커서」
+   · html.has-cursor 일 때만 기본 커서를 숨긴다 (스크립트가 PC 마우스에서만 붙인다 — 터치 · 스크립트 없음은 기본 커서) */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  width: 0.75rem;
+  height: 0.75rem;
+  margin: -0.375rem 0 0 -0.375rem;
+  background: var(--color-header-blend);
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease, scale 0.35s var(--ease-out);
+
+  &.is-visible { opacity: 1; }
+  &.is-hover { scale: 4; }
+  &.is-text { opacity: 0; }
+}
+// 뒤따라오는 링 — 점보다 크게, 얇고 연하게. 링크 위에서는 숨는다(점이 커지므로)
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-cursor);
+  width: 2rem;
+  height: 2rem;
+  margin: -1rem 0 0 -1rem;
+  border: 1px solid var(--color-header-blend);
+  border-radius: 50%;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.is-visible { opacity: 0.35; }
+  &.is-hover,
+  &.is-text { opacity: 0; }
+}
+.has-cursor {
+  &,
+  * { cursor: none; }
+
+  input,
+  textarea,
+  select { cursor: auto; }
+}

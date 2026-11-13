@@ -2,50 +2,9 @@
 
 /* ==========================================================================
    12. 라벨
-   · .status-badge — 상태 알약(숨 쉬는 점 .dot + 글자)
    · .chip-list > .skill-chip — 기술 로고(.logo.{이름}-icon) + 이름
    · .tag-list > .tag — 작은 태그 (사용 기술)
    ========================================================================== */
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4375rem 0.875rem 0.4375rem 0.75rem;
-  font: var(--font-b4-med);
-  letter-spacing: var(--font-b4-med-ls);
-  color: var(--color-text-point);
-  background: var(--color-bg-point-soft);
-  border-radius: 99rem;
-
-  .dot {
-    position: relative;
-    width: 0.4375rem;
-    height: 0.4375rem;
-    background: var(--color-bg-point);
-    border-radius: 50%;
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: -0.1875rem;
-      background: var(--color-bg-point);
-      border-radius: 50%;
-      opacity: 0;
-    }
-  }
-}
-@include motion {
-  .status-badge {
-    .dot {
-      &::after { animation: status-pulse 2.4s ease-out infinite; }
-    }
-  }
-}
-@keyframes status-pulse {
-  0% { opacity: 0.5; transform: scale(0.6); }
-  100% { opacity: 0; transform: scale(2.2); }
-}
-
 .chip-list {
   display: flex;
   flex-wrap: wrap;
@@ -60,7 +19,6 @@
   letter-spacing: var(--font-b4-med-ls);
   background: var(--color-bg-surface);
   border: 1px solid var(--color-line-default);
-  border-radius: 99rem;
 
   .logo {
     width: 1.125rem;
@@ -80,6 +38,5 @@
     letter-spacing: var(--font-b5-med-ls);
     color: var(--color-text-default-medium);
     background: var(--color-bg-subtle);
-    border-radius: 0.5rem;
   }
 }

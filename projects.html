@@ -6,7 +6,7 @@
   <title>프로젝트 | 구은지 웹 퍼블리셔 포트폴리오</title>
   <meta name="description" content="웹 퍼블리셔 구은지의 실무 · 개인 프로젝트 목록입니다.">
   <meta name="robots" content="noindex, follow">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#efefef">
 
   <link rel="icon" href="common/images/favicon.ico" sizes="16x16 32x32 48x48">
   <link rel="icon" href="common/images/favicon.svg" type="image/svg+xml">
@@ -23,7 +23,7 @@
     <!-- 헤더 -->
     <header class="gnb">
       <div class="bar">
-        <a href="index.html" class="logo">KEJ<span class="dot">.</span><span class="blind"> 메인으로</span></a>
+        <a href="index.html" class="logo"><span class="role">퍼블리셔</span> 구은지<span class="blind"> — 메인으로</span></a>
         <nav class="menu" id="gnbMenu" aria-label="섹션 메뉴">
           <ul class="depth1">
             <li class="depth1-item"><a href="#projects" class="depth1-link">프로젝트</a></li>
@@ -33,10 +33,6 @@
           </ul>
         </nav>
         <div class="util">
-          <button type="button" class="theme-btn" aria-pressed="false">
-            <span class="icon" aria-hidden="true"></span>
-            <span class="blind">다크 모드</span>
-          </button>
           <button type="button" class="menu-btn" aria-expanded="false" aria-controls="gnbMenu">
             <span class="bar-icon" aria-hidden="true"></span>
             <span class="blind">메뉴</span>
@@ -519,7 +515,6 @@
     <footer class="footer">
       <div class="inner">
         <p class="copy">© 2026 구은지 · 웹 퍼블리셔</p>
-        <a href="#content" class="top-link">맨 위로</a>
       </div>
     </footer>
   </div>
@@ -556,6 +551,13 @@
       </div>
     </div>
   </div>
+
+  <!-- 맨 위로 — 오른쪽 아래에 떠 있다, 맨 위에서는 숨는다 (main.js 「맨 위로 버튼」) -->
+  <a href="#content" class="top-btn is-hidden"><span class="blind">맨 위로</span></a>
+
+  <!-- 마우스 커서 — 점 + 뒤따라오는 얇은 링, 장식 (main.js 「마우스 커서」, PC 마우스에서만) -->
+  <div class="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
 
   <script src="common/js/lib/jquery.min.js"></script>
   <script src="common/js/lib/gsap.min.js"></script>

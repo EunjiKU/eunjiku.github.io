@@ -2,83 +2,69 @@
 
 /* ==========================================================================
    1. 디자인 토큰 — 컬러 · 텍스트 스타일 · 레이아웃 · z-index
-   · 다크 모드는 html[data-theme="dark"] 에서 컬러만 재선언한다 (common.js 테마 전환)
    ========================================================================== */
 // ■ 이 :root 가 원본(SoT)이다. 별도 JSON 은 없다.
-// ■ 피그마 없음 — 흰 바탕 · 차콜 글자 · 코발트 블루 포인트 · 블루/스카이 그라데이션 · 세리프 숫자 강조로 직접 정한 값 (영어 문구는 쓰지 않는다). 결정은 PROJECT.md 「결정 기록」
+// ■ 피그마 없음 — 참고 사이트(아이파트너즈) 느낌의 무채색: 연회색 바탕 · 검정 글자 · 검정 구획(data-tone="dark") · 굵은 고딕(Pretendard)으로 직접 정한 값. 결정은 PROJECT.md 「결정 기록」
 // ■ 시안에 있는데 여기 없는 값은 부분 파일에 박지 말고 여기에 먼저 추가한다.
 // ■ rem 은 (B) 100% 기준 — 시안 px ÷ 16 (16px = 1rem). 화면이 넓어져도 커지지 않고, 콘텐츠는 --content-width(1440px)에서 가운데 정렬. 반응형 재선언(1024 / 600)은 이 파일 끝.
 :root {
   /* ------------------------------------------------------------------
-     Color — Text
+     Color — Text  (무채색 — 검정 · 회색 · 흰색만, 포인트 색 없음)
      ------------------------------------------------------------------ */
-  --color-text-default-highest: #2b2c30;   /* 제목 · 강조 — 차콜 */
-  --color-text-default-medium: #5c5f67;    /* 본문 · 설명 */
-  --color-text-default-low: #6b6e76;       /* 날짜 · 보조 — 흰 바탕 5.1:1 · 회색 면 4.7:1 */
-  --color-text-default-inverse: #ffffff;   /* 차콜 바탕 위 글자 */
-  --color-text-point: #2448d8;             /* 포인트 글자 — 라벨 · 강조 단어 · 회사명 (코발트 블루) */
+  --color-text-default-highest: #000000;   /* 제목 · 강조 */
+  --color-text-default-medium: #3a3a3a;    /* 본문 · 설명 */
+  --color-text-default-low: #5c5c5c;       /* 날짜 · 보조 */
+  --color-text-default-inverse: #ffffff;   /* 검정 바탕 위 글자 */
+  --color-text-point: #000000;             /* 강조 글자 — 포인트 색 대신 검정 */
+  --color-text-fill-off: #c4c4c4;          /* 큰 문장 — 아직 안 채워진 단어 */
 
   /* ------------------------------------------------------------------
      Color — Background
      ------------------------------------------------------------------ */
-  --color-bg-default: #ffffff;             /* 페이지 바탕 — 흰색 */
-  --color-bg-surface: #ffffff;             /* 카드 · 입력칸 · 모달 */
-  --color-bg-subtle: #f4f5f6;              /* 칩 · 태그 · 탭 트랙 · 연한 면 */
-  --color-bg-point: #2f5bea;               /* 코발트 블루 — 상태 점 · 진행 막대 · 타임라인 점 */
-  --color-bg-point-soft: #eaf0fe;          /* 연한 파랑 면 — 통계 카드 · 아이콘 원 */
-  --color-bg-inverse: #26272b;             /* 차콜 면 — 기본 버튼 · 강조 카드 */
-  --color-bg-header: rgb(255 255 255 / 85%);   /* 고정 헤더 반투명 바탕 */
-  --color-bg-dim: rgb(20 20 24 / 45%);     /* 모달 딤 */
-  --color-bg-thumb-1: #e6edfc;             /* 카드 사진 자리 면 — 연한 파랑 */
-  --color-bg-thumb-2: #edf1f5;             /* 〃 블루 그레이 */
-  --color-bg-thumb-3: #f3f1ec;             /* 〃 샌드 */
+  --color-bg-default: #efefef;             /* 페이지 바탕 — 연회색 */
+  --color-bg-surface: #ffffff;             /* 카드 · 모달 */
+  --color-bg-subtle: #e4e4e4;              /* 칩 · 태그 · 연한 면 */
+  --color-bg-point: #000000;               /* 상태 점 · 진행 막대 · 타임라인 점 */
+  --color-bg-point-soft: #dcdcdc;          /* 연한 면 */
+  --color-bg-inverse: #000000;             /* 검정 면 — 기본 버튼 */
+  --color-bg-header: rgb(239 239 239 / 85%);   /* 600↓ 메뉴 펼침 바탕 */
+  --color-bg-dim: rgb(0 0 0 / 50%);        /* 모달 딤 */
+  --color-bg-thumb-1: #d8d8d8;             /* 카드 사진 자리 면 */
+  --color-bg-thumb-2: #cccccc;             /* 〃 */
+  --color-bg-thumb-3: #e2e2e2;             /* 〃 */
   --color-thumb-light: rgb(255 255 255 / 60%);   /* 카드 사진 자리 빛 번짐 */
-  --color-grad-1: #8fb4ff;                 /* 그라데이션 덩어리 — 블루 */
-  --color-grad-2: #cddcff;                 /* 〃 연한 파랑 */
-  --color-grad-3: #a6def0;                 /* 〃 스카이 */
-  --color-dot: #141416;                    /* 그라데이션 위 작은 점 */
+  --color-media-1: #000000;                /* 히어로 가운데 상자 — 사진 밑 · 덧칠 (고정 검정) */
+  --color-media-text: #ffffff;             /* 〃 위 글자 */
+  --color-header-blend: #ffffff;           /* 헤더 글자 — 반전(difference)으로 바탕에 따라 검정 · 흰색이 된다 (모드 무관)  */
 
   /* ------------------------------------------------------------------
      Color — Line
      ------------------------------------------------------------------ */
-  --color-line-default: #e8e9ec;           /* 카드 테두리 · 구분선 */
-  --color-line-strong: #26272b;            /* 강조 테두리 */
-  --color-line-orbit: #ececef;             /* 배경의 큰 원 (헤어라인) */
-  --color-border-focused: #2448d8;         /* 키보드 포커스 링 · 입력 포커스 */
+  --color-line-default: #d2d2d2;           /* 구분선 · 밑줄 */
+  --color-line-strong: #000000;            /* 강조 선 · 띠 위아래 선 */
+  --color-border-focused: #000000;         /* 키보드 포커스 링 · 입력 포커스 */
 
   /* ------------------------------------------------------------------
      Color — Effect
      ------------------------------------------------------------------ */
-  --color-shadow: rgb(20 20 24 / 7%);      /* 카드 hover · 떠 있는 요소 그림자 */
-  --color-shadow-strong: rgb(20 20 24 / 26%);   /* 히어로 코드 창 그림자 */
-
-  /* ------------------------------------------------------------------
-     Color — Code (히어로 코드 창 — 다크 모드에서도 어두운 창)
-     ------------------------------------------------------------------ */
-  --color-bg-code: #1d1e22;
-  --color-code-line: rgb(255 255 255 / 8%);
-  --color-code-text: #e9e9ef;
-  --color-code-tag: #9dbbff;
-  --color-code-attr: #a6aabb;
-  --color-code-val: #9ad9ef;
-  --color-code-dim: #6f7380;
-  --color-code-dot-1: #8fb4ff;
-  --color-code-dot-2: #cddcff;
-  --color-code-dot-3: #a6def0;
+  --color-shadow: rgb(0 0 0 / 8%);         /* 떠 있는 요소 그림자 */
 
   /* ------------------------------------------------------------------
      Font — 텍스트 스타일 「굵기 크기 / 행간 글꼴」 + 자간(-ls)
      ------------------------------------------------------------------ */
   --font-family-kor: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
 
-  --font-family-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;   /* 영문 대제목 전용 */
 
-  /* Display — 히어로 제목 · 영문 세리프 대제목(ds) */
-  --font-ds1: 500 5rem / 1 "Cormorant Garamond", Georgia, "Times New Roman", serif;  --font-ds1-ls: -0.01em;
+  /* Display — 히어로 · 큰 숫자 */
+  --font-ds1: 700 4rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-ds1-ls: -0.03em;   /* 큰 숫자 — 소개 4+ · 30+ */
   --font-d1: 700 4.5rem / 1.2 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-d1-ls: -0.035em;
-  /* Statement — 소개 선언 문장 (첫 줄 들여쓰기) */
   /* Title — 섹션 제목 · 통계 숫자 */
-  --font-t1: 500 5rem / 1.15 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-t1-ls: -0.04em;   /* 섹션 제목 — 이전 영문 대제목(ds1)과 같은 크기 · 굵기, 한글이라 Pretendard */
+  --font-dp: 700 13cqw / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-dp-ls: -0.02em;   /* 히어로 큰 영문 — 무대 폭에 비례(cqw, 화면 양끝까지 채운다 — vw 금지의 예외) */
+  --font-dl: 700 14cqw / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-dl-ls: -0.02em;   /* 히어로 상자 안 큰 글자 */
+  --font-hs: 700 3rem / 1.25 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-hs-ls: -0.02em;   /* 히어로 슬로건 */
+  --font-hs-txt: 400 1.375rem / 1.6 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-hs-txt-ls: 0;   /* 히어로 슬로건 아래 글 */
+  --font-t1: 700 4.5rem / 1.2 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-t1-ls: -0.03em;   /* 섹션 제목 · 소개 문장 */
+  --font-band: 700 7.5rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-band-ls: -0.02em;   /* 섹션 머리 흐르는 띠 */
   --font-t2: 700 2.5rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-t2-ls: -0.03em;
   /* Heading */
   --font-h1: 700 1.75rem / 1.35 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-h1-ls: -0.025em;
@@ -93,10 +79,8 @@
   --font-b4-reg: 400 0.875rem / 1.6 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-b4-reg-ls: 0;
   --font-b4-med: 500 0.875rem / 1.5 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-b4-med-ls: 0;
   --font-b5-med: 500 0.8125rem / 1.5 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-b5-med-ls: 0.01em;
-  /* Caption — 영문 대문자 라벨 */
-  --font-cap: 600 0.75rem / 1.4 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-cap-ls: 0.16em;
-  /* Code — 코드 창 (시스템 고정폭 글꼴) */
-  --font-code: 500 0.9375rem / 1.85 ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;  --font-code-ls: 0;
+  /* Caption — 작은 라벨 (날짜 · 구분 · 숫자 이름) */
+  --font-cap: 600 0.75rem / 1.4 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-cap-ls: 0.02em;
   /* Logo */
   --font-logo: 700 1.375rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;  --font-logo-ls: -0.03em;
 
@@ -115,50 +99,52 @@
   --z-behind: -1;       /* 쌓임 맥락 안에서 콘텐츠 뒤로 */
   --z-base: 1;          /* 겹치는 장식 */
   --z-sticky: 100;      /* 고정 헤더 */
-  --z-dropdown: 200;    /* 떠 있는 캐릭터 */
+  --z-dropdown: 200;    /* 맨 위로 버튼 · 떠 있는 요소 */
   --z-overlay: 300;     /* 딤 */
   --z-modal: 400;       /* 모달 */
   --z-page-header: 450; /* 전체 화면 페이지(.modal-page) 위에 남는 헤더 */
   --z-toast: 500;       /* 토스트 · 알림 */
   --z-skip: 1000;       /* 스킵 링크 */
+  --z-cursor: 2000;     /* 마우스 커서 — 맨 위 */
 }
 
-/* 다크 모드 — 컬러만 재선언 */
-:root[data-theme="dark"] {
-  --color-text-default-highest: #ececf0;
-  --color-text-default-medium: #a9abb3;
-  --color-text-default-low: #8d909a;
-  --color-text-default-inverse: #111114;
-  --color-text-point: #8fb0ff;
-  --color-bg-default: #111114;
-  --color-bg-surface: #18181c;
-  --color-bg-subtle: #1f1f24;
-  --color-bg-point: #8fb0ff;
-  --color-bg-point-soft: #16213c;
-  --color-bg-inverse: #ececf0;
-  --color-bg-header: rgb(17 17 20 / 85%);
-  --color-bg-dim: rgb(0 0 0 / 60%);
-  --color-bg-thumb-1: #172238;
-  --color-bg-thumb-2: #1c2028;
-  --color-bg-thumb-3: #24221e;
+/* 검정 구획 — 섹션에 data-tone="dark" (프로젝트 · 연락). 컬러 토큰을 그 안에서만 뒤집는다 */
+[data-tone="dark"] {
+  --color-text-default-highest: #ffffff;
+  --color-text-default-medium: #bdbdbd;
+  --color-text-default-low: #949494;
+  --color-text-default-inverse: #000000;
+  --color-text-point: #ffffff;
+  --color-text-fill-off: #3d3d3d;
+  --color-bg-default: #000000;
+  --color-bg-surface: #141414;
+  --color-bg-subtle: #1c1c1c;
+  --color-bg-point: #ffffff;
+  --color-bg-point-soft: #262626;
+  --color-bg-inverse: #ffffff;
+  --color-bg-header: rgb(0 0 0 / 85%);
+  --color-bg-dim: rgb(0 0 0 / 65%);
+  --color-bg-thumb-1: #1f1f1f;
+  --color-bg-thumb-2: #2a2a2a;
+  --color-bg-thumb-3: #333333;
   --color-thumb-light: rgb(255 255 255 / 6%);
-  --color-dot: #ececf0;
-  --color-line-default: #2a2a31;
-  --color-line-strong: #ececf0;
-  --color-line-orbit: #222228;
-  --color-border-focused: #8fb0ff;
-  --color-shadow: rgb(0 0 0 / 35%);
-  --color-shadow-strong: rgb(0 0 0 / 50%);
-  --color-bg-code: #0b0b0e;
+  --color-line-default: #2e2e2e;
+  --color-line-strong: #ffffff;
+  --color-border-focused: #ffffff;
+  --color-shadow: rgb(0 0 0 / 40%);
 }
+
 
 /* 반응형 — 텍스트 스타일 · 레이아웃 재선언 */
 // 1024↓ · 600↓ 글자 크기 · 좌우 여백만 바꾼다 (콘텐츠 최대 폭은 그대로)
 @include mo {
   :root {
-    --font-ds1: 500 3.75rem / 1 "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --font-ds1: 700 3rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-d1: 700 3.25rem / 1.25 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-    --font-t1: 500 3.75rem / 1.15 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    --font-hs: 700 2.25rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    --font-hs-txt: 400 1.125rem / 1.6 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    --font-t1: 700 3rem / 1.25 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    --font-band: 700 5rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-t2: 700 2.125rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-h1: 700 1.5rem / 1.35 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-b1-reg: 400 1rem / 1.75 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
@@ -170,9 +156,12 @@
 }
 @include sm {
   :root {
-    --font-ds1: 500 3rem / 1 "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --font-ds1: 700 2.5rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-d1: 700 2.25rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
-    --font-t1: 500 3rem / 1.2 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    --font-hs: 700 1.625rem / 1.35 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    --font-hs-txt: 400 1rem / 1.6 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    --font-t1: 700 2.125rem / 1.3 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
+    --font-band: 700 3.25rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-t2: 700 1.875rem / 1 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-h1: 700 1.375rem / 1.4 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;
     --font-h2: 700 1.1875rem / 1.4 "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", sans-serif;

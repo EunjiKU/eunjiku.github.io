@@ -1,12 +1,89 @@
 @use "../tools" as *;
 
 /* ==========================================================================
-   9. 섹션 골격 — .sec · 섹션 제목 .sec-head
+   9. 섹션 골격 — .sec · 검정 구획 [data-tone="dark"] · 섹션 머리 띠 .sec-band · 큰 문장 .statement · 섹션 제목 .sec-head(서브페이지)
    ========================================================================== */
 /* 본문 섹션 — 위아래 여백 */
-.sec { padding: 16.25rem 0 0; }
+.sec { padding: 10rem 0; }
 
-/* 섹션 제목 — 한글 제목(h2.tit) 하나, 글자 하나씩 등장(data-split) */
+/* 검정 구획 — 섹션에 data-tone="dark" (컬러 토큰은 _tokens 에서 뒤집는다) */
+[data-tone="dark"] {
+  color: var(--color-text-default-highest);
+  background: var(--color-bg-default);
+}
+
+/* 섹션 머리 — 옆으로 흐르는 큰 제목 띠(위아래 선)
+   · 띠는 같은 묶음(.set) 두 벌이 왼쪽으로 흐르며 이어진다 — 모션 줄이기는 멈춤 */
+.sec-band {
+  margin-bottom: 6rem;
+
+  .band-tit {
+    overflow: hidden;
+    border-top: 1px solid var(--color-line-strong);
+    border-bottom: 1px solid var(--color-line-strong);
+
+    .track {
+      display: flex;
+      width: max-content;
+
+      .set {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        gap: 2.5rem;
+        padding: 0.5rem 1.25rem;
+
+        .word {
+          font: var(--font-band);
+          letter-spacing: var(--font-band-ls);
+          white-space: nowrap;
+        }
+
+        // 띠 사이 별표 — 글자 색을 따른다
+        .star::before {
+          @include icon-mask("icon-asterisk");
+          width: 0.45em;
+          height: 0.45em;
+          font: var(--font-band);
+        }
+      }
+    }
+  }
+}
+@include motion {
+  .sec-band {
+    .band-tit {
+      .track { animation: band-flow 40s linear infinite; }
+    }
+  }
+}
+@keyframes band-flow {
+  to { transform: translateX(-50%); }
+}
+
+/* 큰 문장 — 가운데 굵은 글(.statement-left 는 왼쪽). data-fill 이면 스크롤하는 만큼 단어가 하나씩 진해진다 (.word.is-filled — main.js 「문장 채우기」) */
+.statement {
+  max-width: 60rem;
+  margin: 0 auto 7.5rem;
+  font: var(--font-t1);
+  letter-spacing: var(--font-t1-ls);
+  text-align: center;
+  text-wrap: balance;
+
+  .word { transition: color 0.3s ease; }
+}
+// 변형 — 왼쪽 정렬
+.statement-left {
+  margin-left: 0;
+  text-align: left;
+}
+@include motion {
+  .statement[data-fill] {
+    .word:not(.is-filled) { color: var(--color-text-fill-off); }
+  }
+}
+
+/* 섹션 제목 — 서브페이지(projects.html)의 제목 */
 .sec-head {
   margin-bottom: 3.5rem;
 
@@ -24,35 +101,32 @@
   .footer { display: none; }
 
   .sec { padding-top: calc(var(--gnb-height) + 2.5rem); }
-
-  // 스크롤바 — 얇은 알약, 올리면 포인트 색. 크롬 · 엣지 · 사파리는 ::-webkit-scrollbar(모양까지), 파이어폭스는 scrollbar-color(색만)
-  // 크롬 121+ 은 scrollbar-color 가 있으면 ::-webkit-scrollbar 를 무시해서 파이어폭스에만 건다
-  &::-webkit-scrollbar { width: 12px; }
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb {
-    min-height: 48px;
-    background: var(--color-text-default-low);
-    background-clip: padding-box;
-    border: 4px solid transparent;
-    border-radius: 99px;
-    transition: background-color 0.3s ease;
-  }
-  &::-webkit-scrollbar-thumb:hover { background-color: var(--color-bg-point); }
-
-  @supports not selector(::-webkit-scrollbar) {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-text-default-low) transparent;
-  }
 }
 
 /* 반응형 */
 @include mo {
-  .sec { padding-top: 11.25rem; }
+  .sec { padding: 7.5rem 0; }
+
+  .sec-band { margin-bottom: 4rem; }
+
+  .statement { margin-bottom: 5rem; }
 
   .sec-head { margin-bottom: 2.5rem; }
 }
 @include sm {
-  .sec { padding-top: 7.5rem; }
+  .sec { padding: 5rem 0; }
+
+  .sec-band {
+    margin-bottom: 3rem;
+
+    .band-tit {
+      .track {
+        .set { gap: 1.25rem; }
+      }
+    }
+  }
+
+  .statement { margin-bottom: 3.5rem; }
 
   .sec-head { margin-bottom: 2rem; }
 }

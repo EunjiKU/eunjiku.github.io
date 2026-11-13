@@ -3,50 +3,54 @@
 /* ==========================================================================
    10. 폼
    · .form-row — 입력칸 두 개를 한 줄에 (600↓ 한 줄에 하나)
-   · .text-field — 라벨(.label) + 입력 .control (textarea 는 .control.control-multi)
+   · .text-field — 라벨(.label) + 밑줄 입력 .control (textarea 는 .control.control-multi) — 포커스하면 밑줄이 그어진다
    ========================================================================== */
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .text-field {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
 
   .label {
-    font: var(--font-b4-med);
-    letter-spacing: var(--font-b4-med-ls);
-    color: var(--color-text-default-medium);
+    font: var(--font-cap);
+    letter-spacing: var(--font-cap-ls);
+    color: var(--color-text-default-low);
   }
 
+  // 밑줄 입력칸 — 바탕 · 테두리 상자 없이 아래 선만. 포커스하면 차콜 선(2px)이 왼쪽부터 그어진다
   .control {
     width: 100%;
-    height: 3.25rem;
-    padding: 0 1.125rem;
+    height: 3rem;
+    padding: 0;
     font: var(--font-b2-reg);
     letter-spacing: var(--font-b2-reg-ls);
-    background: var(--color-bg-default);
-    border: 1px solid var(--color-line-default);
-    border-radius: 0.75rem;
-    transition: border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    background: linear-gradient(var(--color-line-strong), var(--color-line-strong)) left bottom / 0 2px no-repeat;
+    border: 0;
+    border-bottom: 1px solid var(--color-line-default);
+    border-radius: 0;
 
-    // 포커스 표시는 테두리 + 옅은 링 — 전역 outline 대신
+    // 포커스 표시는 그어지는 밑줄 — 전역 outline 대신
     &:focus {
       outline: none;
-      background: var(--color-bg-surface);
-      border-color: var(--color-border-focused);
-      box-shadow: 0 0 0 3px var(--color-bg-point-soft);
+      background-size: 100% 2px;
     }
   }
 
   .control-multi {
     height: auto;
-    min-height: 8.75rem;
-    padding: 0.875rem 1.125rem;
+    min-height: 8rem;
+    padding: 0.75rem 0;
     resize: vertical;
+  }
+}
+@include motion {
+  .text-field {
+    .control { transition: background-size 0.5s var(--ease-out); }
   }
 }
 
