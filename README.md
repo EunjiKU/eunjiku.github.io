@@ -52,8 +52,8 @@ CLAUDE.md · PROJECT.md · TODO.md   ← 작업 규칙 · 결정 기록 · 할 �
 | 전체 프로젝트 · 건너뛰기 | 왼쪽 「프로젝트」 아래 `.more-btn`(서브페이지 `projects.html` — 스크립트가 있으면 `#projectsModal` 화면이 오른쪽에서 밀고 들어온다. 헤더는 위에 남고, 헤더 링크를 누르면 화면을 닫고 그 섹션으로) · `.skip-btn`(소개로). 팝업 안 서브페이지는 `html[data-embed]`(theme.js)로 헤더 · 푸터를 감춘다 |
 | 지금 보는 카드 | 메인 오른쪽 `.preview`(사진 · 이름 · 순번 · `.now-tag`) — `main.js` 「지금 보는 카드 표시」가 지금 붙어 있는 카드의 `data-period` 연도 · `data-category` 로 바꾼다 |
 | 분류 필터 (전체 프로젝트) | `projects.html` `.filter-btn[data-filter]` 값 = 카드 `data-category` (`build` 구축 · `dispatch` 파견) |
-| 소개 인적 사항 | `.profile .profile-info`(이름 · 사는 곳 · 생년월일 — 히어로와 같은 값, JSON-LD `birthDate` · `address` 도 같이) |
-| 히어로 | 큰 영문 `.hero-name` · 가운데 상자 글자 `.hero-media .media-item`(한 자씩 — `main.js` 「히어로 글자」) · 슬로건 `.intro .tit` · 아래 줄 `.hero-foot`(숫자 · 이름 · 사는 곳 · 생년월일 · 주요 기술 `.info-list` — 주요 기술은 `.info-item-full` 로 한 줄 전체 · 흐르는 고객사 `.client-list` 두 벌) |
+| 소개 인적 사항 | `.about-grid .profile-info`(왼쪽 표 — 이름 · 사는 곳 · 생년월일, 히어로와 같은 값, JSON-LD `birthDate` · `address` 도 같이) · 그 아래 큰 숫자 `.stat-grid` · 오른쪽 인사말 `.profile` |
+| 히어로 | 큰 영문 `.hero-name` · 가운데 상자 글자 `.hero-media .media-item`(한 자씩 — `main.js` 「히어로 글자」) · 슬로건 `.intro .tit` · 아래 줄 `.hero-foot`(세 칸 — 숫자 | 이름 · 사는 곳 · 생년월일 · 주요 기술 `.info-list`(이름표 | 값 줄) | 흐르는 프로젝트 `.client-list` 두 벌) |
 | 맨 위로 버튼 · 마우스 커서 | `.top-btn`(맨 위가 아니면 보임 — `main.js` 「맨 위로 버튼」) · `.cursor` 점 + 뒤따라오는 `.cursor-ring`(PC 마우스에서만 — 「마우스 커서」) |
 | 흐르는 띠(연락) · 검정 구획 · 큰 문장 | `.sec-band`(흐르는 제목 `h2.band-tit` — 같은 묶음 `.set` 두 벌) · 섹션에 `data-tone="dark"` · `.statement[data-fill]`(`main.js` 「문장 채우기」, 왼쪽 정렬 `.statement-left`) |
 | 경력 · 학력 타임라인 | `.career-line` 의 `.career-item` (오래된 순). 지금 다니는 곳은 `.is-active` — 스크롤하면 선이 그어지는 동작은 `main.js` 「경력 타임라인」 |

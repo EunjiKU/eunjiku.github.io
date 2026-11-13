@@ -100,18 +100,20 @@
           }
         }
 
-        /* 아래 줄 — 숫자 · 이름 · 사는 곳 · 생년월일 · 주요 기술 · 함께한 고객사(칸 안에서 끝없이 흐른다) */
+        /* 아래 줄 — 세 칸 명세: 숫자 | 인적 사항 · 주요 기술(이름표 | 값 줄) | 프로젝트(칸 안에서 끝없이 흐른다)
+           · 칸은 위 끝을 맞추고 세로 헤어라인으로 나눈다 */
         .hero-foot {
           display: grid;
-          grid-template-columns: auto auto 1fr;
-          align-items: center;
+          grid-template-columns: auto minmax(0, auto) 1fr;
+          align-items: stretch;
           gap: 3rem;
           margin-top: 5rem;
-          padding-top: 2rem;
-          border-top: 1px solid var(--color-line-default);
+          padding-top: 1.75rem;
+          border-top: 1px solid var(--color-line-strong);
 
           .stat-list {
             display: flex;
+            align-items: flex-start;
             gap: 3rem;
 
             .stat-item {
@@ -132,21 +134,19 @@
             }
           }
 
-          // 이름 · 사는 곳 · 생년월일 한 줄 + 주요 기술(.info-item-full) 한 줄
+          // 이름표 | 값 — 한 줄씩
           .info-list {
-            display: grid;
-            grid-template-columns: repeat(3, auto);
-            justify-content: start;
-            gap: 1.25rem 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
             padding-left: 3rem;
             border-left: 1px solid var(--color-line-default);
 
             .info-item {
-              display: flex;
-              flex-direction: column;
-              gap: 0.375rem;
-
-              &.info-item-full { grid-column: 1 / -1; }
+              display: grid;
+              grid-template-columns: 4.5rem 1fr;
+              align-items: baseline;
+              gap: 1rem;
 
               .label {
                 font: var(--font-cap);
@@ -155,8 +155,8 @@
               }
 
               .txt {
-                font: var(--font-b2-sb);
-                letter-spacing: var(--font-b2-sb-ls);
+                font: var(--font-b3-sb);
+                letter-spacing: var(--font-b3-sb-ls);
               }
             }
           }
@@ -165,7 +165,7 @@
           .client {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.75rem;
             min-width: 0;
             padding-left: 3rem;
             overflow: hidden;
@@ -732,57 +732,56 @@
 }
 
 /* --------------------------------------------------------------------------
-   소개 — 글 + 숫자 카드 · 기술 스택 · 역량 카드
+   소개 — 인적 사항 표 · 큰 숫자(왼쪽) + 인사말 · 글(오른쪽) · 기술 스택 · 역량 카드
    -------------------------------------------------------------------------- */
 .main-about {
   .inner {
-    /* 12칸 — 글은 오른쪽 절반, 숫자는 그 아래 */
+    /* 12칸 — 왼쪽: 인적 사항 표 + 큰 숫자, 오른쪽: 인사말 · 글 · 링크 */
     .about-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 4rem 1.5rem;
+      grid-template-rows: auto 1fr;
+      gap: 3.5rem 1.5rem;
+
+      /* 인적 사항 — 굵은 선 아래 이름표 | 값 줄, 줄마다 헤어라인 */
+      .profile-info {
+        grid-column: 1 / 6;
+        grid-row: 1;
+        border-top: 2px solid var(--color-line-strong);
+
+        .info-item {
+          display: grid;
+          grid-template-columns: 6rem 1fr;
+          align-items: baseline;
+          gap: 1rem;
+          padding: 1.125rem 0;
+          border-bottom: 1px solid var(--color-line-default);
+
+          .label {
+            font: var(--font-b4-med);
+            letter-spacing: var(--font-b4-med-ls);
+            color: var(--color-text-default-low);
+          }
+
+          .txt {
+            font: var(--font-h3);
+            letter-spacing: var(--font-h3-ls);
+          }
+        }
+      }
 
       .profile {
         grid-column: 7 / -1;
+        grid-row: 1 / 3;
 
         .lead {
-          font: var(--font-b1-reg);
-          letter-spacing: var(--font-b1-reg-ls);
+          font: var(--font-h2);
+          letter-spacing: var(--font-h2-ls);
         }
 
         .txt {
-          margin-top: 1rem;
+          margin-top: 1.5rem;
           color: var(--color-text-default-medium);
-        }
-
-        /* 이름 · 사는 곳 · 생년월일 */
-        .profile-info {
-          display: grid;
-          grid-template-columns: repeat(3, auto);
-          justify-content: start;
-          gap: 1.25rem 3rem;
-          margin-top: 2rem;
-          padding-top: 1.5rem;
-          border-top: 1px solid var(--color-line-default);
-
-          .info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.375rem;
-
-            .label {
-              font: var(--font-cap);
-              letter-spacing: var(--font-cap-ls);
-              color: var(--color-text-default-low);
-            }
-
-            .txt {
-              margin-top: 0;
-              font: var(--font-b2-sb);
-              letter-spacing: var(--font-b2-sb-ls);
-              color: var(--color-text-default-highest);
-            }
-          }
         }
 
         /* 밑줄 글자 링크 */
@@ -823,14 +822,14 @@
         }
       }
 
-      /* 큰 숫자 — 위에 헤어라인 */
+      /* 큰 숫자 — 인적 사항 아래, 칸 바닥에 */
       .stat-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
+        align-self: end;
         gap: 1.5rem;
-        grid-column: 7 / -1;
-        padding-top: 2rem;
-        border-top: 1px solid var(--color-line-default);
+        grid-column: 1 / 6;
+        grid-row: 2;
 
         .stat-card {
           display: flex;
@@ -1168,8 +1167,8 @@
           width: fit-content;
           max-width: 100%;
           padding-bottom: 0.5rem;
-          font: var(--font-t2);
-          letter-spacing: var(--font-t2-ls);
+          font: var(--font-h1);
+          letter-spacing: var(--font-h1-ls);
           overflow-wrap: anywhere;
           background: linear-gradient(currentColor, currentColor) left bottom / 0 2px no-repeat;
           transition: background-size 0.4s var(--ease-out);
@@ -1177,8 +1176,8 @@
           &::after {
             @include icon-mask("icon-arrow-up-16");
             flex-shrink: 0;
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
             transform: rotate(45deg);
             transition: transform 0.4s var(--ease-out);
           }
@@ -1220,11 +1219,11 @@
 
             .info-list,
             .client {
+              padding-top: 1.5rem;
               padding-left: 0;
+              border-top: 1px solid var(--color-line-default);
               border-left: 0;
             }
-
-            .info-list { gap: 1.25rem 2rem; }
           }
         }
       }
@@ -1284,10 +1283,15 @@
     .inner {
       .about-grid {
         grid-template-columns: 1fr;
+        grid-template-rows: none;
         gap: 2.5rem;
 
+        .profile-info,
         .profile,
-        .stat-grid { grid-column: 1 / -1; }
+        .stat-grid {
+          grid-column: 1 / -1;
+          grid-row: auto;
+        }
       }
 
       .skill-box { margin-top: 2.5rem; }
@@ -1353,41 +1357,6 @@
   }
 }
 @include sm {
-  .main-contact {
-    .inner {
-      .contact-panel {
-        .info {
-          .contact-link {
-            font: var(--font-h1);
-            letter-spacing: var(--font-h1-ls);
-          }
-        }
-      }
-    }
-  }
-
-  .main-hero {
-    .pin-spacer {
-      .stage {
-        .inner {
-          .hero-foot {
-            .info-list { grid-template-columns: repeat(2, auto); }
-          }
-        }
-      }
-    }
-  }
-
-  .main-about {
-    .inner {
-      .about-grid {
-        .profile {
-          .profile-info { grid-template-columns: repeat(2, auto); }
-        }
-      }
-    }
-  }
-
   .main-hero {
     .pin-spacer {
       .stage {
