@@ -1,6 +1,6 @@
 /**
  * main.js — 메인 섹션 동작
- * 히어로 덮기 · 히어로 글자 · 숫자 세기 · 경력 타임라인 · 프로젝트 탭(실무 · 개인) · 분류 필터 · 지금 보는 카드 표시 · 쌓이는 카드 · 문장 채우기 · 전체 프로젝트 화면(헤더 · Esc) · 프로젝트 설명 모달 채우기 · 메시지 보내기(EmailJS) · 맨 위로 버튼 · 마우스 커서
+ * 히어로 덮기 · 히어로 글자 · 숫자 세기 · 경력 타임라인 · 프로젝트 탭(실무 · 개인) · 분류 필터 · 지금 보는 카드 표시(백업 페이지) · 문장 채우기 · 전체 프로젝트 화면(헤더 · Esc) · 프로젝트 설명 모달 채우기 · 메시지 보내기(EmailJS) · 맨 위로 버튼 · 마우스 커서
  * common.js 다음에 로드한다 — UI.util · UI.refresh 를 쓴다
  */
 (function ($) {
@@ -209,14 +209,11 @@
   }
 
   /* --------------------------------------------------------------------------
-     지금 보는 카드 표시 — .now-tag 의 .year · .type 을 지금 보는 카드의 연도 · 구분으로, .preview 가 있으면 면색 · 이름 · 순번도
+     지금 보는 카드 표시 (백업 페이지) — .now-tag 의 .year · .type 을 화면 가운데를 지나는 카드의 연도 · 구분으로
      · 연도는 data-period 앞 네 자리, 구분은 data-category(build 구축 · dispatch 파견 · 없으면 개인)
-     · 2열 카드(백업 페이지)는 화면 가운데를 지나는 카드, 쌓이는 카드는 지금 붙어 있는 카드 (「쌓이는 카드」)
      · 카드마다 ScrollTrigger — 숨긴 카드는 건너뛴다. 필터 · 탭 뒤에는 UI.refresh() 가 다시 잰다
      -------------------------------------------------------------------------- */
   const NOW_TYPE = { build: "구축", dispatch: "파견" };
-  const BG_CLASSES = "project-card-bg1 project-card-bg2 project-card-bg3";
-  const pad = (n) => String(n).padStart(2, "0");
 
   /** 카드 하나를 지금 보는 카드로 표시 */
   function showNow(card) {
@@ -225,21 +222,11 @@
     const year = ($card.attr("data-period") || "").slice(0, 4);
     $(".main-projects .now-tag .year").text(year ? "#" + year : "");
     $(".main-projects .now-tag .type").text("#" + (NOW_TYPE[$card.attr("data-category")] || "개인"));
-    const $preview = $(".main-projects .preview");
-    if (!$preview.length) return;
-    const $visible = $card.parent().children(".project-card").not("[hidden]");
-    $preview.find(".num").text(pad($visible.index(card) + 1));
-    $preview.find(".total").text(pad($visible.length));
-    const bg = (card.className.match(/project-card-bg\d/) || [""])[0];
-    const $mini = $preview.find(".mini").removeClass(BG_CLASSES).addClass(bg);
-    $mini.find(".genre").text($card.find(".thumb .genre").text());
-    $mini.find(".photo").attr("src", $card.find(".thumb .photo").attr("src"));
   }
 
-  /** 2열 카드 — 화면 가운데를 지나는 카드 */
   function setupNowTag() {
-    const $cards = $(".main-projects .project-card").filter(function () { return !$(this).closest(".stack-list").length; });
-    if (!$cards.length || !util.ensureGsap()) return;
+    const $cards = $(".main-projects .card-grid .project-card");
+    if (!$cards.length || !$(".main-projects .now-tag").length || !util.ensureGsap()) return;
     showNow($cards[0]);
     $cards.each(function () {
       const card = this;
@@ -248,59 +235,6 @@
         start: "top 55%",
         end: "bottom 55%",
         onToggle: (self) => { if (self.isActive) showNow(card); }
-      });
-    });
-  }
-
-  /* --------------------------------------------------------------------------
-     쌓이는 카드 — .stack-list 의 카드는 화면 위에 붙고(sticky, SCSS) 다음 카드가 그 위를 덮는다
-     · 덮이는 동안 카드가 작아지며 위로 밀린다 — 진행도(0 → 1)를 --stack 으로. 마지막 카드는 그대로
-     · 붙기 조금 전(화면 높이의 STACK.nowAt 만큼)부터 다음 카드가 올 때까지 「지금 보는 카드」
-     · 붙는 위치는 앞 카드 높이 + 간격을 더해 잰다 (붙어 있는 카드는 화면 위치가 달라서) — 숨긴 카드는 건너뛴다
-     · 모션 줄이기는 쌓임 효과 없이 붙기만, GSAP 없음은 표시도 그대로
-     -------------------------------------------------------------------------- */
-  const STACK = { nowAt: 0.4 };
-
-  function setupStack() {
-    const $cards = $(".main-projects .stack-list .project-card");
-    if (!$cards.length || !util.ensureGsap()) return;
-    const reduce = util.reduceMotion.matches;
-
-    /** 카드가 화면 위에 붙기 시작하는 스크롤 위치(start) · 다음 카드가 붙을 때까지 거리(step) · 마지막 카드인지 */
-    function range(card) {
-      const list = card.parentElement;
-      const gap = parseFloat(getComputedStyle(list).rowGap) || 0;
-      let y = list.getBoundingClientRect().top + window.scrollY;
-      let last = true;
-      let passed = false;
-      $(list).children(".project-card").each(function () {
-        if (this === card) {
-          passed = true;
-          return;
-        }
-        if (this.hidden) return;
-        if (passed) last = false;
-        else y += this.offsetHeight + gap;
-      });
-      return { start: y - (parseFloat(getComputedStyle(card).top) || 0), step: card.offsetHeight + gap, last: last };
-    }
-
-    showNow($cards.filter(function () { return this.offsetParent; })[0]);
-    $cards.each(function () {
-      const card = this;
-      let r = range(card);
-      ScrollTrigger.create({
-        start: () => (r = range(card)).start - window.innerHeight * STACK.nowAt,
-        end: () => r.start + r.step - window.innerHeight * STACK.nowAt,
-        invalidateOnRefresh: true,
-        onToggle: (self) => { if (self.isActive) showNow(card); }
-      });
-      if (reduce) return;
-      ScrollTrigger.create({
-        start: () => (r = range(card)).start,
-        end: () => r.start + r.step,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => card.style.setProperty("--stack", r.last || card.hidden ? 0 : self.progress.toFixed(3))
       });
     });
   }
@@ -556,7 +490,6 @@
   bindTabs();
   bindFilter();
   setupNowTag();
-  setupStack();
   setupFill();
   bindPageScreen();
   bindEmbedEscape();

@@ -174,406 +174,384 @@
       <!-- 프로젝트 -->
       <section class="main-projects sec" id="projects" data-tone="dark">
         <div class="inner">
-          <div class="project-layout project-layout-stack">
-            <div class="side">
-              <div class="side-sticky">
-                <div class="sec-head" data-motion-group="each">
-                  <h2 class="tit" data-motion="custom" data-split>프로젝트</h2>
-                </div>
-                <!-- @ 「전체 프로젝트 보기」: 서브페이지(projects.html) — 스크립트가 있으면 이동 대신 화면(#projectsModal)으로 밀고 들어온다 -->
-                <div class="more" data-motion>
-                  <a href="projects.html" class="basic-btn basic-btn-outline more-btn" aria-haspopup="dialog" aria-controls="projectsModal">전체 프로젝트 보기</a>
-                </div>
-              </div>
-            </div>
-
-            <div class="list">
-              <!-- @ 카드 data-* 가 「설명 보기」 모달 내용 — data-pages · data-contrib 는 「|」 구분, data-tags 는 「,」 구분, data-url(사이트) · data-video(영상)는 있을 때만
-                   「사이트 보기」 링크는 공개 주소가 있는 카드에만 둔다 (href + target="_blank" rel="noopener" + 새 창 안내) -->
-              <div class="stack-list" id="workGrid" data-motion-group="row">
-                <article class="project-card project-card-bg3"
-                  data-category="build"
-                  data-period="2026.10 - 진행중"
-                  data-role="퍼블리셔"
-                  data-client="KTR 한국화학융합시험연구원"
-                  data-detail="KTR 화재특화 재난안전산업 진흥시설 웹사이트 구축 — SCSS 디자인 토큰 · 공통 컴포넌트 · UI 가이드 기반 퍼블리싱."
-                  data-tags="구축,기관 사이트">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">KTR</span></span></div>
-                  <div class="info">
-                    <p class="period">2026.10 - 진행중</p>
-                    <h3 class="tit">KTR 화재특화 재난안전산업 진흥시설</h3>
-                    <p class="txt">KTR 화재특화 재난안전산업 진흥시설 웹사이트 구축 — SCSS 디자인 토큰 · 공통 컴포넌트 · UI 가이드 기반 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">기관 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KTR 화재특화 재난안전산업 진흥시설</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg1"
-                  data-category="build"
-                  data-period="2026.10 - 진행중"
-                  data-role="퍼블리셔"
-                  data-client="서한그룹"
-                  data-detail="서한그룹 인재채용 웹사이트를 새로 구축하는 프로젝트입니다."
-                  data-tags="구축,채용 사이트">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">서한그룹 채용</span></span></div>
-                  <div class="info">
-                    <p class="period">2026.10 - 진행중</p>
-                    <h3 class="tit">서한그룹 인재채용 웹사이트 구축</h3>
-                    <p class="txt">서한그룹 인재채용 웹사이트를 새로 구축하는 프로젝트입니다.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">채용 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 서한그룹 인재채용 웹사이트 구축</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg2"
-                  data-category="dispatch"
-                  data-period="2026.09 - 2026.10"
-                  data-role="퍼블리셔"
-                  data-client="H-Biz"
-                  data-detail="H-Biz 항공 서비스 화면 퍼블리싱 — 파견 근무."
-                  data-tags="파견,항공">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">H-Biz</span></span></div>
-                  <div class="info">
-                    <p class="period">2026.09 - 2026.10</p>
-                    <h3 class="tit">H-Biz 항공</h3>
-                    <p class="txt">H-Biz 항공 서비스 화면 퍼블리싱 — 파견 근무.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">파견</li><li class="tag">항공</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — H-Biz 항공</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg3"
-                  data-category="dispatch"
-                  data-period="2026.05 - 2026.08"
-                  data-role="퍼블리셔"
-                  data-client="삼성화재"
-                  data-detail="삼성화재 다이렉트 장기 · 일반보험 화면 리뉴얼 퍼블리싱 — 파견 근무."
-                  data-tags="파견,리뉴얼,PC/MO"
-                  data-url="https://direct.samsungfire.com/">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 다이렉트</span></span></div>
-                  <div class="info">
-                    <p class="period">2026.05 - 2026.08</p>
-                    <h3 class="tit">삼성화재 다이렉트 장기/일반 리뉴얼</h3>
-                    <p class="txt">삼성화재 다이렉트 장기 · 일반보험 화면 리뉴얼 퍼블리싱 — 파견 근무.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">파견</li><li class="tag">리뉴얼</li><li class="tag">PC/MO</li>
-                    </ul>
-                    <div class="btn-group">
-                      <a href="https://direct.samsungfire.com/" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 삼성화재 다이렉트 장기/일반 리뉴얼(새 창)</span></a>
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 다이렉트 장기/일반 리뉴얼</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg1"
-                  data-category="dispatch"
-                  data-period="2025.06 - 2026.03"
-                  data-role="퍼블리셔"
-                  data-client="삼성화재"
-                  data-detail="삼성화재 고객케어서비스 앱과 세일즈웹 PC · 모바일 화면 퍼블리싱 — 파견 근무."
-                  data-tags="파견,App,PC/MO"
-                  data-url="https://direct.samsungfire.com/">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 앱</span></span></div>
-                  <div class="info">
-                    <p class="period">2025.06 - 2026.03</p>
-                    <h3 class="tit">삼성화재 고객케어서비스 App &amp; 세일즈웹</h3>
-                    <p class="txt">삼성화재 고객케어서비스 앱과 세일즈웹 PC · 모바일 화면 퍼블리싱 — 파견 근무.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">파견</li><li class="tag">App</li><li class="tag">PC/MO</li>
-                    </ul>
-                    <div class="btn-group">
-                      <a href="https://direct.samsungfire.com/" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 삼성화재 고객케어서비스 App &amp; 세일즈웹(새 창)</span></a>
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 고객케어서비스 App &amp; 세일즈웹</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg2"
-                  data-category="build"
-                  data-period="2025.06 - 2026.06"
-                  data-role="퍼블리셔"
-                  data-client="현대글로비스"
-                  data-detail="현대글로비스 임직원 복리후생 안내 플랫폼 퍼블리싱."
-                  data-tags="구축,복리후생 플랫폼">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">현대글로비스</span></span></div>
-                  <div class="info">
-                    <p class="period">2025.06 - 2026.06</p>
-                    <h3 class="tit">현대글로비스 복리후생</h3>
-                    <p class="txt">현대글로비스 임직원 복리후생 안내 플랫폼 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">복리후생 플랫폼</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대글로비스 복리후생</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg3"
-                  data-category="build"
-                  data-period="2025.03 - 2025.06"
-                  data-role="퍼블리셔"
-                  data-client="HD한국조선해양"
-                  data-detail="HD한국조선해양 기업 웹사이트 퍼블리싱."
-                  data-tags="구축,기업 사이트">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">HD한국조선해양</span></span></div>
-                  <div class="info">
-                    <p class="period">2025.03 - 2025.06</p>
-                    <h3 class="tit">HD한국조선해양</h3>
-                    <p class="txt">HD한국조선해양 기업 웹사이트 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">기업 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — HD한국조선해양</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg1"
-                  data-category="build"
-                  data-period="2025.01 - 2025.03"
-                  data-role="퍼블리셔"
-                  data-client="HD하이드로젠"
-                  data-detail="HD하이드로젠 기업 웹사이트 구축 퍼블리싱."
-                  data-tags="구축,기업 사이트"
-                  data-url="https://hdhydrogen.com/kr/main">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">HD하이드로젠</span></span></div>
-                  <div class="info">
-                    <p class="period">2025.01 - 2025.03</p>
-                    <h3 class="tit">HD하이드로젠</h3>
-                    <p class="txt">HD하이드로젠 기업 웹사이트 구축 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">기업 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <a href="https://hdhydrogen.com/kr/main" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — HD하이드로젠(새 창)</span></a>
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — HD하이드로젠</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg2"
-                  data-category="dispatch"
-                  data-period="2024.09 - 2024.12"
-                  data-role="퍼블리셔"
-                  data-client="현대드림투어"
-                  data-detail="현대드림투어 호텔 HUB API 통합시스템 화면 퍼블리싱 — 파견 근무."
-                  data-tags="파견,통합시스템"
-                  data-url="https://www.therailntel.com/hotel/main">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">현대드림투어</span></span></div>
-                  <div class="info">
-                    <p class="period">2024.09 - 2024.12</p>
-                    <h3 class="tit">현대드림투어 호텔 HUB API 통합시스템</h3>
-                    <p class="txt">현대드림투어 호텔 HUB API 통합시스템 화면 퍼블리싱 — 파견 근무.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">파견</li><li class="tag">통합시스템</li>
-                    </ul>
-                    <div class="btn-group">
-                      <a href="https://www.therailntel.com/hotel/main" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 현대드림투어 호텔 HUB API 통합시스템(새 창)</span></a>
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대드림투어 호텔 HUB API 통합시스템</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg3"
-                  data-category="build"
-                  data-period="2024.02 - 2024.06"
-                  data-role="퍼블리셔"
-                  data-client="대동"
-                  data-detail="대동 KIOTI 브랜드 웹사이트 퍼블리싱."
-                  data-tags="구축,브랜드 사이트">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">대동 KIOTI</span></span></div>
-                  <div class="info">
-                    <p class="period">2024.02 - 2024.06</p>
-                    <h3 class="tit">대동 KIOTI</h3>
-                    <p class="txt">대동 KIOTI 브랜드 웹사이트 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">브랜드 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 대동 KIOTI</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg1"
-                  data-category="build"
-                  data-period="2024.01 - 2024.04"
-                  data-role="퍼블리셔"
-                  data-client="현대로템"
-                  data-detail="현대로템 제품 디지털 카탈로그 퍼블리싱."
-                  data-tags="구축,디지털 카탈로그">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">현대로템 카탈로그</span></span></div>
-                  <div class="info">
-                    <p class="period">2024.01 - 2024.04</p>
-                    <h3 class="tit">현대로템 디지털 카탈로그</h3>
-                    <p class="txt">현대로템 제품 디지털 카탈로그 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">디지털 카탈로그</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대로템 디지털 카탈로그</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg2"
-                  data-category="build"
-                  data-period="2023.10 - 2024.03"
-                  data-role="퍼블리셔"
-                  data-client="자동차부품산업진흥재단"
-                  data-detail="자동차부품산업진흥재단(KAP) 웹사이트 퍼블리싱."
-                  data-tags="구축,기관 사이트">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">KAP</span></span></div>
-                  <div class="info">
-                    <p class="period">2023.10 - 2024.03</p>
-                    <h3 class="tit">KAP 자동차부품산업진흥재단</h3>
-                    <p class="txt">자동차부품산업진흥재단(KAP) 웹사이트 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">기관 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KAP 자동차부품산업진흥재단</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg3"
-                  data-category="build"
-                  data-period="2023.06 - 2023.08"
-                  data-role="퍼블리셔"
-                  data-client="삼성화재"
-                  data-detail="삼성화재 UI 팩토리 프로젝트 화면 퍼블리싱."
-                  data-tags="UI,삼성화재">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 UI 팩토리</span></span></div>
-                  <div class="info">
-                    <p class="period">2023.06 - 2023.08</p>
-                    <h3 class="tit">삼성화재 UI 팩토리</h3>
-                    <p class="txt">삼성화재 UI 팩토리 프로젝트 화면 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">UI</li><li class="tag">삼성화재</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 UI 팩토리</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg1"
-                  data-category="build"
-                  data-period="2023.04 - 2023.05"
-                  data-role="퍼블리셔"
-                  data-client="KG그룹"
-                  data-detail="KG그룹 웹사이트 퍼블리싱."
-                  data-tags="구축,그룹 사이트">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">KG그룹</span></span></div>
-                  <div class="info">
-                    <p class="period">2023.04 - 2023.05</p>
-                    <h3 class="tit">KG그룹</h3>
-                    <p class="txt">KG그룹 웹사이트 퍼블리싱.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">그룹 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KG그룹</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg2"
-                  data-category="build"
-                  data-period="2023.02 - 2023.05"
-                  data-role="퍼블리셔 (중간 투입)"
-                  data-client="현대로템"
-                  data-detail="레일솔루션 · 디펜스솔루션 · 에코플랜트 등 기업 정보를 안내하는 현대로템 공식 홈페이지 — 프로젝트 중간 투입."
-                  data-tags="구축,기업 사이트"
-                  data-url="https://www.hyundai-rotem.co.kr/ko/main/index.do">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">현대로템</span></span></div>
-                  <div class="info">
-                    <p class="period">2023.02 - 2023.05</p>
-                    <h3 class="tit">현대로템</h3>
-                    <p class="txt">레일솔루션 · 디펜스솔루션 · 에코플랜트 등 기업 정보를 안내하는 현대로템 공식 홈페이지 — 프로젝트 중간 투입.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">기업 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <a href="https://www.hyundai-rotem.co.kr/ko/main/index.do" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 현대로템(새 창)</span></a>
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대로템</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg3"
-                  data-category="build"
-                  data-period="2023.02 - 2023.03"
-                  data-role="퍼블리셔"
-                  data-client="미래에셋자산운용"
-                  data-detail="미래에셋자산운용 월간 리포트 페이지 작업."
-                  data-tags="운영,리포트">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">미래에셋</span></span></div>
-                  <div class="info">
-                    <p class="period">2023.02 - 2023.03</p>
-                    <h3 class="tit">미래에셋자산운용 월간 리포트</h3>
-                    <p class="txt">미래에셋자산운용 월간 리포트 페이지 작업.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">운영</li><li class="tag">리포트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 미래에셋자산운용 월간 리포트</span></button>
-                    </div>
-                  </div>
-                </article>
-
-                <article class="project-card project-card-bg1"
-                  data-category="build"
-                  data-period="2022.09 - 2023.04"
-                  data-role="퍼블리셔"
-                  data-client="현대건설 · 현대엔지니어링"
-                  data-detail="현대건설 · 현대엔지니어링 아파트 브랜드 사이트 — 분양 · 공사 · 입주 단지 정보 제공."
-                  data-tags="구축,브랜드 사이트"
-                  data-url="https://www.hillstate.co.kr/gate/index">
-                  <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">힐스테이트</span></span></div>
-                  <div class="info">
-                    <p class="period">2022.09 - 2023.04</p>
-                    <h3 class="tit">힐스테이트</h3>
-                    <p class="txt">현대건설 · 현대엔지니어링 아파트 브랜드 사이트 — 분양 · 공사 · 입주 단지 정보 제공.</p>
-                    <ul class="tag-list" aria-label="구분">
-                      <li class="tag">구축</li><li class="tag">브랜드 사이트</li>
-                    </ul>
-                    <div class="btn-group">
-                      <a href="https://www.hillstate.co.kr/gate/index" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 힐스테이트(새 창)</span></a>
-                      <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 힐스테이트</span></button>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </div>
-
-            <!-- @ 지금 보고 있는 카드 — 사진 자리 면색 · 이름 · 순번 · 연도 · 구분 (main.js 가 바꾼다) -->
-            <div class="preview" aria-hidden="true">
-              <div class="preview-sticky" data-motion>
-                <div class="mini project-card-bg3"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="genre">KTR</span></div>
-                <p class="count"><span class="num">01</span> / <span class="total">17</span></p>
-                <p class="now-tag"><span class="year">#2026</span> <span class="type">#구축</span></p>
-              </div>
-            </div>
+          <div class="project-head">
+            <h2 class="tit" data-motion="custom" data-split>프로젝트</h2>
+            <!-- @ 「전체 프로젝트 보기」: 서브페이지(projects.html) — 스크립트가 있으면 이동 대신 화면(#projectsModal)으로 밀고 들어온다 -->
+            <a href="projects.html" class="basic-btn basic-btn-outline more-btn" aria-haspopup="dialog" aria-controls="projectsModal" data-motion>전체 프로젝트 보기</a>
           </div>
 
-          <!-- 소개로 건너뛰기 — 프로젝트를 보는 동안 화면 아래 가운데에 붙어 있다 -->
-          <a href="#about" class="skip-btn">프로젝트 건너뛰기</a>
+          <!-- @ 카드 data-* 가 「설명 보기」 모달 내용 — data-pages · data-contrib 는 「|」 구분, data-tags 는 「,」 구분, data-url(사이트) · data-video(영상)는 있을 때만
+               「사이트 보기」 링크는 공개 주소가 있는 카드에만 둔다 (href + target="_blank" rel="noopener" + 새 창 안내) -->
+          <div class="project-grid" data-motion-group="row">
+            <article class="project-card project-card-bg3"
+              data-category="build"
+              data-period="2026.10 - 진행중"
+              data-role="퍼블리셔"
+              data-client="KTR 한국화학융합시험연구원"
+              data-detail="KTR 화재특화 재난안전산업 진흥시설 웹사이트 구축 — SCSS 디자인 토큰 · 공통 컴포넌트 · UI 가이드 기반 퍼블리싱."
+              data-tags="구축,기관 사이트">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">KTR</span></span></div>
+              <div class="info">
+                <p class="period">2026.10 - 진행중</p>
+                <h3 class="tit">KTR 화재특화 재난안전산업 진흥시설</h3>
+                <p class="txt">KTR 화재특화 재난안전산업 진흥시설 웹사이트 구축 — SCSS 디자인 토큰 · 공통 컴포넌트 · UI 가이드 기반 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">기관 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KTR 화재특화 재난안전산업 진흥시설</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg1"
+              data-category="build"
+              data-period="2026.10 - 진행중"
+              data-role="퍼블리셔"
+              data-client="서한그룹"
+              data-detail="서한그룹 인재채용 웹사이트를 새로 구축하는 프로젝트입니다."
+              data-tags="구축,채용 사이트">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">서한그룹 채용</span></span></div>
+              <div class="info">
+                <p class="period">2026.10 - 진행중</p>
+                <h3 class="tit">서한그룹 인재채용 웹사이트 구축</h3>
+                <p class="txt">서한그룹 인재채용 웹사이트를 새로 구축하는 프로젝트입니다.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">채용 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 서한그룹 인재채용 웹사이트 구축</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg2"
+              data-category="dispatch"
+              data-period="2026.09 - 2026.10"
+              data-role="퍼블리셔"
+              data-client="H-Biz"
+              data-detail="H-Biz 항공 서비스 화면 퍼블리싱 — 파견 근무."
+              data-tags="파견,항공">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">H-Biz</span></span></div>
+              <div class="info">
+                <p class="period">2026.09 - 2026.10</p>
+                <h3 class="tit">H-Biz 항공</h3>
+                <p class="txt">H-Biz 항공 서비스 화면 퍼블리싱 — 파견 근무.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">파견</li><li class="tag">항공</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — H-Biz 항공</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg3"
+              data-category="dispatch"
+              data-period="2026.05 - 2026.08"
+              data-role="퍼블리셔"
+              data-client="삼성화재"
+              data-detail="삼성화재 다이렉트 장기 · 일반보험 화면 리뉴얼 퍼블리싱 — 파견 근무."
+              data-tags="파견,리뉴얼,PC/MO"
+              data-url="https://direct.samsungfire.com/">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 다이렉트</span></span></div>
+              <div class="info">
+                <p class="period">2026.05 - 2026.08</p>
+                <h3 class="tit">삼성화재 다이렉트 장기/일반 리뉴얼</h3>
+                <p class="txt">삼성화재 다이렉트 장기 · 일반보험 화면 리뉴얼 퍼블리싱 — 파견 근무.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">파견</li><li class="tag">리뉴얼</li><li class="tag">PC/MO</li>
+                </ul>
+                <div class="btn-group">
+                  <a href="https://direct.samsungfire.com/" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 삼성화재 다이렉트 장기/일반 리뉴얼(새 창)</span></a>
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 다이렉트 장기/일반 리뉴얼</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg1"
+              data-category="dispatch"
+              data-period="2025.06 - 2026.03"
+              data-role="퍼블리셔"
+              data-client="삼성화재"
+              data-detail="삼성화재 고객케어서비스 앱과 세일즈웹 PC · 모바일 화면 퍼블리싱 — 파견 근무."
+              data-tags="파견,App,PC/MO"
+              data-url="https://direct.samsungfire.com/">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 앱</span></span></div>
+              <div class="info">
+                <p class="period">2025.06 - 2026.03</p>
+                <h3 class="tit">삼성화재 고객케어서비스 App &amp; 세일즈웹</h3>
+                <p class="txt">삼성화재 고객케어서비스 앱과 세일즈웹 PC · 모바일 화면 퍼블리싱 — 파견 근무.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">파견</li><li class="tag">App</li><li class="tag">PC/MO</li>
+                </ul>
+                <div class="btn-group">
+                  <a href="https://direct.samsungfire.com/" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 삼성화재 고객케어서비스 App &amp; 세일즈웹(새 창)</span></a>
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 고객케어서비스 App &amp; 세일즈웹</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg2"
+              data-category="build"
+              data-period="2025.06 - 2026.06"
+              data-role="퍼블리셔"
+              data-client="현대글로비스"
+              data-detail="현대글로비스 임직원 복리후생 안내 플랫폼 퍼블리싱."
+              data-tags="구축,복리후생 플랫폼">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">현대글로비스</span></span></div>
+              <div class="info">
+                <p class="period">2025.06 - 2026.06</p>
+                <h3 class="tit">현대글로비스 복리후생</h3>
+                <p class="txt">현대글로비스 임직원 복리후생 안내 플랫폼 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">복리후생 플랫폼</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대글로비스 복리후생</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg3"
+              data-category="build"
+              data-period="2025.03 - 2025.06"
+              data-role="퍼블리셔"
+              data-client="HD한국조선해양"
+              data-detail="HD한국조선해양 기업 웹사이트 퍼블리싱."
+              data-tags="구축,기업 사이트">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">HD한국조선해양</span></span></div>
+              <div class="info">
+                <p class="period">2025.03 - 2025.06</p>
+                <h3 class="tit">HD한국조선해양</h3>
+                <p class="txt">HD한국조선해양 기업 웹사이트 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">기업 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — HD한국조선해양</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg1"
+              data-category="build"
+              data-period="2025.01 - 2025.03"
+              data-role="퍼블리셔"
+              data-client="HD하이드로젠"
+              data-detail="HD하이드로젠 기업 웹사이트 구축 퍼블리싱."
+              data-tags="구축,기업 사이트"
+              data-url="https://hdhydrogen.com/kr/main">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">HD하이드로젠</span></span></div>
+              <div class="info">
+                <p class="period">2025.01 - 2025.03</p>
+                <h3 class="tit">HD하이드로젠</h3>
+                <p class="txt">HD하이드로젠 기업 웹사이트 구축 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">기업 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <a href="https://hdhydrogen.com/kr/main" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — HD하이드로젠(새 창)</span></a>
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — HD하이드로젠</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg2"
+              data-category="dispatch"
+              data-period="2024.09 - 2024.12"
+              data-role="퍼블리셔"
+              data-client="현대드림투어"
+              data-detail="현대드림투어 호텔 HUB API 통합시스템 화면 퍼블리싱 — 파견 근무."
+              data-tags="파견,통합시스템"
+              data-url="https://www.therailntel.com/hotel/main">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">현대드림투어</span></span></div>
+              <div class="info">
+                <p class="period">2024.09 - 2024.12</p>
+                <h3 class="tit">현대드림투어 호텔 HUB API 통합시스템</h3>
+                <p class="txt">현대드림투어 호텔 HUB API 통합시스템 화면 퍼블리싱 — 파견 근무.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">파견</li><li class="tag">통합시스템</li>
+                </ul>
+                <div class="btn-group">
+                  <a href="https://www.therailntel.com/hotel/main" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 현대드림투어 호텔 HUB API 통합시스템(새 창)</span></a>
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대드림투어 호텔 HUB API 통합시스템</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg3"
+              data-category="build"
+              data-period="2024.02 - 2024.06"
+              data-role="퍼블리셔"
+              data-client="대동"
+              data-detail="대동 KIOTI 브랜드 웹사이트 퍼블리싱."
+              data-tags="구축,브랜드 사이트">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">대동 KIOTI</span></span></div>
+              <div class="info">
+                <p class="period">2024.02 - 2024.06</p>
+                <h3 class="tit">대동 KIOTI</h3>
+                <p class="txt">대동 KIOTI 브랜드 웹사이트 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">브랜드 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 대동 KIOTI</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg1"
+              data-category="build"
+              data-period="2024.01 - 2024.04"
+              data-role="퍼블리셔"
+              data-client="현대로템"
+              data-detail="현대로템 제품 디지털 카탈로그 퍼블리싱."
+              data-tags="구축,디지털 카탈로그">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">현대로템 카탈로그</span></span></div>
+              <div class="info">
+                <p class="period">2024.01 - 2024.04</p>
+                <h3 class="tit">현대로템 디지털 카탈로그</h3>
+                <p class="txt">현대로템 제품 디지털 카탈로그 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">디지털 카탈로그</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대로템 디지털 카탈로그</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg2"
+              data-category="build"
+              data-period="2023.10 - 2024.03"
+              data-role="퍼블리셔"
+              data-client="자동차부품산업진흥재단"
+              data-detail="자동차부품산업진흥재단(KAP) 웹사이트 퍼블리싱."
+              data-tags="구축,기관 사이트">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">KAP</span></span></div>
+              <div class="info">
+                <p class="period">2023.10 - 2024.03</p>
+                <h3 class="tit">KAP 자동차부품산업진흥재단</h3>
+                <p class="txt">자동차부품산업진흥재단(KAP) 웹사이트 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">기관 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KAP 자동차부품산업진흥재단</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg3"
+              data-category="build"
+              data-period="2023.06 - 2023.08"
+              data-role="퍼블리셔"
+              data-client="삼성화재"
+              data-detail="삼성화재 UI 팩토리 프로젝트 화면 퍼블리싱."
+              data-tags="UI,삼성화재">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-3.png" alt="" class="photo"><span class="frame"><span class="genre">삼성화재 UI 팩토리</span></span></div>
+              <div class="info">
+                <p class="period">2023.06 - 2023.08</p>
+                <h3 class="tit">삼성화재 UI 팩토리</h3>
+                <p class="txt">삼성화재 UI 팩토리 프로젝트 화면 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">UI</li><li class="tag">삼성화재</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 삼성화재 UI 팩토리</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg1"
+              data-category="build"
+              data-period="2023.04 - 2023.05"
+              data-role="퍼블리셔"
+              data-client="KG그룹"
+              data-detail="KG그룹 웹사이트 퍼블리싱."
+              data-tags="구축,그룹 사이트">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-4.png" alt="" class="photo"><span class="frame"><span class="genre">KG그룹</span></span></div>
+              <div class="info">
+                <p class="period">2023.04 - 2023.05</p>
+                <h3 class="tit">KG그룹</h3>
+                <p class="txt">KG그룹 웹사이트 퍼블리싱.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">그룹 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — KG그룹</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg2"
+              data-category="build"
+              data-period="2023.02 - 2023.05"
+              data-role="퍼블리셔 (중간 투입)"
+              data-client="현대로템"
+              data-detail="레일솔루션 · 디펜스솔루션 · 에코플랜트 등 기업 정보를 안내하는 현대로템 공식 홈페이지 — 프로젝트 중간 투입."
+              data-tags="구축,기업 사이트"
+              data-url="https://www.hyundai-rotem.co.kr/ko/main/index.do">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-5.png" alt="" class="photo"><span class="frame"><span class="genre">현대로템</span></span></div>
+              <div class="info">
+                <p class="period">2023.02 - 2023.05</p>
+                <h3 class="tit">현대로템</h3>
+                <p class="txt">레일솔루션 · 디펜스솔루션 · 에코플랜트 등 기업 정보를 안내하는 현대로템 공식 홈페이지 — 프로젝트 중간 투입.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">기업 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <a href="https://www.hyundai-rotem.co.kr/ko/main/index.do" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 현대로템(새 창)</span></a>
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 현대로템</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg3"
+              data-category="build"
+              data-period="2023.02 - 2023.03"
+              data-role="퍼블리셔"
+              data-client="미래에셋자산운용"
+              data-detail="미래에셋자산운용 월간 리포트 페이지 작업."
+              data-tags="운영,리포트">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-1.png" alt="" class="photo"><span class="frame"><span class="genre">미래에셋</span></span></div>
+              <div class="info">
+                <p class="period">2023.02 - 2023.03</p>
+                <h3 class="tit">미래에셋자산운용 월간 리포트</h3>
+                <p class="txt">미래에셋자산운용 월간 리포트 페이지 작업.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">운영</li><li class="tag">리포트</li>
+                </ul>
+                <div class="btn-group">
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 미래에셋자산운용 월간 리포트</span></button>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card project-card-bg1"
+              data-category="build"
+              data-period="2022.09 - 2023.04"
+              data-role="퍼블리셔"
+              data-client="현대건설 · 현대엔지니어링"
+              data-detail="현대건설 · 현대엔지니어링 아파트 브랜드 사이트 — 분양 · 공사 · 입주 단지 정보 제공."
+              data-tags="구축,브랜드 사이트"
+              data-url="https://www.hillstate.co.kr/gate/index">
+              <div class="thumb" aria-hidden="true"><img src="common/images/@img-sample-2.png" alt="" class="photo"><span class="frame"><span class="genre">힐스테이트</span></span></div>
+              <div class="info">
+                <p class="period">2022.09 - 2023.04</p>
+                <h3 class="tit">힐스테이트</h3>
+                <p class="txt">현대건설 · 현대엔지니어링 아파트 브랜드 사이트 — 분양 · 공사 · 입주 단지 정보 제공.</p>
+                <ul class="tag-list" aria-label="구분">
+                  <li class="tag">구축</li><li class="tag">브랜드 사이트</li>
+                </ul>
+                <div class="btn-group">
+                  <a href="https://www.hillstate.co.kr/gate/index" target="_blank" rel="noopener" class="basic-btn basic-btn-outline basic-btn-small">사이트 보기<span class="blind"> — 힐스테이트(새 창)</span></a>
+                  <button type="button" class="basic-btn basic-btn-small detail-btn" aria-haspopup="dialog" aria-controls="projectModal">설명 보기<span class="blind"> — 힐스테이트</span></button>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
