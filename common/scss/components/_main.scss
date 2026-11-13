@@ -281,11 +281,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   프로젝트 — 왼쪽 고정 칸(제목 · 지금 보는 카드의 연도/구분 · 탭 · 필터) + 오른쪽 2열 엇갈림 카드 (이전 디자인 — 백업 페이지 projects.html)
-   · 탭: .tab-btn.is-active + aria-selected="true", 흰 알약 .indicator 는 --indicator-x · --indicator-w (main.js)
-   · 필터: .filter-btn[aria-pressed="true"] 가 현재 분류, 맞지 않는 카드는 hidden
-   · .now-tag 의 .year · .type 은 main.js 가 스크롤 위치의 카드로 바꾼다 (장식 — aria-hidden)
-   · 카드 사진 자리 면색: .project-card-bg1(세이지) · -bg2(블루 그레이) · -bg3(샌드)
+   프로젝트 3칸 틀 (메인) — 왼쪽 고정 칸(제목 · 전체 보기) + 오른쪽 카드 자리. 카드는 아래 .project-layout-stack
    -------------------------------------------------------------------------- */
 .main-projects {
   .inner {
@@ -301,187 +297,6 @@
           top: calc(var(--gnb-height) + 2.5rem);
 
           .sec-head { margin-bottom: 2rem; }
-
-          .now-tag {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            position: relative;
-            margin-bottom: 2.5rem;
-            padding-top: 1.75rem;
-            font: var(--font-t2);
-            letter-spacing: var(--font-t2-ls);
-            color: var(--color-text-point);
-
-            // 제목과 태그 사이 짧은 선
-            &::before {
-              content: "";
-              position: absolute;
-              top: 0;
-              left: 0;
-              width: 3rem;
-              height: 2px;
-              background: var(--color-line-strong);
-            }
-
-            .type { color: var(--color-text-default-highest); }
-          }
-
-          .tool-row {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-
-            .tabs {
-              display: inline-flex;
-              position: relative;
-              width: 100%;
-              padding: 0.25rem;
-              background: var(--color-bg-subtle);
-
-              .tab-btn {
-                flex: 1;
-                position: relative;
-                z-index: var(--z-base);
-                min-height: 2.75rem;
-                padding: 0.625rem 1rem;
-                font: var(--font-b3-sb);
-                letter-spacing: var(--font-b3-sb-ls);
-                color: var(--color-text-default-medium);
-                transition: color 0.3s ease;
-
-                &.is-active { color: var(--color-text-default-highest); }
-              }
-
-              .indicator {
-                position: absolute;
-                top: 0.25rem;
-                bottom: 0.25rem;
-                left: 0;
-                width: var(--indicator-w, 0);
-                background: var(--color-bg-surface);
-                box-shadow: 0 2px 8px var(--color-shadow);
-                transform: translateX(var(--indicator-x, 0));
-                transition: transform 0.4s var(--ease-out), width 0.4s var(--ease-out);
-              }
-            }
-
-            .filter {
-              display: flex;
-              flex-wrap: wrap;
-              gap: 0.375rem;
-
-              .filter-btn {
-                position: relative;
-                padding: 0.5rem 1rem;
-                font: var(--font-b4-med);
-                letter-spacing: var(--font-b4-med-ls);
-                color: var(--color-text-default-medium);
-                border: 1px solid var(--color-line-default);
-                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-
-                &[aria-pressed="true"] {
-                  color: var(--color-text-default-inverse);
-                  background: var(--color-bg-inverse);
-                  border-color: var(--color-line-strong);
-                }
-
-                @include touch-area;
-                @include hover { border-color: var(--color-line-strong); }
-              }
-            }
-          }
-        }
-      }
-
-      /* 오른쪽 — 2열, 둘째 열이 아래로 엇갈린다 */
-      .list {
-        .card-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 4rem 2rem;
-          padding-bottom: 8rem;   // 엇갈려 내려간 둘째 열의 마지막 카드 자리
-
-          .project-card {
-            display: flex;
-            flex-direction: column;
-
-            .thumb {
-              @include flex-center;
-              position: relative;
-              aspect-ratio: 4 / 5;
-              overflow: hidden;
-              background: var(--color-bg-subtle);
-              isolation: isolate;
-
-              // 바탕 면은 따로 깔아 hover 때 글자는 그대로 두고 면만 커지게
-              &::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                z-index: var(--z-behind);
-                background: radial-gradient(circle at 75% 20%, var(--color-thumb-light) 0%, transparent 60%);
-                transition: transform 0.6s var(--ease-out);
-              }
-
-              .genre {
-                padding: 0 1.5rem;
-                font: var(--font-h1);
-                letter-spacing: var(--font-h1-ls);
-                text-align: center;
-                color: var(--color-text-default-medium);
-                opacity: 0.75;
-              }
-            }
-
-            .info {
-              display: flex;
-              flex: 1;
-              flex-direction: column;
-              gap: 0.625rem;
-              padding-top: 1.5rem;
-
-              .period {
-                font: var(--font-b5-med);
-                letter-spacing: var(--font-b5-med-ls);
-                color: var(--color-text-point);
-              }
-
-              .tit {
-                font: var(--font-h2);
-                letter-spacing: var(--font-h2-ls);
-              }
-
-              .txt {
-                font: var(--font-b3-reg);
-                letter-spacing: var(--font-b3-reg-ls);
-                color: var(--color-text-default-medium);
-              }
-
-              .btn-group { padding-top: 0.5rem; }
-            }
-
-            @include hover(false) {
-              .thumb {
-                &::before { transform: scale(1.06); }
-              }
-            }
-          }
-
-          /* 둘째 열 — 보이는 카드 중 짝수 번째. 숨긴 카드는 세지 않는다(필터) */
-          // 의도적인 지그재그 패턴 — translate 는 진입 모션의 transform 과 따로 움직인다
-          .project-card:nth-child(even of :not([hidden])) { translate: 0 8rem; }
-
-          .project-card-bg1 {
-            .thumb { background: linear-gradient(150deg, var(--color-bg-thumb-1), var(--color-bg-thumb-2)); }
-          }
-          .project-card-bg2 {
-            .thumb { background: linear-gradient(150deg, var(--color-bg-thumb-2), var(--color-bg-thumb-3)); }
-          }
-          .project-card-bg3 {
-            .thumb { background: linear-gradient(150deg, var(--color-bg-thumb-3), var(--color-bg-thumb-1)); }
-          }
         }
       }
     }
@@ -489,9 +304,11 @@
 }
 
 /* --------------------------------------------------------------------------
-   프로젝트 (메인) — 위 제목 줄(제목 · 전체 보기) + 아래 3열 카드 (1024↓ 2열 · 600↓ 1열)
+   프로젝트 3열 — 위 제목 줄 .project-head + 아래 3열 카드 .project-grid (1024↓ 2열 · 600↓ 1열)
+   · 전체 프로젝트(projects.html): 제목 줄 오른쪽에 탭 · 필터(.tool-row) / 메인 백업(index2.html): 「전체 프로젝트 보기」
+   · 탭: .tab-btn.is-active + aria-selected="true", 흰 면 .indicator 는 --indicator-x · --indicator-w (main.js)
+   · 필터: .filter-btn[aria-pressed="true"] 가 현재 분류, 맞지 않는 카드는 hidden
    · 사진 자리: 사진(.photo) 위에 또렷한 작은 액자(.frame)
-   · 이전 디자인(2열 엇갈림)은 위 .project-layout — 백업 페이지 projects.html 이 쓴다
    -------------------------------------------------------------------------- */
 .main-projects {
   .inner {
@@ -506,6 +323,71 @@
       .tit {
         font: var(--font-t1);
         letter-spacing: var(--font-t1-ls);
+      }
+
+      .tool-row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1rem;
+
+        .tabs {
+          display: inline-flex;
+          position: relative;
+          padding: 0.25rem;
+          background: var(--color-bg-subtle);
+
+          .tab-btn {
+            flex: 1;
+            position: relative;
+            z-index: var(--z-base);
+            min-height: 2.75rem;
+            padding: 0.625rem 1rem;
+            font: var(--font-b3-sb);
+            letter-spacing: var(--font-b3-sb-ls);
+            color: var(--color-text-default-medium);
+            transition: color 0.3s ease;
+
+            &.is-active { color: var(--color-text-default-highest); }
+          }
+
+          .indicator {
+            position: absolute;
+            top: 0.25rem;
+            bottom: 0.25rem;
+            left: 0;
+            width: var(--indicator-w, 0);
+            background: var(--color-bg-surface);
+            box-shadow: 0 2px 8px var(--color-shadow);
+            transform: translateX(var(--indicator-x, 0));
+            transition: transform 0.4s var(--ease-out), width 0.4s var(--ease-out);
+          }
+        }
+
+        .filter {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.375rem;
+
+          .filter-btn {
+            position: relative;
+            padding: 0.5rem 1rem;
+            font: var(--font-b4-med);
+            letter-spacing: var(--font-b4-med-ls);
+            color: var(--color-text-default-medium);
+            border: 1px solid var(--color-line-default);
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+
+            &[aria-pressed="true"] {
+              color: var(--color-text-default-inverse);
+              background: var(--color-bg-inverse);
+              border-color: var(--color-line-strong);
+            }
+
+            @include touch-area;
+            @include hover { border-color: var(--color-line-strong); }
+          }
+        }
       }
     }
 
@@ -590,6 +472,255 @@
         @include hover(false) {
           .thumb {
             .photo { transform: scale(1.04); }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   프로젝트 쌓이는 카드 (메인) — .project-layout-stack: 왼쪽 고정 칸(제목 · 탭 · 필터) · 가운데 쌓이는 카드 · 오른쪽 지금 보는 카드
+   · 카드는 화면 위에 붙고(sticky) 다음 카드가 그 위를 덮는다. 덮이는 동안 작아지며 위로 밀린다 — --stack 0 → 1 (main.js 「쌓이는 카드」)
+   · 오른쪽 .preview 의 면색 · 이름 · 순번 · 연도 · 구분은 main.js 가 지금 붙어 있는 카드로 바꾼다 (장식 — aria-hidden)
+   · 사진 자리: 사진(.photo) 위에 또렷한 작은 액자(.frame)
+   -------------------------------------------------------------------------- */
+.main-projects {
+  .inner {
+    .project-layout-stack {
+      grid-template-columns: 18rem 1fr 13rem;
+      gap: 3rem;
+
+      /* 왼쪽 — 전체 보기 (화면에 붙어 있다) */
+      .side {
+        .side-sticky {
+          position: sticky;
+          top: calc(var(--gnb-height) + 2.5rem);
+        }
+      }
+
+      .list {
+        .stack-list {
+          display: flex;
+          flex-direction: column;
+          gap: 6rem;
+
+          .project-card {
+            position: sticky;
+            top: calc(var(--gnb-height) + 2.5rem);
+            background: var(--color-bg-default);
+            transform-origin: center top;
+
+            .thumb {
+              @include flex-center;
+              position: relative;
+              aspect-ratio: 16 / 10;
+              max-height: max(10rem, calc(100svh - var(--gnb-height) - 14rem));   // 화면이 낮아도(태블릿 가로 · 폴드 펼침 가로) 붙어 있는 카드가 화면 안에 다 들어오게 — 높이만 줄고 폭은 그대로
+              overflow: hidden;
+              background: var(--color-bg-subtle);
+
+              // 뒤 — 사진 (틀을 채운다)
+              .photo {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+              }
+
+              // 앞 — 또렷한 액자
+              .frame {
+                @include flex-center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 46%;
+                aspect-ratio: 4 / 3;
+                padding: 0 1rem;
+                background: color-mix(in srgb, var(--color-bg-default) 55%, transparent);
+                border: 1px solid var(--color-line-default);
+                box-shadow: 0 1.5rem 3rem var(--color-shadow);
+                transform: translate(-50%, -50%);
+                transition: transform 0.6s var(--ease-out);
+
+                .genre {
+                  font: var(--font-h1);
+                  letter-spacing: var(--font-h1-ls);
+                  text-align: center;
+                  color: var(--color-text-default-highest);
+                }
+              }
+            }
+
+            // 아래 설명 줄 — 기간 · 제목과 설명 · 버튼
+            .info {
+              display: grid;
+              grid-template-areas:
+                "period tit btn"
+                "period txt btn"
+                "period tags btn";
+              grid-template-columns: 9rem 1fr auto;
+              align-items: start;
+              column-gap: 2rem;
+              row-gap: 0.375rem;
+              padding-top: 1.25rem;
+
+              .period {
+                grid-area: period;
+                font: var(--font-b5-med);
+                letter-spacing: var(--font-b5-med-ls);
+                color: var(--color-text-point);
+              }
+
+              .tit {
+                grid-area: tit;
+                font: var(--font-h3);
+                letter-spacing: var(--font-h3-ls);
+              }
+
+              .txt {
+                grid-area: txt;
+                font: var(--font-b4-reg);
+                letter-spacing: var(--font-b4-reg-ls);
+                color: var(--color-text-default-medium);
+              }
+
+              .tag-list {
+                grid-area: tags;
+                padding-top: 0.25rem;
+              }
+
+              .btn-group { grid-area: btn; }
+            }
+
+            @include hover(false) {
+              .thumb {
+                .frame { transform: translate(-50%, -50%) scale(1.04); }
+              }
+            }
+          }
+
+          .project-card-bg1 {
+            .thumb { background: var(--color-bg-thumb-1); }
+          }
+          .project-card-bg2 {
+            .thumb { background: var(--color-bg-thumb-2); }
+          }
+          .project-card-bg3 {
+            .thumb { background: var(--color-bg-thumb-3); }
+          }
+        }
+      }
+
+      /* 오른쪽 — 지금 보는 카드 */
+      .preview {
+        .preview-sticky {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          position: sticky;
+          top: calc(var(--gnb-height) + 2.5rem);
+
+          .mini {
+            @include flex-center;
+            position: relative;
+            aspect-ratio: 4 / 3;
+            padding: 0 0.75rem;
+            overflow: hidden;
+            background: var(--color-bg-subtle);
+            transition: background-color 0.4s ease;
+
+            // 사진 위를 살짝 어둡게 — 흰 글자가 읽히게
+            &::after {
+              content: "";
+              position: absolute;
+              inset: 0;
+              background: color-mix(in srgb, var(--color-media-1) 35%, transparent);
+            }
+
+            .photo {
+              position: absolute;
+              inset: 0;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            .genre {
+              position: relative;
+              z-index: var(--z-base);
+              font: var(--font-b3-sb);
+              letter-spacing: var(--font-b3-sb-ls);
+              text-align: center;
+              color: var(--color-media-text);
+            }
+
+            &.project-card-bg1 { background: var(--color-bg-thumb-1); }
+            &.project-card-bg2 { background: var(--color-bg-thumb-2); }
+            &.project-card-bg3 { background: var(--color-bg-thumb-3); }
+          }
+
+          .count {
+            font: var(--font-cap);
+            letter-spacing: var(--font-cap-ls);
+            color: var(--color-text-default-low);
+          }
+
+          .now-tag {
+            font: var(--font-h2);
+            letter-spacing: var(--font-h2-ls);
+            color: var(--color-text-point);
+
+            .type { color: var(--color-text-default-highest); }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* 소개로 건너뛰기 — 프로젝트를 보는 동안 화면 아래 가운데에 붙어 있다(sticky — 섹션 끝까지) */
+.main-projects {
+  .inner {
+    .skip-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: sticky;
+      bottom: 1.5rem;
+      z-index: var(--z-base);
+      width: fit-content;
+      margin: 4rem auto 0;
+      padding: 0.875rem 1.5rem;
+      font: var(--font-b4-med);
+      letter-spacing: var(--font-b4-med-ls);
+      color: var(--color-text-default-inverse);
+      background: var(--color-bg-inverse);
+      transition: opacity 0.3s ease;
+
+      &::after {
+        @include icon-mask("icon-arrow-up-16");
+        width: 1rem;
+        height: 1rem;
+        transform: rotate(180deg);
+      }
+
+      @include hover { opacity: 0.8; }
+    }
+  }
+}
+
+// 덮이는 카드 — 작아지며 위로 (translate · scale 은 진입 모션의 transform 과 따로 움직인다 · main.js 「쌓이는 카드」)
+@include motion {
+  .main-projects {
+    .inner {
+      .project-layout-stack {
+        .list {
+          .stack-list {
+            .project-card {
+              translate: 0 calc(var(--stack, 0) * -2rem);
+              scale: calc(1 - var(--stack, 0) * 0.08);
+            }
           }
         }
       }
@@ -1059,41 +1190,43 @@
         gap: 2.5rem;
 
         .side {
-          .side-sticky {
-            position: static;
-
-            .now-tag { display: none; }
-
-            .tool-row {
-              flex-direction: row;
-              flex-wrap: wrap;
-              align-items: center;
-              justify-content: space-between;
-
-              .tabs { width: auto; }
-            }
-          }
+          .side-sticky { position: static; }
         }
+      }
 
-        .list {
-          .card-grid {
-            gap: 3rem 1.5rem;
-            padding-bottom: 0;
+      .project-head { margin-bottom: 2.5rem; }
 
-            .project-card:nth-child(even of :not([hidden])) { translate: none; }
-          }
-        }
+      .project-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem 1.5rem;
       }
     }
   }
 
   .main-projects {
     .inner {
-      .project-head { margin-bottom: 2.5rem; }
+      .project-layout-stack {
+        .list {
+          .stack-list {
+            gap: 4rem;
 
-      .project-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 3rem 1.5rem;
+            .project-card {
+              top: calc(var(--gnb-height) + 1.5rem);
+
+              .info {
+                grid-template-areas:
+                  "period btn"
+                  "tit tit"
+                  "txt txt"
+                  "tags tags";
+                grid-template-columns: 1fr auto;
+                align-items: center;
+              }
+            }
+          }
+        }
+
+        .preview { display: none; }
       }
     }
   }
@@ -1180,38 +1313,38 @@
 
   .main-projects {
     .inner {
-      .project-layout {
-        .side {
-          .side-sticky {
-            .tool-row {
-              flex-direction: column;
-              align-items: stretch;
+      .project-head {
+        margin-bottom: 2rem;
 
-              .tabs { width: 100%; }
-            }
-          }
+        // 탭이 위, 필터가 아래 (PC 는 필터 · 탭 순서로 탭이 맨 오른쪽)
+        .tool-row {
+          flex-direction: column-reverse;
+          align-items: stretch;
+          width: 100%;
         }
+      }
 
-        .list {
-          .card-grid {
-            grid-template-columns: 1fr;
-
-            .project-card {
-              .thumb { aspect-ratio: 16 / 10; }
-            }
-          }
-        }
+      .project-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
       }
     }
   }
 
   .main-projects {
     .inner {
-      .project-head { margin-bottom: 2rem; }
+      .project-layout-stack {
+        .list {
+          .stack-list {
+            .project-card {
+              .thumb {
+                aspect-ratio: 4 / 3;
 
-      .project-grid {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
+                .frame { width: 64%; }
+              }
+            }
+          }
+        }
       }
     }
   }

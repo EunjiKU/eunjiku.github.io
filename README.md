@@ -21,7 +21,8 @@ npm run serve
 
 ```
 index.html                 ← 메인 페이지 (GitHub Pages 진입점)
-projects.html              ← 백업 — 이전 프로젝트 섹션(2열 엇갈림 · 실무/개인 탭). 나중에 서브페이지로 쓸 것. 검색 제외(noindex) · sitemap 에 없음
+projects.html              ← 전체 프로젝트 — 제목 줄(제목 · 실무/개인 탭 · 분류 필터) + 카드 3열. 메인 「전체 프로젝트 보기」가 팝업 화면(iframe)으로 연다. 검색 제외(noindex) · sitemap 에 없음
+index2.html                ← 백업 — 메인 프로젝트를 제목 줄 + 카드 3열로 바꾼 버전. 검색 제외(noindex) · sitemap 에 없음
 robots.txt · sitemap.xml   ← 검색엔진 크롤링 (페이지가 바뀌면 sitemap 의 lastmod 갱신)
 common/
 ├── scss/                  ← 스타일 소스 — 여기만 고친다
@@ -33,7 +34,7 @@ common/
 ├── js/
 │   ├── theme.js           ← <head> — 팝업 안(iframe)이면 data-embed (헤더 · 푸터 감춤)
 │   ├── common.js          ← 공통 UI — 헤더(테마 · 메뉴 · 첫 진입 · 진행 막대 · 현재 섹션) · 부드러운 스크롤 · 앵커 스크롤 · 진입 모션 · 모달 · 공개 API window.UI
-│   ├── main.js            ← 메인 섹션 — 히어로 덮기 · 히어로 단어 · 숫자 세기 · 경력 타임라인 · 프로젝트 탭 · 필터(백업 페이지) · 지금 보는 카드(백업 페이지) · 설명 모달 · 연락 폼(EmailJS) · 맨 위로 버튼 · 마우스 커서
+│   ├── main.js            ← 메인 섹션 — 히어로 덮기 · 히어로 단어 · 숫자 세기 · 경력 타임라인 · 프로젝트 탭 · 필터(전체 프로젝트) · 지금 보는 카드 · 쌓이는 카드 · 설명 모달 · 연락 폼(EmailJS) · 맨 위로 버튼 · 마우스 커서
 │   └── lib/               ← jQuery 3.7.1 · GSAP 3.12.5 + ScrollTrigger · Lenis 1.3.27 (로컬)
 ├── images/                ← icon-* · logo-* (SVG) · @img-sample-* (더미 사진 — 히어로 · 프로젝트 카드) · favicon* · og-default.png
 ├── fonts/                 ← Pretendard 400 · 500 · 600 · 700 + 라이선스
@@ -47,10 +48,10 @@ CLAUDE.md · PROJECT.md · TODO.md   ← 작업 규칙 · 결정 기록 · 할 �
 | 무엇 | 어디 |
 | --- | --- |
 | 색 · 글자 크기 | `common/scss/common/_tokens.scss` (`:root` · 검정 구획 `[data-tone="dark"]` · 1024/600) |
-| 프로젝트 카드 | `index.html` `.project-grid`(3열) · `projects.html` `#workGrid` · `#personalGrid`(백업) 의 `<article class="project-card">` — 「설명 보기」 모달 내용은 카드의 `data-*` (`data-pages` · `data-contrib` 는 `\|` 구분, `data-tags` 는 `,` 구분, `data-url` · `data-video` 는 있을 때만). 공개 주소가 있는 카드만 「사이트 보기」 링크. 사진 자리 면색은 `.project-card-bg1`~`3` |
-| 전체 프로젝트 | 제목 줄 오른쪽 `.more-btn`(서브페이지 `projects.html` — 스크립트가 있으면 `#projectsModal` 화면이 오른쪽에서 밀고 들어온다. 헤더는 위에 남고, 헤더 링크를 누르면 화면을 닫고 그 섹션으로). 팝업 안 서브페이지는 `html[data-embed]`(theme.js)로 헤더 · 푸터를 감춘다 |
-| 지금 보는 카드 | 백업 페이지 왼쪽 `.now-tag` — `main.js` 「지금 보는 카드 표시」가 카드의 `data-period` 연도 · `data-category` 로 바꾼다 |
-| 분류 필터 (백업 페이지) | `projects.html` `.filter-btn[data-filter]` 값 = 카드 `data-category` (`build` 구축 · `dispatch` 파견) |
+| 프로젝트 카드 | `index.html` `#workGrid`(쌓이는 카드) · `projects.html` `#workGrid` · `#personalGrid`(3열 `.project-grid`) 의 `<article class="project-card">` — 「설명 보기」 모달 내용은 카드의 `data-*` (`data-pages` · `data-contrib` 는 `\|` 구분, `data-tags` 는 `,` 구분, `data-url` · `data-video` 는 있을 때만). 공개 주소가 있는 카드만 「사이트 보기」 링크. 사진 자리 면색은 `.project-card-bg1`~`3` |
+| 전체 프로젝트 · 건너뛰기 | 왼쪽 「프로젝트」 아래 `.more-btn`(서브페이지 `projects.html` — 스크립트가 있으면 `#projectsModal` 화면이 오른쪽에서 밀고 들어온다. 헤더는 위에 남고, 헤더 링크를 누르면 화면을 닫고 그 섹션으로) · `.skip-btn`(소개로). 팝업 안 서브페이지는 `html[data-embed]`(theme.js)로 헤더 · 푸터를 감춘다 |
+| 지금 보는 카드 | 메인 오른쪽 `.preview`(사진 · 이름 · 순번 · `.now-tag`) — `main.js` 「지금 보는 카드 표시」가 지금 붙어 있는 카드의 `data-period` 연도 · `data-category` 로 바꾼다 |
+| 분류 필터 (전체 프로젝트) | `projects.html` `.filter-btn[data-filter]` 값 = 카드 `data-category` (`build` 구축 · `dispatch` 파견) |
 | 히어로 | 큰 영문 `.hero-name` · 가운데 상자 글자 `.hero-media .media-item`(한 자씩 — `main.js` 「히어로 글자」) · 슬로건 `.intro .tit` · 아래 줄 `.hero-foot`(숫자 · 주요 기술 · 강점 `.info-list` · 흐르는 고객사 `.client-list` 두 벌) |
 | 맨 위로 버튼 · 마우스 커서 | `.top-btn`(맨 위가 아니면 보임 — `main.js` 「맨 위로 버튼」) · `.cursor` 점 + 뒤따라오는 `.cursor-ring`(PC 마우스에서만 — 「마우스 커서」) |
 | 흐르는 띠(연락) · 검정 구획 · 큰 문장 | `.sec-band`(흐르는 제목 `h2.band-tit` — 같은 묶음 `.set` 두 벌) · 섹션에 `data-tone="dark"` · `.statement[data-fill]`(`main.js` 「문장 채우기」, 왼쪽 정렬 `.statement-left`) |
