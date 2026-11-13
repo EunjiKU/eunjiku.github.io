@@ -3031,10 +3031,14 @@ body:has(.modal-page.is-open) .wrapper .gnb {
 @media (max-width: 1024px) {
   .main-about .inner {
     position: relative;
+    isolation: isolate;
   }
   .main-about .inner .statement {
     max-width: 10.5em;
     margin-bottom: 7rem;
+  }
+  .main-projects .inner .side .side-sticky .more {
+    display: none;
   }
   .main-projects .inner .all-btn {
     display: flex;
@@ -3048,15 +3052,53 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   }
   .main-hero .pin-spacer .stage .inner .hero-foot {
     grid-template-columns: 1fr;
-    gap: 1.75rem;
-    margin-top: 3.5rem;
+    gap: 1.25rem;
+    margin-top: 2.75rem;
+    padding-top: 1.5rem;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .info-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem 1.5rem;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item .txt {
+    font: var(--font-b2-sb);
+    letter-spacing: var(--font-b2-sb-ls);
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item.info-item-full {
+    flex-basis: 100%;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item.info-item-full .txt {
+    font: var(--font-b5-med);
+    letter-spacing: var(--font-b5-med-ls);
   }
   .main-hero .pin-spacer .stage .inner .hero-foot .stat-list,
   .main-hero .pin-spacer .stage .inner .hero-foot .client {
-    padding-top: 1.5rem;
+    padding-top: 1.25rem;
     padding-left: 0;
     border-top: 1px solid var(--color-line-default);
     border-left: 0;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .stat-list {
+    gap: 2.5rem;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .stat-list .stat-item {
+    gap: 0.25rem;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .stat-list .stat-item .num {
+    font: var(--font-h1);
+    letter-spacing: var(--font-h1-ls);
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .client {
+    gap: 0.5rem;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .client .client-flow .client-list {
+    gap: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .client .client-flow .client-list .client-item {
+    font: var(--font-b4-med);
+    letter-spacing: var(--font-b4-med-ls);
   }
   .main-projects .inner .project-layout {
     grid-template-columns: 1fr;
@@ -3094,6 +3136,7 @@ body:has(.modal-page.is-open) .wrapper .gnb {
     position: absolute;
     top: -2rem;
     right: var(--side-padding);
+    z-index: var(--z-behind);
     width: min(18rem, 45%);
     min-height: 0;
     height: 15rem;
@@ -3164,7 +3207,10 @@ body:has(.modal-page.is-open) .wrapper .gnb {
 }
 @media (max-width: 600px) {
   .main-about .inner .about-grid .about-deco {
-    display: none;
+    top: -3rem;
+    right: 0;
+    width: 11rem;
+    height: 10rem;
   }
   .main-experience .inner .cert {
     width: 100%;
@@ -3206,33 +3252,11 @@ body:has(.modal-page.is-open) .wrapper .gnb {
     padding-top: 1.25rem;
   }
   .main-hero .pin-spacer .stage .inner .hero-foot .info-list {
-    display: flex;
-    flex-wrap: wrap;
     gap: 0.375rem 1.25rem;
-  }
-  .main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item .txt {
-    font: var(--font-b2-sb);
-    letter-spacing: var(--font-b2-sb-ls);
-  }
-  .main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item.info-item-full {
-    flex-basis: 100%;
-  }
-  .main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item.info-item-full .txt {
-    font: var(--font-b5-med);
-    letter-spacing: var(--font-b5-med-ls);
-  }
-  .main-hero .pin-spacer .stage .inner .hero-foot .stat-list {
-    padding-top: 1rem;
   }
   .main-hero .pin-spacer .stage .inner .hero-foot .stat-list {
     gap: 2rem;
-  }
-  .main-hero .pin-spacer .stage .inner .hero-foot .stat-list .stat-item {
-    gap: 0.25rem;
-  }
-  .main-hero .pin-spacer .stage .inner .hero-foot .stat-list .stat-item .num {
-    font: var(--font-h1);
-    letter-spacing: var(--font-h1-ls);
+    padding-top: 1rem;
   }
   .main-hero .pin-spacer .stage .inner .hero-foot .client {
     display: none;

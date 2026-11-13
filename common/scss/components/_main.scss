@@ -1307,6 +1307,7 @@
   .main-about {
     .inner {
       position: relative;   // 장식(.about-deco)을 큰 문장 오른쪽에 띄우는 기준
+      isolation: isolate;   // 장식을 글 뒤(--z-behind)에 두되 섹션 바탕 위에
 
       .statement {
         max-width: 10.5em;
@@ -1315,9 +1316,15 @@
     }
   }
 
-  // 전체 보기 — 왼쪽 칸이 위에 남아 카드를 보는 동안 안 보이므로 아래 버튼 줄에도
+  // 전체 보기 — 왼쪽 칸이 위에 남아 카드를 보는 동안 안 보이므로 아래 버튼 줄로 옮긴다 (제목 아래 버튼은 숨김)
   .main-projects {
     .inner {
+      .side {
+        .side-sticky {
+          .more { display: none; }
+        }
+      }
+
       .all-btn { display: flex; }
     }
   }
@@ -1336,17 +1343,70 @@
         }
 
         .inner {
+          // 아래 줄 — 한 칸으로 쌓고 글자 · 칸 사이를 줄인다 (휴대폰은 더 줄임)
           .hero-foot {
             grid-template-columns: 1fr;
-            gap: 1.75rem;
-            margin-top: 3.5rem;
+            gap: 1.25rem;
+            margin-top: 2.75rem;
+            padding-top: 1.5rem;
+
+            .info-list {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.375rem 1.5rem;
+
+              .info-item {
+                .txt {
+                  font: var(--font-b2-sb);
+                  letter-spacing: var(--font-b2-sb-ls);
+                }
+
+                &.info-item-full {
+                  flex-basis: 100%;
+
+                  .txt {
+                    font: var(--font-b5-med);
+                    letter-spacing: var(--font-b5-med-ls);
+                  }
+                }
+              }
+            }
 
             .stat-list,
             .client {
-              padding-top: 1.5rem;
+              padding-top: 1.25rem;
               padding-left: 0;
               border-top: 1px solid var(--color-line-default);
               border-left: 0;
+            }
+
+            .stat-list {
+              gap: 2.5rem;
+
+              .stat-item {
+                gap: 0.25rem;
+
+                .num {
+                  font: var(--font-h1);
+                  letter-spacing: var(--font-h1-ls);
+                }
+              }
+            }
+
+            .client {
+              gap: 0.5rem;
+
+              .client-flow {
+                .client-list {
+                  gap: 1.5rem;
+                  padding-right: 1.5rem;
+
+                  .client-item {
+                    font: var(--font-b4-med);
+                    letter-spacing: var(--font-b4-med-ls);
+                  }
+                }
+              }
             }
           }
         }
@@ -1414,6 +1474,7 @@
           position: absolute;
           top: -2rem;
           right: var(--side-padding);
+          z-index: var(--z-behind);
           width: min(18rem, 45%);
           min-height: 0;
           height: 15rem;
@@ -1498,11 +1559,16 @@
   }
 }
 @include sm {
-  // 휴대폰 — 소개 장식은 숨긴다 (큰 문장이 폭을 다 쓴다)
+  // 휴대폰 — 소개 장식은 작게, 큰 문장 오른쪽 위에 겹쳐 (옅은 무늬라 글 뒤에 깔린다)
   .main-about {
     .inner {
       .about-grid {
-        .about-deco { display: none; }
+        .about-deco {
+          top: -3rem;
+          right: 0;
+          width: 11rem;
+          height: 10rem;
+        }
       }
     }
   }
@@ -1561,47 +1627,17 @@
     .pin-spacer {
       .stage {
         .inner {
-          // 아래 줄 — 휴대폰은 칸 사이 · 글자를 줄여 한 화면에 덜 차지하게
+          // 아래 줄 — 휴대폰은 칸 사이를 더 줄인다 (글자는 태블릿과 같다)
           .hero-foot {
             gap: 1rem;
             margin-top: 2.25rem;
             padding-top: 1.25rem;
 
-            .info-list {
-              display: flex;
-              flex-wrap: wrap;
-              gap: 0.375rem 1.25rem;
-
-              .info-item {
-                .txt {
-                  font: var(--font-b2-sb);
-                  letter-spacing: var(--font-b2-sb-ls);
-                }
-
-                &.info-item-full {
-                  flex-basis: 100%;
-
-                  .txt {
-                    font: var(--font-b5-med);
-                    letter-spacing: var(--font-b5-med-ls);
-                  }
-                }
-              }
-            }
-
-            .stat-list { padding-top: 1rem; }
+            .info-list { gap: 0.375rem 1.25rem; }
 
             .stat-list {
               gap: 2rem;
-
-              .stat-item {
-                gap: 0.25rem;
-
-                .num {
-                  font: var(--font-h1);
-                  letter-spacing: var(--font-h1-ls);
-                }
-              }
+              padding-top: 1rem;
             }
 
             // 흐르는 프로젝트 — 휴대폰은 첫 화면이 좁아 뺀다
