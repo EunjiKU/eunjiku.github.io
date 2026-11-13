@@ -100,7 +100,7 @@
           }
         }
 
-        /* 아래 줄 — 세 칸 명세: 숫자 | 인적 사항 · 주요 기술(이름표 | 값 줄) | 프로젝트(칸 안에서 끝없이 흐른다)
+        /* 아래 줄 — 세 칸 명세: 인적 사항 · 주요 기술(값만) | 숫자 | 프로젝트(칸 안에서 끝없이 흐른다)
            · 칸은 위 끝을 맞추고 세로 헤어라인으로 나눈다 */
         .hero-foot {
           display: grid;
@@ -115,6 +115,8 @@
             display: flex;
             align-items: flex-start;
             gap: 3rem;
+            padding-left: 3rem;
+            border-left: 1px solid var(--color-line-default);
 
             .stat-item {
               display: flex;
@@ -134,29 +136,28 @@
             }
           }
 
-          // 이름표 | 값 — 한 줄씩
+          // 값만 — 이름 · 생년월일 · 사는 곳을 한 줄에, 주요 기술(.info-item-full)은 아래 한 줄 전체 (이름표 dt 는 .blind)
           .info-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.625rem;
-            padding-left: 3rem;
-            border-left: 1px solid var(--color-line-default);
+            display: grid;
+            grid-template-columns: auto auto auto 1fr;   // 끝의 1fr 이 주요 기술 줄의 남는 폭을 받는다 — 윗줄 세 칸은 글자 폭 그대로
+            align-content: start;
+            gap: 0.75rem 1.75rem;
 
+            // 윗줄(인적 사항)은 굵고 크게, 아랫줄(주요 기술)은 가늘고 연하게 — 위아래가 한 덩어리로 보이지 않게
             .info-item {
-              display: grid;
-              grid-template-columns: 4.5rem 1fr;
-              align-items: baseline;
-              gap: 1rem;
-
-              .label {
-                font: var(--font-cap);
-                letter-spacing: var(--font-cap-ls);
-                color: var(--color-text-default-low);
+              .txt {
+                font: var(--font-h3);
+                letter-spacing: var(--font-h3-ls);
               }
 
-              .txt {
-                font: var(--font-b3-sb);
-                letter-spacing: var(--font-b3-sb-ls);
+              &.info-item-full {
+                grid-column: 1 / -1;
+
+                .txt {
+                  font: var(--font-b4-reg);
+                  letter-spacing: var(--font-b4-reg-ls);
+                  color: var(--color-text-default-medium);
+                }
               }
             }
           }
@@ -732,47 +733,36 @@
 }
 
 /* --------------------------------------------------------------------------
-   소개 — 인적 사항 표 · 큰 숫자(왼쪽) + 인사말 · 글(오른쪽) · 기술 스택 · 역량 카드
+   소개 — 위 줄(인적 사항 · 큰 숫자) · 굵은 선 · 인사말 · 글 · 기술 스택 · 역량 카드
    -------------------------------------------------------------------------- */
 .main-about {
   .inner {
-    /* 12칸 — 왼쪽: 인적 사항 표 + 큰 숫자, 오른쪽: 인사말 · 글 · 링크 */
+    /* 12칸 — 전부 오른쪽 절반(7칸째부터)에 위에서 아래로: 인적 사항(값만) → 큰 숫자 → 굵은 선 · 인사말 · 글 · 링크 */
     .about-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: auto 1fr;
-      gap: 3.5rem 1.5rem;
+      gap: 2.5rem 1.5rem;
 
-      /* 인적 사항 — 굵은 선 아래 이름표 | 값 줄, 줄마다 헤어라인 */
+      /* 인적 사항 — 값만 한 줄 (이름표 dt 는 .blind) */
       .profile-info {
-        grid-column: 1 / 6;
-        grid-row: 1;
-        border-top: 2px solid var(--color-line-strong);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 2.5rem;
+        grid-column: 7 / -1;
 
         .info-item {
-          display: grid;
-          grid-template-columns: 6rem 1fr;
-          align-items: baseline;
-          gap: 1rem;
-          padding: 1.125rem 0;
-          border-bottom: 1px solid var(--color-line-default);
-
-          .label {
-            font: var(--font-b4-med);
-            letter-spacing: var(--font-b4-med-ls);
-            color: var(--color-text-default-low);
-          }
-
           .txt {
-            font: var(--font-h3);
-            letter-spacing: var(--font-h3-ls);
+            font: var(--font-h2);
+            letter-spacing: var(--font-h2-ls);
           }
         }
       }
 
+      /* 인사말 위 굵은 선 */
       .profile {
         grid-column: 7 / -1;
-        grid-row: 1 / 3;
+        padding-top: 2.5rem;
+        border-top: 2px solid var(--color-line-strong);
 
         .lead {
           font: var(--font-h2);
@@ -780,7 +770,7 @@
         }
 
         .txt {
-          margin-top: 1.5rem;
+          margin-top: 1.25rem;
           color: var(--color-text-default-medium);
         }
 
@@ -789,7 +779,7 @@
           display: flex;
           flex-wrap: wrap;
           gap: 0.5rem 2rem;
-          margin-top: 2rem;
+          margin-top: 1.5rem;
 
           .out-link {
             display: inline-flex;
@@ -822,14 +812,12 @@
         }
       }
 
-      /* 큰 숫자 — 인적 사항 아래, 칸 바닥에 */
+      /* 큰 숫자 — 인적 사항 아래 */
       .stat-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        align-self: end;
-        gap: 1.5rem;
-        grid-column: 1 / 6;
-        grid-row: 2;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem 4rem;
+        grid-column: 7 / -1;
 
         .stat-card {
           display: flex;
@@ -1217,7 +1205,7 @@
             gap: 1.75rem;
             margin-top: 3.5rem;
 
-            .info-list,
+            .stat-list,
             .client {
               padding-top: 1.5rem;
               padding-left: 0;
@@ -1283,14 +1271,14 @@
     .inner {
       .about-grid {
         grid-template-columns: 1fr;
-        grid-template-rows: none;
-        gap: 2.5rem;
+        gap: 2rem;
 
         .profile-info,
-        .profile,
-        .stat-grid {
+        .stat-grid { grid-column: 1 / -1; }
+
+        .profile {
           grid-column: 1 / -1;
-          grid-row: auto;
+          padding-top: 2rem;
         }
       }
 
@@ -1357,6 +1345,25 @@
   }
 }
 @include sm {
+  .main-hero {
+    .pin-spacer {
+      .stage {
+        .inner {
+          .hero-foot {
+            .info-list {
+              display: flex;
+              flex-wrap: wrap;
+
+              .info-item {
+                &.info-item-full { flex-basis: 100%; }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .main-hero {
     .pin-spacer {
       .stage {

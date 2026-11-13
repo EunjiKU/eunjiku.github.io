@@ -119,6 +119,25 @@
               </div>
 
               <div class="hero-foot" data-motion>
+                <!-- 인적 사항 · 주요 기술 — 이름표는 화면에 숨기고 값만 (스크린리더는 이름표까지 읽는다) -->
+                <dl class="info-list">
+                  <div class="info-item">
+                    <dt class="blind">이름</dt>
+                    <dd class="txt">구은지</dd>
+                  </div>
+                  <div class="info-item">
+                    <dt class="blind">생년월일</dt>
+                    <dd class="txt"><time datetime="1998-12-08">1998.12.08</time></dd>
+                  </div>
+                  <div class="info-item">
+                    <dt class="blind">사는 곳</dt>
+                    <dd class="txt">인천 부평구</dd>
+                  </div>
+                  <div class="info-item info-item-full">
+                    <dt class="blind">주요 기술</dt>
+                    <dd class="txt">HTML5 · CSS3 · SCSS · JavaScript · jQuery · GSAP</dd>
+                  </div>
+                </dl>
                 <dl class="stat-list">
                   <div class="stat-item">
                     <dt class="label">년 차 경력</dt>
@@ -127,24 +146,6 @@
                   <div class="stat-item">
                     <dt class="label">프로젝트 수행</dt>
                     <dd class="num"><span data-count="30">30</span>+</dd>
-                  </div>
-                </dl>
-                <dl class="info-list">
-                  <div class="info-item">
-                    <dt class="label">이름</dt>
-                    <dd class="txt">구은지</dd>
-                  </div>
-                  <div class="info-item">
-                    <dt class="label">사는 곳</dt>
-                    <dd class="txt">인천 부평구</dd>
-                  </div>
-                  <div class="info-item">
-                    <dt class="label">생년월일</dt>
-                    <dd class="txt"><time datetime="1998-12-08">1998.12.08</time></dd>
-                  </div>
-                  <div class="info-item">
-                    <dt class="label">주요 기술</dt>
-                    <dd class="txt">HTML5 · CSS3 · SCSS · JavaScript · jQuery · GSAP</dd>
                   </div>
                 </dl>
                 <!-- 프로젝트 — 칸 안에서 끝없이 왼쪽으로 흐른다 (같은 목록 두 벌, 두 번째는 장식) -->
@@ -590,21 +591,32 @@
       <section class="main-about sec" id="about">
         <div class="inner">
           <!-- @ 스크롤하면 단어가 하나씩 진해진다 (main.js 「문장 채우기」) -->
-          <h2 class="statement" data-fill>사용자 경험을 코드로 완성하는 퍼블리셔</h2>
+          <h2 class="statement statement-left" data-fill>사용자 경험을 코드로 완성하는 퍼블리셔</h2>
 
           <div class="about-grid">
+            <!-- 인적 사항 — 이름표는 화면에 숨기고 값만 -->
             <dl class="profile-info" data-motion>
               <div class="info-item">
-                <dt class="label">이름</dt>
+                <dt class="blind">이름</dt>
                 <dd class="txt">구은지</dd>
               </div>
               <div class="info-item">
-                <dt class="label">사는 곳</dt>
-                <dd class="txt">인천 부평구</dd>
+                <dt class="blind">생년월일</dt>
+                <dd class="txt"><time datetime="1998-12-08">1998.12.08</time></dd>
               </div>
               <div class="info-item">
-                <dt class="label">생년월일</dt>
-                <dd class="txt"><time datetime="1998-12-08">1998.12.08</time></dd>
+                <dt class="blind">사는 곳</dt>
+                <dd class="txt">인천 부평구</dd>
+              </div>
+            </dl>
+            <dl class="stat-grid" data-motion-group="row">
+              <div class="stat-card">
+                <dt class="label">년 차 경력</dt>
+                <dd class="num"><span data-count="4">4</span>+</dd>
+              </div>
+              <div class="stat-card">
+                <dt class="label">프로젝트 수행</dt>
+                <dd class="num"><span data-count="30">30</span>+</dd>
               </div>
             </dl>
             <div class="profile" data-motion-group="each">
@@ -618,16 +630,6 @@
                 </li>
               </ul>
             </div>
-            <dl class="stat-grid" data-motion-group="row">
-              <div class="stat-card">
-                <dt class="label">년 차 경력</dt>
-                <dd class="num"><span data-count="4">4</span>+</dd>
-              </div>
-              <div class="stat-card">
-                <dt class="label">프로젝트 수행</dt>
-                <dd class="num"><span data-count="30">30</span>+</dd>
-              </div>
-            </dl>
           </div>
 
           <div class="skill-box" data-motion>

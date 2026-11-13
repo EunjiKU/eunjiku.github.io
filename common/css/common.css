@@ -1925,7 +1925,7 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   letter-spacing: var(--font-hs-txt-ls);
 }
 .main-hero .pin-spacer .stage .inner {
-  /* 아래 줄 — 세 칸 명세: 숫자 | 인적 사항 · 주요 기술(이름표 | 값 줄) | 프로젝트(칸 안에서 끝없이 흐른다)
+  /* 아래 줄 — 세 칸 명세: 인적 사항 · 주요 기술(값만) | 숫자 | 프로젝트(칸 안에서 끝없이 흐른다)
      · 칸은 위 끝을 맞추고 세로 헤어라인으로 나눈다 */
 }
 .main-hero .pin-spacer .stage .inner .hero-foot {
@@ -1941,6 +1941,8 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   display: flex;
   align-items: flex-start;
   gap: 3rem;
+  padding-left: 3rem;
+  border-left: 1px solid var(--color-line-default);
 }
 .main-hero .pin-spacer .stage .inner .hero-foot .stat-list .stat-item {
   display: flex;
@@ -1957,26 +1959,22 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   color: var(--color-text-default-low);
 }
 .main-hero .pin-spacer .stage .inner .hero-foot .info-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.625rem;
-  padding-left: 3rem;
-  border-left: 1px solid var(--color-line-default);
-}
-.main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item {
   display: grid;
-  grid-template-columns: 4.5rem 1fr;
-  align-items: baseline;
-  gap: 1rem;
-}
-.main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item .label {
-  font: var(--font-cap);
-  letter-spacing: var(--font-cap-ls);
-  color: var(--color-text-default-low);
+  grid-template-columns: auto auto auto 1fr;
+  align-content: start;
+  gap: 0.75rem 1.75rem;
 }
 .main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item .txt {
-  font: var(--font-b3-sb);
-  letter-spacing: var(--font-b3-sb-ls);
+  font: var(--font-h3);
+  letter-spacing: var(--font-h3-ls);
+}
+.main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item.info-item-full {
+  grid-column: 1/-1;
+}
+.main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item.info-item-full .txt {
+  font: var(--font-b4-reg);
+  letter-spacing: var(--font-b4-reg-ls);
+  color: var(--color-text-default-medium);
 }
 .main-hero .pin-spacer .stage .inner .hero-foot .client {
   display: flex;
@@ -2506,50 +2504,41 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   }
 }
 /* --------------------------------------------------------------------------
-   소개 — 인적 사항 표 · 큰 숫자(왼쪽) + 인사말 · 글(오른쪽) · 기술 스택 · 역량 카드
+   소개 — 위 줄(인적 사항 · 큰 숫자) · 굵은 선 · 인사말 · 글 · 기술 스택 · 역량 카드
    -------------------------------------------------------------------------- */
 .main-about .inner {
-  /* 12칸 — 왼쪽: 인적 사항 표 + 큰 숫자, 오른쪽: 인사말 · 글 · 링크 */
+  /* 12칸 — 전부 오른쪽 절반(7칸째부터)에 위에서 아래로: 인적 사항(값만) → 큰 숫자 → 굵은 선 · 인사말 · 글 · 링크 */
 }
 .main-about .inner .about-grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto 1fr;
-  gap: 3.5rem 1.5rem;
-  /* 인적 사항 — 굵은 선 아래 이름표 | 값 줄, 줄마다 헤어라인 */
+  gap: 2.5rem 1.5rem;
+  /* 인적 사항 — 값만 한 줄 (이름표 dt 는 .blind) */
 }
 .main-about .inner .about-grid .profile-info {
-  grid-column: 1/6;
-  grid-row: 1;
-  border-top: 2px solid var(--color-line-strong);
-}
-.main-about .inner .about-grid .profile-info .info-item {
-  display: grid;
-  grid-template-columns: 6rem 1fr;
-  align-items: baseline;
-  gap: 1rem;
-  padding: 1.125rem 0;
-  border-bottom: 1px solid var(--color-line-default);
-}
-.main-about .inner .about-grid .profile-info .info-item .label {
-  font: var(--font-b4-med);
-  letter-spacing: var(--font-b4-med-ls);
-  color: var(--color-text-default-low);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2.5rem;
+  grid-column: 7/-1;
 }
 .main-about .inner .about-grid .profile-info .info-item .txt {
-  font: var(--font-h3);
-  letter-spacing: var(--font-h3-ls);
+  font: var(--font-h2);
+  letter-spacing: var(--font-h2-ls);
+}
+.main-about .inner .about-grid {
+  /* 인사말 위 굵은 선 */
 }
 .main-about .inner .about-grid .profile {
   grid-column: 7/-1;
-  grid-row: 1/3;
+  padding-top: 2.5rem;
+  border-top: 2px solid var(--color-line-strong);
 }
 .main-about .inner .about-grid .profile .lead {
   font: var(--font-h2);
   letter-spacing: var(--font-h2-ls);
 }
 .main-about .inner .about-grid .profile .txt {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
   color: var(--color-text-default-medium);
 }
 .main-about .inner .about-grid .profile {
@@ -2559,7 +2548,7 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem 2rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 .main-about .inner .about-grid .profile .link-list .out-link {
   display: inline-flex;
@@ -2590,15 +2579,13 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   }
 }
 .main-about .inner .about-grid {
-  /* 큰 숫자 — 인적 사항 아래, 칸 바닥에 */
+  /* 큰 숫자 — 인적 사항 아래 */
 }
 .main-about .inner .about-grid .stat-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-self: end;
-  gap: 1.5rem;
-  grid-column: 1/6;
-  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 4rem;
+  grid-column: 7/-1;
 }
 .main-about .inner .about-grid .stat-grid .stat-card {
   display: flex;
@@ -2919,7 +2906,7 @@ body:has(.modal-page.is-open) .wrapper .gnb {
     gap: 1.75rem;
     margin-top: 3.5rem;
   }
-  .main-hero .pin-spacer .stage .inner .hero-foot .info-list,
+  .main-hero .pin-spacer .stage .inner .hero-foot .stat-list,
   .main-hero .pin-spacer .stage .inner .hero-foot .client {
     padding-top: 1.5rem;
     padding-left: 0;
@@ -2956,14 +2943,15 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   }
   .main-about .inner .about-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: none;
-    gap: 2.5rem;
+    gap: 2rem;
   }
   .main-about .inner .about-grid .profile-info,
-  .main-about .inner .about-grid .profile,
   .main-about .inner .about-grid .stat-grid {
     grid-column: 1/-1;
-    grid-row: auto;
+  }
+  .main-about .inner .about-grid .profile {
+    grid-column: 1/-1;
+    padding-top: 2rem;
   }
   .main-about .inner .skill-box {
     margin-top: 2.5rem;
@@ -3020,6 +3008,13 @@ body:has(.modal-page.is-open) .wrapper .gnb {
   }
 }
 @media (max-width: 600px) {
+  .main-hero .pin-spacer .stage .inner .hero-foot .info-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .main-hero .pin-spacer .stage .inner .hero-foot .info-list .info-item.info-item-full {
+    flex-basis: 100%;
+  }
   .main-hero .pin-spacer .stage .hero-media {
     width: calc(100% - var(--side-padding) * 2);
   }
