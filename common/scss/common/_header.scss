@@ -2,7 +2,7 @@
 
 /* ==========================================================================
    7. GNB — 고정 헤더 (로고 · 섹션 메뉴 · 테마 · 600↓ 햄버거)
-   · common.js 가 붙이는 상태: .gnb.is-stuck(화면 위끝에 붙음) · .gnb.is-open(600↓ 메뉴 열림)
+   · common.js 가 붙이는 상태: .gnb.is-stuck(화면 위끝에 붙음) · .gnb.is-dark(바로 아래가 검정 구획) · .gnb.is-open(600↓ 메뉴 열림)
    · 현재 섹션 메뉴: .depth1-link.is-active + aria-current="true"
    · 첫 진입: .gnb.is-shown 이 붙으며 위에서 내려온다 (common.js — html 에 직접 쓰지 않는다)
    · 모양: 검정 글자. 화면 위에 붙어 있는 동안(.is-stuck — common.js)은 뒤가 흐리게 비치는 반투명 바탕, 히어로 안에 있을 때는 투명. 600↓ 메뉴를 펼치면 불투명 바탕 · 전체 메뉴 버튼은 오른쪽 아래, 맨 위로 버튼 위에 떠 있다
@@ -15,7 +15,7 @@
   padding: 0.5rem 1.25rem 0;
   color: var(--color-text-default-highest);
 
-  // 화면 위에 붙은 동안 — 로고 ~ 메뉴 영역(.bar)만큼만 반투명 바탕 + 뒤 흐림 (어디서나 같은 모양으로 읽히게)
+  // 화면 위에 붙은 동안 — 로고 ~ 메뉴 영역(.bar)만큼 떠 있는 판: 옅은 반투명 바탕 + 뒤 흐림 + 얇은 테두리 + 살짝 둥근 모서리 (사용자 요청 — 「둥근 모서리 없음」의 예외)
   // 흐림은 .bar 자신이 아니라 뒤 층(::before)에 — backdrop-filter 를 건 요소는 안의 fixed(600↓ 떠 있는 메뉴 버튼)의 기준이 된다
   .bar::before {
     content: "";
@@ -23,10 +23,12 @@
     inset: 0;
     z-index: var(--z-behind);
     background: var(--color-bg-glass);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-line-glass);
+    border-radius: 0.75rem;
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
     pointer-events: none;
   }
 
@@ -34,10 +36,23 @@
     .bar::before { opacity: 1; }
   }
 
-  /* 첫 진입 — 위에 숨어 있다가 .is-shown 이 붙으면 내려온다 (common.js). 모션 줄이기는 처음부터 제자리 */
+  // 아래가 검정 구획이면(.is-dark — common.js) 판도 어둡게 · 글자는 흰색
+  &.is-dark {
+    color: var(--color-media-text);
+
+    .bar::before {
+      background: var(--color-bg-glass-dark);
+      border-color: var(--color-line-glass-dark);
+    }
+  }
+
+  /* 첫 진입 — PC 만 위에 숨어 있다가 .is-shown 이 붙으면 내려온다 (common.js). 1024↓ · 모션 줄이기는 처음부터 제자리 */
   // 시작값을 CSS 가 갖는다 — JS 가 걸면 제자리에 보였다가 튄다. sticky 헤더라 top 대신 transform 으로 올린다
+  // 1024↓ 은 빼는 이유 — 헤더에 transform 이 걸린 동안은 안의 fixed(600↓ 전체 메뉴 버튼)가 헤더 기준이 되어 헤더 자리에 있다가 오른쪽 아래로 내려가 보인다
   @include motion {
-    &:not(.is-shown) { transform: translateY(-100%); }
+    @media not all and (max-width: 1024px) {
+      &:not(.is-shown) { transform: translateY(-100%); }
+    }
   }
 
   .bar {
@@ -48,7 +63,7 @@
     max-width: calc(var(--content-width) + var(--header-padding) * 2);
     height: calc(var(--gnb-height) - 0.5rem);
     margin: 0 auto;
-    padding: 0 0.75rem 0 1.5rem;
+    padding: 0 1.5rem;   // 판 안 좌우 여백 같게
 
     .logo {
       display: inline-flex;
@@ -269,10 +284,14 @@
 
 
     // 메뉴를 펼치면 반전을 풀고 불투명 바탕 — 글자가 아래 내용과 겹쳐 읽히지 않게
+    // 펼친 동안 — 불투명 밝은 바탕 · 검정 글자 (검정 구획 위 · 붙은 판 모양보다 우선)
     &.is-open {
+      color: var(--color-text-default-highest);
       background: var(--color-bg-default);
 
       .bar {
+        &::before { opacity: 0; }
+
         .menu { display: block; }
       }
     }

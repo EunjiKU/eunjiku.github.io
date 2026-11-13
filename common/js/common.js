@@ -208,13 +208,13 @@
   }
 
   /**
-   * 첫 진입 — 헤더가 위에서 내려온다 (GNB_DROP). 숨김(위로 올림)은 CSS 가 처음부터, 여기서는 .is-shown 을 붙이며 제자리로
-   * gsap 이 없거나 reduceMotion 이면 .is-shown 만 바로
+   * 첫 진입 — PC 만 헤더가 위에서 내려온다 (GNB_DROP). 숨김(위로 올림)은 CSS 가 처음부터, 여기서는 .is-shown 을 붙이며 제자리로
+   * gsap 이 없거나 reduceMotion · 1024↓ 이면 .is-shown 만 바로 (모바일은 처음부터 제자리)
    */
   function introGnb() {
     const gnb = $(".gnb")[0];
     if (!gnb || gnb.classList.contains("is-shown")) return;
-    if (!ensureGsap() || reduceMotion.matches) {
+    if (!ensureGsap() || reduceMotion.matches || mqMobile.matches) {
       gnb.classList.add("is-shown");
       return;
     }
@@ -223,7 +223,7 @@
   }
 
   /* --------------------------------------------------------------------------
-     스크롤 상태 — 헤더가 화면 위끝에 붙어 있으면 .gnb.is-stuck(반투명 흐림 바탕)
+     스크롤 상태 — 헤더가 화면 위끝에 붙어 있으면 .gnb.is-stuck(반투명 흐림 바탕), 바로 아래가 검정 구획([data-tone="dark"])이면 .gnb.is-dark(어두운 판 · 흰 글자)
      -------------------------------------------------------------------------- */
   function bindGnbScroll() {
     const $gnb = $(".gnb").first();
@@ -231,7 +231,10 @@
     let ticking = false;
 
     function update() {
-      $gnb.toggleClass("is-stuck", $gnb[0].getBoundingClientRect().top <= 0);
+      const rect = $gnb[0].getBoundingClientRect();
+      const below = document.elementFromPoint(window.innerWidth / 2, Math.min(rect.bottom + 2, window.innerHeight - 1));
+      $gnb.toggleClass("is-stuck", rect.top <= 0);
+      $gnb.toggleClass("is-dark", !!(below && below.closest("[data-tone='dark']")));
       ticking = false;
     }
     function onScroll() {

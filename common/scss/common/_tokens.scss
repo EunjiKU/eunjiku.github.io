@@ -33,7 +33,10 @@
   --color-bg-thumb-3: #e2e2e2;             /* 〃 */
   --color-media-1: #000000;                /* 히어로 가운데 상자 — 사진 밑 · 덧칠 (고정 검정) */
   --color-media-text: #ffffff;             /* 〃 위 글자 */
-  --color-bg-glass: rgb(239 239 239 / 72%);     /* 화면 위에 붙은 헤더 바탕 — 뒤가 흐리게 비친다(backdrop-filter) */
+  --color-bg-glass: rgb(239 239 239 / 60%);     /* 화면 위에 붙은 헤더 바탕 — 뒤가 흐리게 비친다(backdrop-filter) */
+  --color-line-glass: rgb(0 0 0 / 8%);          /* 〃 테두리 — 밝은 바탕에서 판 가장자리 */
+  --color-bg-glass-dark: rgb(0 0 0 / 45%);      /* 검정 구획 위에 붙은 헤더 바탕 (.gnb.is-dark) */
+  --color-line-glass-dark: rgb(255 255 255 / 12%);
   --color-line-float: rgb(255 255 255 / 30%);  /* 떠 있는 검정 버튼(맨 위로 · 600↓ 전체 메뉴) 테두리 — 검정 구획 위에서도 보이게 */
   --color-header-blend: #ffffff;           /* 마우스 커서 — 바탕과 반전(difference)되는 흰색 */
 

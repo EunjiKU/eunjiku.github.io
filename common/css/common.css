@@ -9,7 +9,7 @@
    3. 문서 기준 ............. common/_base             html(rem 기준) · body · 강조 em(포인트 색) · 앵커 멈춤 위치
    3-1. 레이아웃 컨테이너 .. common/_base             .wrapper · .inner
    4. 접근성·공통 클래스 .... common/_utilities        .blind · .skip · 포커스 링 · 진입 모션 [data-motion] · 글자 나눠 등장 [data-split]
-   7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-stuck · .is-open · .depth1-link.is-active
+   7. GNB .................. common/_header           .gnb — common.js 가 붙이는 상태: .is-stuck · .is-dark · .is-open · .depth1-link.is-active
    8. 푸터 ................. common/_footer           .footer
    9. 섹션 골격 ............ common/_page             .sec · .sec-head
    10. 폼 .................. components/_form        .form-row · .text-field
@@ -393,7 +393,10 @@ progress, meter {
   --color-bg-thumb-3: #e2e2e2; /* 〃 */
   --color-media-1: #000000; /* 히어로 가운데 상자 — 사진 밑 · 덧칠 (고정 검정) */
   --color-media-text: #ffffff; /* 〃 위 글자 */
-  --color-bg-glass: rgb(239 239 239 / 72%); /* 화면 위에 붙은 헤더 바탕 — 뒤가 흐리게 비친다(backdrop-filter) */
+  --color-bg-glass: rgb(239 239 239 / 60%); /* 화면 위에 붙은 헤더 바탕 — 뒤가 흐리게 비친다(backdrop-filter) */
+  --color-line-glass: rgb(0 0 0 / 8%); /* 〃 테두리 — 밝은 바탕에서 판 가장자리 */
+  --color-bg-glass-dark: rgb(0 0 0 / 45%); /* 검정 구획 위에 붙은 헤더 바탕 (.gnb.is-dark) */
+  --color-line-glass-dark: rgb(255 255 255 / 12%);
   --color-line-float: rgb(255 255 255 / 30%); /* 떠 있는 검정 버튼(맨 위로 · 600↓ 전체 메뉴) 테두리 — 검정 구획 위에서도 보이게 */
   --color-header-blend: #ffffff; /* 마우스 커서 — 바탕과 반전(difference)되는 흰색 */
   /* ------------------------------------------------------------------
@@ -836,7 +839,7 @@ em {
 }
 /* ==========================================================================
    7. GNB — 고정 헤더 (로고 · 섹션 메뉴 · 테마 · 600↓ 햄버거)
-   · common.js 가 붙이는 상태: .gnb.is-stuck(화면 위끝에 붙음) · .gnb.is-open(600↓ 메뉴 열림)
+   · common.js 가 붙이는 상태: .gnb.is-stuck(화면 위끝에 붙음) · .gnb.is-dark(바로 아래가 검정 구획) · .gnb.is-open(600↓ 메뉴 열림)
    · 현재 섹션 메뉴: .depth1-link.is-active + aria-current="true"
    · 첫 진입: .gnb.is-shown 이 붙으며 위에서 내려온다 (common.js — html 에 직접 쓰지 않는다)
    · 모양: 검정 글자. 화면 위에 붙어 있는 동안(.is-stuck — common.js)은 뒤가 흐리게 비치는 반투명 바탕, 히어로 안에 있을 때는 투명. 600↓ 메뉴를 펼치면 불투명 바탕 · 전체 메뉴 버튼은 오른쪽 아래, 맨 위로 버튼 위에 떠 있다
@@ -855,21 +858,32 @@ em {
   inset: 0;
   z-index: var(--z-behind);
   background: var(--color-bg-glass);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-line-glass);
+  border-radius: 0.75rem;
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
   pointer-events: none;
 }
 .gnb.is-stuck .bar::before {
   opacity: 1;
 }
+.gnb.is-dark {
+  color: var(--color-media-text);
+}
+.gnb.is-dark .bar::before {
+  background: var(--color-bg-glass-dark);
+  border-color: var(--color-line-glass-dark);
+}
 .gnb {
-  /* 첫 진입 — 위에 숨어 있다가 .is-shown 이 붙으면 내려온다 (common.js). 모션 줄이기는 처음부터 제자리 */
+  /* 첫 진입 — PC 만 위에 숨어 있다가 .is-shown 이 붙으면 내려온다 (common.js). 1024↓ · 모션 줄이기는 처음부터 제자리 */
 }
 @media (prefers-reduced-motion: no-preference) {
-  .gnb:not(.is-shown) {
-    transform: translateY(-100%);
+  @media not all and (max-width: 1024px) {
+    .gnb:not(.is-shown) {
+      transform: translateY(-100%);
+    }
   }
 }
 .gnb .bar {
@@ -880,7 +894,7 @@ em {
   max-width: calc(var(--content-width) + var(--header-padding) * 2);
   height: calc(var(--gnb-height) - 0.5rem);
   margin: 0 auto;
-  padding: 0 0.75rem 0 1.5rem;
+  padding: 0 1.5rem;
 }
 .gnb .bar .logo {
   display: inline-flex;
@@ -1097,7 +1111,11 @@ em {
     opacity: 1;
   }
   .gnb.is-open {
+    color: var(--color-text-default-highest);
     background: var(--color-bg-default);
+  }
+  .gnb.is-open .bar::before {
+    opacity: 0;
   }
   .gnb.is-open .bar .menu {
     display: block;
