@@ -105,7 +105,7 @@
   --z-cursor: 2000;     /* 마우스 커서 — 맨 위 */
 }
 
-/* 검정 구획 — 섹션에 data-tone="dark" (프로젝트 · 연락). 컬러 토큰을 그 안에서만 뒤집는다 */
+/* 검정 구획 — 섹션에 data-tone="dark" (프로젝트 · 연락 · 푸터). 컬러 토큰을 그 안에서만 뒤집는다 */
 [data-tone="dark"] {
   --color-text-default-highest: #ffffff;
   --color-text-default-medium: #bdbdbd;
